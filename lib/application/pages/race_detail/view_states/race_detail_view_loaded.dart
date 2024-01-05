@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/race_entry_item.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,10 @@ class RaceDetailViewLoaded extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ListView.builder(
             itemCount: raceEntryIds.length,
-            itemBuilder: (context, item) => const Text('index'),
+            itemBuilder: (context, index) => RaceEntryItemProvider(
+                collectionId: collectionId,
+                raceEntryId: raceEntryIds[index]
+            ),
           ),
         ),
     );

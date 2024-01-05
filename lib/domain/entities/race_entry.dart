@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import 'unique_id.dart';
 
-class RaceEntry {
+class RaceEntry extends Equatable{
   final String description;
   final RaceEntryId id;
 
@@ -15,4 +17,8 @@ class RaceEntry {
         description: 'Lorem ipsum description'
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, description];
 }

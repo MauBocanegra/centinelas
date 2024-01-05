@@ -33,8 +33,8 @@ class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
       );
 
       return entry.fold(
-            (left) => RaceEntryItemLoadedState(raceEntry: left),
-            (right) => const RaceEntryItemErrorState(),
+            (left) => emit(RaceEntryItemLoadedState(raceEntry: left)),
+            (right) => emit(const RaceEntryItemErrorState()),
       );
     } on Exception {
       emit(const RaceEntryItemErrorState());

@@ -17,7 +17,7 @@ class RacesViewLoaded extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: collections.length,
-      itemBuilder: (context, index) {
+        itemBuilder: (context, index) {
           final item = collections[index];
           final colorScheme = Theme.of(context).colorScheme;
           return ListTile(
