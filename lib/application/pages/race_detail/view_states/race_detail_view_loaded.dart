@@ -19,7 +19,7 @@ class RaceDetailViewLoaded extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ListView.builder(
             itemCount: raceEntryIds.length,
-            itemBuilder: (context, index) => RaceEntryItemProvider(
+            itemBuilder: (context, index) => RaceEntryItemProvider( // TODO need to redo for only raceEntryId
                 collectionId: collectionId,
                 raceEntryId: raceEntryIds[index]
             ),

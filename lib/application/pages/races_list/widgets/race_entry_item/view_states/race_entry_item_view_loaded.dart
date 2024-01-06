@@ -12,7 +12,7 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Title for ${raceEntry.id}'),
+      title: Text(raceEntry.id.value),
       subtitle: Text(raceEntry.description),
       leading: Icon(Icons.directions_run_rounded),
     );

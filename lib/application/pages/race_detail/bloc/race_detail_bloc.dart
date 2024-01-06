@@ -29,7 +29,10 @@ class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
       if(entryIds.isRight){
         emit(const RaceDetailErrorState());
       } else {
-        emit(RaceDetailLoadedState(raceEntryIds: entryIds.left));
+        emit(RaceDetailLoadedState(
+            raceEntryIds: entryIds.left,
+            collectionId: collectionId
+        ));
       }
     }on Exception {
       emit(const RaceDetailErrorState());

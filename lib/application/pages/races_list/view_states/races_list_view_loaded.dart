@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/entities/race_collection.dart';
 import '../../race_detail/race_detail_page.dart';
 
-class RacesViewLoaded extends StatelessWidget {
-  const RacesViewLoaded({
+class RacesListViewLoaded extends StatelessWidget {
+  const RacesListViewLoaded({
     super.key,
     required this.collections
   });

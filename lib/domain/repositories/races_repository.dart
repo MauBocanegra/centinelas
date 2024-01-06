@@ -7,6 +7,7 @@ import '../failures/failures.dart';
 
 abstract class RacesRepository{
   Future<Either<List<RaceCollection>, Failure>> readRacesCollections();
+  Future<Either<RaceCollection, Failure>> readSingleRaceCollection();
   Future<Either<RaceEntry, Failure>> readRaceEntry(
     CollectionId collectionId,
     RaceEntryId raceEntryId

@@ -1,9 +1,10 @@
+import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/page_config.dart';
 import '../../core/routes_constants.dart';
-import '../races_list/races_page.dart';
+import '../races_list/races_list_page.dart';
 import '../reports/reports_page.dart';
 
 class HomePage extends StatefulWidget {

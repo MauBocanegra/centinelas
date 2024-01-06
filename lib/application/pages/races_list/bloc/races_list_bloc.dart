@@ -21,6 +21,7 @@ class RacesListBloc extends Bloc<RacesListEvent, RacesListState> {
   Future<void> readRacesCollections() async {
     emit(const RacesListLoadingState());
     try{
+
       final collectionsFuture = loadRaceCollectionsUseCase.call(NoParams());
       final collections = await collectionsFuture;
 

@@ -15,8 +15,12 @@ class RaceDetailErrorState extends RaceDetailState {
   const RaceDetailErrorState();
 }
 class RaceDetailLoadedState extends RaceDetailState {
-  const RaceDetailLoadedState({required this.raceEntryIds});
+  const RaceDetailLoadedState({
+    required this.raceEntryIds,
+    required this.collectionId,
+  });
   final List<RaceEntryId> raceEntryIds;
-  @override List<Object?> get props => [raceEntryIds];
+  final CollectionId collectionId;
+  @override List<Object?> get props => [raceEntryIds, collectionId];
 }
 

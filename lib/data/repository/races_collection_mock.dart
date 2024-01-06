@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:centinelas_app/domain/entities/race_entry.dart';
 import 'package:either_dart/either.dart';
 
@@ -72,4 +74,19 @@ class RacesRepositoryMock implements RacesRepository {
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
     }
   }
+
+  @override
+  Future<Either<RaceCollection, Failure>> readSingleRaceCollection() {
+    try{
+      //raceCollections
+      return Future.delayed(
+        const Duration(milliseconds: waitInMilis),
+        () => Left(raceCollections[Random().nextInt(raceCollections.length)]),
+      );
+    } on Exception catch(exception){
+      return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
+    }
+  }
+
+
 }

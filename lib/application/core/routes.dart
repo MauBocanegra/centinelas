@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/pages/races_list/races_page.dart';
+import 'package:centinelas_app/application/pages/races_list/races_list_page.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -56,7 +56,7 @@ final routes = GoRouter(
                 } else {
                   context.goNamed(
                     HomePage.pageConfig.name,
-                    pathParameters: {'tab' : RacesPage.pageConfig.name},
+                    pathParameters: {'tab' : RacesListPage.pageConfig.name},
                   );
                 }
               },
