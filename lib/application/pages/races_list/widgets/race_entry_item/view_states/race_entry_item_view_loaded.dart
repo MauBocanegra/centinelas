@@ -11,10 +11,17 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(raceEntry.id.value),
-      subtitle: Text(raceEntry.description),
-      leading: Icon(Icons.directions_run_rounded),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.0)),
+        child: ListTile(
+          title: Text(raceEntry.id.value),
+          subtitle: Text(raceEntry.description),
+          leading: const Icon(Icons.directions_run_rounded),
+        ),
+      ),
     );
   }
 }
