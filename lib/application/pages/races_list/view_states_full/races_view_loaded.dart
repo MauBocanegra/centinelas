@@ -16,7 +16,7 @@ class RacesViewLoaded extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: raceEntryIds.length,
-      itemBuilder: (context, index) => RaceEntryItemProvider( // TODO need to redo for only raceEntryId
+      itemBuilder: (context, index) => RaceEntryItemProvider(
           collectionId: collectionId,
           raceEntryId: raceEntryIds[index]
       ),

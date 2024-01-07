@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:centinelas_app/domain/entities/race_entry.dart';
+import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:either_dart/either.dart';
 
 import '../../domain/entities/race_collection.dart';
@@ -82,6 +83,23 @@ class RacesRepositoryMock implements RacesRepository {
       return Future.delayed(
         const Duration(milliseconds: waitInMilis),
         () => Left(raceCollections[Random().nextInt(raceCollections.length)]),
+      );
+    } on Exception catch(exception){
+      return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
+    }
+  }
+
+  @override
+  Future<Either<RaceFull, Failure>> readRaceFull(CollectionId collectionId, RaceEntryId raceEntryId) {
+    try{
+      return Future.delayed(
+        const Duration(milliseconds: waitInMilis),
+          () => Left(RaceFull(
+              'title',
+              'discipline',
+              'address',
+              'description',
+              id: raceEntryId))
       );
     } on Exception catch(exception){
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));

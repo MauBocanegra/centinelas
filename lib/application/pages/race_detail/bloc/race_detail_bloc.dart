@@ -1,38 +1,32 @@
 import 'dart:async';
 
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/usecases/load_race_entry_ids_for_collection.dart';
+import 'package:centinelas_app/domain/entities/helpers/race_id_collection_id.dart';
+import 'package:centinelas_app/domain/entities/race_full.dart';
+import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../domain/entities/unique_id.dart';
 
 part 'race_detail_event.dart';
 part 'race_detail_state.dart';
 
 class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
   RaceDetailBloc({
-    required this.collectionId,
-    required this.loadRaceEntryIdsForCollection
+    required this.raceIdCollectionId,
+    required this.loadRaceFullUseCase,
   }) : super(const RaceDetailLoadingState());
 
-  final CollectionId collectionId;
-  final LoadRaceEntryIdsForCollection loadRaceEntryIdsForCollection;
+  final LoadRaceFullUseCase loadRaceFullUseCase;
+  final RaceIdCollectionId raceIdCollectionId;
 
-  Future<void> fetch() async{
+  Future<void> readRaceFull() async{
     emit(const RaceDetailLoadingState());
     try{
-      final entryIds = await loadRaceEntryIdsForCollection.call(
-          CollectionIdParam(collectionId: collectionId),
-      );
-      if(entryIds.isRight){
+      final raceFull = await loadRaceFullUseCase.call(raceIdCollectionId);
+      if(raceFull.isRight){
         emit(const RaceDetailErrorState());
       } else {
-        emit(RaceDetailLoadedState(
-            raceEntryIds: entryIds.left,
-            collectionId: collectionId
-        ));
+        emit(RaceDetailLoadedState(raceFull: raceFull.left));
       }
     }on Exception {
       emit(const RaceDetailErrorState());

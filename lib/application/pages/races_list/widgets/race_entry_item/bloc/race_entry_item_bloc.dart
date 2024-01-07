@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../domain/entities/unique_id.dart';
-import '../../../../../../domain/usecases/load_race_entry.dart';
+import '../../../../../../domain/usecases/load_race_entry_usecase.dart';
 
 part 'race_entry_item_event.dart';
 part 'race_entry_item_state.dart';
@@ -14,7 +14,7 @@ part 'race_entry_item_state.dart';
 class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
   final RaceEntryId raceEntryId;
   final CollectionId collectionId;
-  final LoadRaceEntry loadRaceEntry;
+  final LoadRaceEntryUseCase loadRaceEntry;
 
   //final UpdateRaceEntry updateRaceEntry??
   RaceEntryItemBloc({
@@ -33,7 +33,10 @@ class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
       );
 
       return entry.fold(
-            (left) => emit(RaceEntryItemLoadedState(raceEntry: left)),
+            (left) => emit(RaceEntryItemLoadedState(
+                raceEntry: left,
+                collectionId: collectionId
+            )),
             (right) => emit(const RaceEntryItemErrorState()),
       );
     } on Exception {

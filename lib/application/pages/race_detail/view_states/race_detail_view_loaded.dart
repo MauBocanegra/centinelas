@@ -1,29 +1,20 @@
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/race_entry_item.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:flutter/material.dart';
 
 class RaceDetailViewLoaded extends StatelessWidget {
   const RaceDetailViewLoaded({
     super.key,
-    required this.collectionId,
-    required this.raceEntryIds,
+    required this.raceFull
   });
 
-  final List<RaceEntryId> raceEntryIds;
-  final CollectionId collectionId;
+  final RaceFull raceFull;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: raceEntryIds.length,
-            itemBuilder: (context, index) => RaceEntryItemProvider( // TODO need to redo for only raceEntryId
-                collectionId: collectionId,
-                raceEntryId: raceEntryIds[index]
-            ),
-          ),
+          child: Center(child: Text('Race ${raceFull.id.value} detail'))
         ),
     );
   }

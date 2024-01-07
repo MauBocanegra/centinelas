@@ -4,8 +4,8 @@ import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:either_dart/either.dart';
 
-class LoadRaceEntry implements UseCase<RaceEntry, RaceEntryIdsParam>{
-  const LoadRaceEntry({required this.raceRepository,});
+class LoadRaceEntryUseCase implements UseCase<RaceEntry, RaceEntryIdsParam>{
+  const LoadRaceEntryUseCase({required this.raceRepository,});
   final RacesRepository raceRepository;
 
   @override

@@ -1,10 +1,9 @@
-import 'package:centinelas_app/application/pages/races_list/races_list_page.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
+import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../pages/home/home_page.dart';
 import '../pages/login/login_page.dart';
-import '../pages/race_detail/race_detail_page.dart';
 import '../pages/splash/splash_page.dart';
 import 'go_router_observer.dart';
 import 'routes_constants.dart';
@@ -44,6 +43,34 @@ final routes = GoRouter(
     ),
     GoRoute(
       name: RaceDetailPage.pageConfig.name,
+      path: '/$homeRoute/$racesRoute/$raceDetail/:collectionId/:raceEntryId',
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Detalles de carrera'),
+            leading: BackButton(
+              onPressed: (){
+                if(context.canPop()){
+                  context.pop();
+                } else {
+                  context.goNamed(
+                    HomePage.pageConfig.name,
+                    pathParameters: {'tab' : RacesPage.pageConfig.name},
+                  );
+                }
+              },
+            ),
+          ),
+          body: RaceDetailPageProvider(
+            collectionIdString: state.pathParameters['collectionId'] ?? '',
+            raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
+          ),
+        );
+      }
+    ),
+    /*
+    GoRoute(
+      name: RaceDetailPage.pageConfig.name,
       path: '/$homeRoute/$racesRoute/:collectionId',
       builder: (context, state) {
         return Scaffold(
@@ -71,5 +98,6 @@ final routes = GoRouter(
         );
       },
     ),
+    */
   ],
 );

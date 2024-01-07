@@ -5,15 +5,15 @@ import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:either_dart/src/either.dart';
 
-class LoadRaceEntryIdsForCollection implements UseCase<List<RaceEntryId>, CollectionIdParam>{
+class LoadRaceEntryIdsForCollectionUseCase implements UseCase<List<RaceEntryId>, CollectionIdParam>{
 
   final RacesRepository racesRepository;
-  const LoadRaceEntryIdsForCollection({required this.racesRepository});
+  const LoadRaceEntryIdsForCollectionUseCase({required this.racesRepository});
 
   @override
   Future<Either<List<RaceEntryId>, Failure>> call(CollectionIdParam params) async {
     try {
-      final loadedIds = racesRepository. readRaceEntryIds(
+      final loadedIds = racesRepository.readRaceEntryIds(
         params.collectionId,
       );
 

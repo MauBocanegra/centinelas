@@ -18,10 +18,12 @@ class RaceEntryItemErrorState extends RaceEntryItemState {
 }
 class RaceEntryItemLoadedState extends RaceEntryItemState {
   const RaceEntryItemLoadedState({
-    required this.raceEntry
+    required this.raceEntry,
+    required this.collectionId,
   });
   final RaceEntry raceEntry;
+  final CollectionId collectionId;
 
   @override
-  List<Object> get props => [raceEntry];
+  List<Object> get props => [raceEntry, collectionId];
 }
