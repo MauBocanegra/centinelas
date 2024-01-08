@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,32 @@ class RaceDetailViewLoaded extends StatelessWidget {
     return SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Center(child: Text('Race ${raceFull.id.value} detail'))
+          child: Center(child: Column(
+            children: [
+              Text('RACE ${raceFull.id.value}'),
+              ElevatedButton(
+                style: raisedBlueButtonStyle,
+                onPressed: () { },
+                child: Text('Registrarse'),
+              ),
+              ElevatedButton(
+                style: raisedOrangeButtonStyle,
+                onPressed: () { },
+                child: Text('CheckIn'),
+              ),
+              ElevatedButton(
+                style: raisedYellowButtonStyle,
+                onPressed: () { },
+                child: Text('Solicitar asistencia'),
+              ),
+              ElevatedButton(
+                style: raisedRedButtonStyle,
+                onPressed: () { },
+                child: Text('Reportar EMERGENCIA'),
+              ),
+            ],
+
+          ))
         ),
     );
   }

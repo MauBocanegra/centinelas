@@ -1,6 +1,8 @@
+import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../pages/home/home_page.dart';
 import '../pages/login/login_page.dart';
@@ -15,89 +17,67 @@ GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final routes = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/$homeRoute/$racesRoute',
+  initialLocation: '/$homeRoute/${RacesPage.pageConfig.name}',
   observers: [GoRouterObserver()],
   routes: [
     GoRoute(
       name: SplashPage.pageConfig.name,
-      path: '/$splashRoute',
-      builder: (context, state) => SplashPage(),
+      path: '/${SplashPage.pageConfig.name}',
+      builder: (context, state) => const SplashPage(),
     ),
     GoRoute(
       name: LoginPage.pageConfig.name,
-      path: '/$loginRoute',
-      builder: (context, state) => LoginPage(),
+      path: '/${LoginPage.pageConfig.name}',
+      builder: (context, state) => const LoginPage(),
     ),
     ShellRoute(
       navigatorKey: shellNavigatorKey,
       builder: (context, state, child) => child,
       routes: [
         GoRoute(
+          name: HomePage.pageConfig.name,
           path: '/$homeRoute/:tab',
           builder: (context, state) => HomePage(
             key: state.pageKey,
-            tab: state.pathParameters['tab'] ?? racesRoute,
+            tab: state.pathParameters['tab']!,
           ),
         ),
       ],
     ),
     GoRoute(
       name: RaceDetailPage.pageConfig.name,
-      path: '/$homeRoute/$racesRoute/$raceDetail/:collectionId/:raceEntryId',
+      path: '/$homeRoute/$racesRoute/:collectionId/:raceEntryId',
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Detalles de carrera'),
-            leading: BackButton(
-              onPressed: (){
-                if(context.canPop()){
-                  context.pop();
-                } else {
-                  context.goNamed(
-                    HomePage.pageConfig.name,
-                    pathParameters: {'tab' : RacesPage.pageConfig.name},
-                  );
-                }
-              },
+        return BlocListener<NavigationCubit, NavigationCubitState>(
+          listenWhen: (previous, current) => previous.isSecondBodyDisplayed != current.isSecondBodyDisplayed,
+          listener: (context, state){
+            if(context.canPop() && (state.isSecondBodyDisplayed ?? false )){
+              context.pop();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Detalles de carrera'),
+              leading: BackButton(
+                onPressed: (){
+                  if(context.canPop()){
+                    context.pop();
+                  } else {
+                    context.goNamed(
+                      HomePage.pageConfig.name,
+                      pathParameters: {'tab' : RacesPage.pageConfig.name},
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-          body: RaceDetailPageProvider(
-            collectionIdString: state.pathParameters['collectionId'] ?? '',
-            raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
+            body: RaceDetailPageProvider(
+              collectionIdString: state.pathParameters['collectionId'] ?? '',
+              raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
+            ),
           ),
         );
       }
     ),
-    /*
-    GoRoute(
-      name: RaceDetailPage.pageConfig.name,
-      path: '/$homeRoute/$racesRoute/:collectionId',
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Detalles de carrera'),
-            leading: BackButton(
-              onPressed: (){
-                if(context.canPop()){
-                  context.pop();
-                } else {
-                  context.goNamed(
-                    HomePage.pageConfig.name,
-                    pathParameters: {'tab' : RacesListPage.pageConfig.name},
-                  );
-                }
-              },
-            ),
-          ),
-          body: RaceDetailPageProvider(
-              collectionId: CollectionId.fromUniqueString(
-                // any empty string will show error
-                state.pathParameters['collectionId'] ?? '',
-              )
-          ),
-        );
-      },
-    ),
-    */
   ],
 );

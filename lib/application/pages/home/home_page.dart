@@ -1,6 +1,9 @@
+import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/page_config.dart';
 import '../../core/routes_constants.dart';
@@ -71,16 +74,36 @@ class HomePageState extends State<HomePage> {
           body: SlotLayout(
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.smallAndUp: SlotLayout.from(
-                  key: const Key('primary-body'),
-                  builder: (context) => HomePage.tabs[widget.index].child
+                  key: const Key('primary-body-small'),
+                  builder: (_) => HomePage.tabs[widget.index].child
               )
             },
           ),
           secondaryBody: SlotLayout(
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.mediumAndUp: SlotLayout.from(
-                  key: const Key('secondary-body'),
-                  builder: AdaptiveScaffold.emptyBuilder
+                  key: const Key('secondary-body-medium'),
+                  builder: widget.index != 0 ? AdaptiveScaffold.emptyBuilder : (_) =>
+                      BlocBuilder<NavigationCubit, NavigationCubitState>(
+                        builder: (context, state) {
+                          final selectedRaceId = state.selectedRaceId;
+                          final selectedCollectionId = state.selectedCollectionId;
+
+                          final isSecondBodyDisplayed = Breakpoints.mediumAndUp.isActive(context);
+                          context.read<NavigationCubit>().secondBodyHasChanged(
+                            isSecondBodyDisplayed: isSecondBodyDisplayed,
+                          );
+
+                          if(selectedRaceId == null){
+                            return const Placeholder();
+                          }
+                          return RaceDetailPageProvider(
+                            key: Key(selectedRaceId.value),
+                            raceEntryIdString: selectedRaceId.value,
+                            collectionIdString: selectedCollectionId?.value ?? '',
+                          );
+                        },
+                      ),
               )
             },
           ),
