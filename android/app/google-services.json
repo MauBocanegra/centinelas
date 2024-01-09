@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "917068382197",
+    "project_id": "centinelas-53c9b",
+    "storage_bucket": "centinelas-53c9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917068382197:android:f8ecb126bd8af2f99b2abc",
+        "android_client_info": {
+          "package_name": "centinelas.sportspromotion.com.mx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB26FaYz82_8-WbidkCqWw1HHysh-DNK7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917068382197:android:267ff9c4cedad4939b2abc",
+        "android_client_info": {
+          "package_name": "centinelas.sportspromotion.com.mx.centinelas_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB26FaYz82_8-WbidkCqWw1HHysh-DNK7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
