@@ -17,7 +17,37 @@ class RaceDetailViewLoaded extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Center(child: Column(
             children: [
-              Text('RACE ${raceFull.id.value}'),
+              Text(
+                raceFull.title ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              Image.network(
+                  raceFull.imageUrl ?? 'https://www.zonaturistica.com/files/ferias/995/F4_995.jpg'
+              ),
+              Text(
+                raceFull.discipline ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                raceFull.address ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                raceFull.description ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
               ElevatedButton(
                 style: raisedBlueButtonStyle,
                 onPressed: () { },

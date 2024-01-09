@@ -28,24 +28,39 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
           child: Material(
             elevation: 8.0,
             shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.0)),
-            child: ListTile(
-              title: Text(raceEntry.id.value),
-              subtitle: Text(raceEntry.description),
-              leading: const Icon(Icons.directions_run_rounded),
-              selected: state.selectedRaceId == raceEntry.id,
-              onTap: (){
-                debugPrint('onTap race:${raceEntry.id.value} collection:${collectionId.value}');
-                context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
-                if(Breakpoints.small.isActive(context)){
-                  context.pushNamed(
-                    RaceDetailPage.pageConfig.name,
-                    pathParameters: {
-                      'raceEntryId': raceEntry.id.value.toString(),
-                      'collectionId': collectionId.value.toString()
-                    },
-                  );
-                }
-              },
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.dstATop),
+                    image: NetworkImage(raceEntry.imageUrl ?? ''),
+                    fit: BoxFit.cover),
+              ),
+              child: ListTile(
+                title: Text(
+                  raceEntry.description.split('-').first,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+                subtitle: Text(raceEntry.description),
+                leading: const Icon(Icons.directions_run_rounded),
+                selected: state.selectedRaceId == raceEntry.id,
+                onTap: (){
+                  debugPrint('onTap race:${raceEntry.id.value} collection:${collectionId.value}');
+                  context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
+                  if(Breakpoints.small.isActive(context)){
+                    context.pushNamed(
+                      RaceDetailPage.pageConfig.name,
+                      pathParameters: {
+                        'raceEntryId': raceEntry.id.value.toString(),
+                        'collectionId': collectionId.value.toString()
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ),
         );

@@ -8,12 +8,14 @@ class RaceFull extends Equatable {
   final String? discipline;
   final String? address;
   final String? description;
+  final String? imageUrl;
 
   const RaceFull(
       this.title,
       this.discipline,
       this.address,
       this.description,
+      this.imageUrl,
       {
         required this.id,
       }
@@ -26,6 +28,7 @@ class RaceFull extends Equatable {
     title,
     discipline,
     address,
-    description
+    description,
+    imageUrl,
   ];
 }

@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:centinelas_app/data/repository/races_list_fake.dart';
 import 'package:centinelas_app/domain/entities/race_entry.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 
 import '../../domain/entities/race_collection.dart';
 import '../../domain/entities/race_color.dart';
@@ -16,6 +18,7 @@ const waitInMilis = 200;
 
 class RacesRepositoryMock implements RacesRepository {
 
+  /*
   final List<RaceEntry> raceEntries = List.generate(
       maxNumberOfMockedRaces,
       (index) => RaceEntry(
@@ -23,7 +26,11 @@ class RacesRepositoryMock implements RacesRepository {
         description: 'description $index',
       ),
   );
+  */
 
+  final List<RaceEntry> raceEntries = racesFake;
+
+  /*
   final raceCollections = List<RaceCollection>.generate(
     numberOfMockedRaces,
         (index) => RaceCollection(
@@ -32,6 +39,14 @@ class RacesRepositoryMock implements RacesRepository {
       color: RaceColor(colorIndex: index % RaceColor.predifinedColors.length),
     ),
   );
+  */
+  final raceCollections = [
+    RaceCollection(
+        id: CollectionId.fromUniqueString('0'),
+        title: '2024',
+        color: RaceColor(colorIndex: 0)
+    )
+  ];
 
   @override
   Future<Either<List<RaceCollection>, Failure>> readRacesCollections() {
@@ -58,6 +73,7 @@ class RacesRepositoryMock implements RacesRepository {
     }
   }
 
+  /*
   @override
   Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds(CollectionId collectionId) {
     try{
@@ -70,6 +86,26 @@ class RacesRepositoryMock implements RacesRepository {
       return Future.delayed(
         const Duration(milliseconds: waitInMilis),
         () => Left(entryIds)
+      );
+    } on Exception catch(exception){
+      return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
+    }
+  }
+  */
+  Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds(CollectionId collectionId) {
+    try {
+      final entryIds = [
+        RaceEntryId.fromUniqueString('0'),
+        RaceEntryId.fromUniqueString('1'),
+        RaceEntryId.fromUniqueString('2'),
+        RaceEntryId.fromUniqueString('3'),
+        RaceEntryId.fromUniqueString('4'),
+        RaceEntryId.fromUniqueString('5'),
+        RaceEntryId.fromUniqueString('6'),
+      ];
+      return Future.delayed(
+          const Duration(milliseconds: waitInMilis),
+              () => Left(entryIds)
       );
     } on Exception catch(exception){
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
@@ -94,12 +130,7 @@ class RacesRepositoryMock implements RacesRepository {
     try{
       return Future.delayed(
         const Duration(milliseconds: waitInMilis),
-          () => Left(RaceFull(
-              'title',
-              'discipline',
-              'address',
-              'description',
-              id: raceEntryId))
+          () => Left(racesFullFake.firstWhere((element) => element.id == raceEntryId))
       );
     } on Exception catch(exception){
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
