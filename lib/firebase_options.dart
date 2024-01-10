@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBd4_a2O44ZOsDdhXS5Y0zVEB3Z7rBITrQ',
-    appId: '1:917068382197:web:80061d561524863c9b2abc',
-    messagingSenderId: '917068382197',
-    projectId: 'centinelas-53c9b',
-    authDomain: 'centinelas-53c9b.firebaseapp.com',
-    storageBucket: 'centinelas-53c9b.appspot.com',
-    measurementId: 'G-DJL3Q4YM40',
+    apiKey: 'AIzaSyBQXpZgWM5Cz4U_MXNJbvTzUT0BAgHPqFA',
+    appId: '1:908225121225:web:bef24103107052d0d33618',
+    messagingSenderId: '908225121225',
+    projectId: 'centinelas-27d9b',
+    authDomain: 'centinelas-27d9b.firebaseapp.com',
+    storageBucket: 'centinelas-27d9b.appspot.com',
+    measurementId: 'G-MR7XZ39BTS',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB26FaYz82_8-WbidkCqWw1HHysh-DNK7A',
-    appId: '1:917068382197:android:267ff9c4cedad4939b2abc',
-    messagingSenderId: '917068382197',
-    projectId: 'centinelas-53c9b',
-    storageBucket: 'centinelas-53c9b.appspot.com',
+    apiKey: 'AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk',
+    appId: '1:908225121225:android:9de82a9d1d6f8bb7d33618',
+    messagingSenderId: '908225121225',
+    projectId: 'centinelas-27d9b',
+    storageBucket: 'centinelas-27d9b.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBfAmOm4krXWPI9elI3maYsrexSUFU6fzI',
-    appId: '1:917068382197:ios:b4d8ca8e53a25bb59b2abc',
-    messagingSenderId: '917068382197',
-    projectId: 'centinelas-53c9b',
-    storageBucket: 'centinelas-53c9b.appspot.com',
+    apiKey: 'AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E',
+    appId: '1:908225121225:ios:8d2c1170d29e1464d33618',
+    messagingSenderId: '908225121225',
+    projectId: 'centinelas-27d9b',
+    storageBucket: 'centinelas-27d9b.appspot.com',
     iosBundleId: 'centinelas.sportspromotion.com.mx.centinelasApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBfAmOm4krXWPI9elI3maYsrexSUFU6fzI',
-    appId: '1:917068382197:ios:72614123793447739b2abc',
-    messagingSenderId: '917068382197',
-    projectId: 'centinelas-53c9b',
-    storageBucket: 'centinelas-53c9b.appspot.com',
+    apiKey: 'AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E',
+    appId: '1:908225121225:ios:68a3e7d1384c2496d33618',
+    messagingSenderId: '908225121225',
+    projectId: 'centinelas-27d9b',
+    storageBucket: 'centinelas-27d9b.appspot.com',
     iosBundleId: 'centinelas.sportspromotion.com.mx.centinelasApp.RunnerTests',
   );
 }

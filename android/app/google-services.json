@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "917068382197",
-    "project_id": "centinelas-53c9b",
-    "storage_bucket": "centinelas-53c9b.appspot.com"
+    "project_number": "908225121225",
+    "project_id": "centinelas-27d9b",
+    "storage_bucket": "centinelas-27d9b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:917068382197:android:f8ecb126bd8af2f99b2abc",
+        "mobilesdk_app_id": "1:908225121225:android:ed3de804364cc247d33618",
         "android_client_info": {
           "package_name": "centinelas.sportspromotion.com.mx"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB26FaYz82_8-WbidkCqWw1HHysh-DNK7A"
+          "current_key": "AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk"
         }
       ],
       "services": {
@@ -26,7 +26,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:917068382197:android:267ff9c4cedad4939b2abc",
+        "mobilesdk_app_id": "1:908225121225:android:9de82a9d1d6f8bb7d33618",
         "android_client_info": {
           "package_name": "centinelas.sportspromotion.com.mx.centinelas_app"
         }
@@ -34,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB26FaYz82_8-WbidkCqWw1HHysh-DNK7A"
+          "current_key": "AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk"
         }
       ],
       "services": {
