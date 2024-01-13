@@ -1,6 +1,8 @@
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,18 +19,41 @@ GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final routes = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/$homeRoute/${RacesPage.pageConfig.name}',
+  //initialLocation: '/$homeRoute/${RacesPage.pageConfig.name}',
+  //initialLocation: '/${SplashPage.pageConfig.name}',
+  initialLocation: '/${LoginPage.pageConfig.name}',
   observers: [GoRouterObserver()],
   routes: [
     GoRoute(
-      name: SplashPage.pageConfig.name,
-      path: '/${SplashPage.pageConfig.name}',
-      builder: (context, state) => const SplashPage(),
-    ),
-    GoRoute(
       name: LoginPage.pageConfig.name,
       path: '/${LoginPage.pageConfig.name}',
-      builder: (context, state) => const LoginPage(),
+      builder: (context, state) => SignInScreen(
+        actions: [
+          AuthStateChangeAction<SignedIn>((context, state) {
+            context.pushNamed(
+              HomePage.pageConfig.name,
+              pathParameters: {'tab': RacesPage.pageConfig.name},
+            );
+          }),
+          AuthStateChangeAction<UserCreated>((context, state) {
+            context.pushNamed(
+              HomePage.pageConfig.name,
+              pathParameters: {'tab': RacesPage.pageConfig.name},
+            );
+          }),
+        ],
+      ),
+    ),
+    GoRoute(
+      name: ProfilePage.pageConfig.name,
+      path: '/${ProfilePage.pageConfig.name}',
+      builder: (context, state) => ProfileScreen(
+        actions: [
+          SignedOutAction((context) {
+            context.go(LoginPage.pageConfig.name);
+          }),
+        ],
+      ),
     ),
     ShellRoute(
       navigatorKey: shellNavigatorKey,

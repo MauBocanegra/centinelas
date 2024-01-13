@@ -5,3 +5,4 @@ const racesListRoute = 'races_list';
 const racesRoute = 'races';
 const raceDetail = 'race_detail';
 const reportsRoute = 'reports';
+const profileRoute = 'profile';

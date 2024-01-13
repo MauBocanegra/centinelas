@@ -12,7 +12,20 @@
           "package_name": "centinelas.sportspromotion.com.mx"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "908225121225-unmfqdn7v7qnkmjqavhvi8vlgktrv7ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "centinelas.sportspromotion.com.mx",
+            "certificate_hash": "7a1b7525184668cb80edbbf3a4058267b9bdaee0"
+          }
+        },
+        {
+          "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "908225121225-c1qp45cdkvkhj788hh0v8evlp65uboob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "centinelas.sportspromotion.com.mx"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,20 @@
           "package_name": "centinelas.sportspromotion.com.mx.centinelas_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "908225121225-bb6ukdvvkj14349fitrmmr62rt4hfsnd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "centinelas.sportspromotion.com.mx.centinelas_app",
+            "certificate_hash": "7a1b7525184668cb80edbbf3a4058267b9bdaee0"
+          }
+        },
+        {
+          "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk"
@@ -39,7 +77,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "908225121225-c1qp45cdkvkhj788hh0v8evlp65uboob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "centinelas.sportspromotion.com.mx"
+              }
+            }
+          ]
         }
       }
     }

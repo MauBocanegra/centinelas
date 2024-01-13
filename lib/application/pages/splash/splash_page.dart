@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/widgets/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/page_config.dart';
@@ -14,6 +15,6 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.deepPurple);
+    return Container(color: primaryColorRed);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ class HomePageState extends State<HomePage> {
               Breakpoints.mediumAndUp: SlotLayout.from(
                 key: const Key('primary-navigation-medium'),
                 builder: (context) => AdaptiveScaffold.standardNavigationRail(
+                  leading: IconButton(
+                      onPressed:(){debugPrint('Profile pressed');},
+                      icon: Icon((ProfilePage.pageConfig.icon))
+                  ),
                   selectedIndex: widget.index,
                   destinations: destinations.map( (element) =>
                       AdaptiveScaffold.toRailDestination(element)

@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '908225121225',
     projectId: 'centinelas-27d9b',
     storageBucket: 'centinelas-27d9b.appspot.com',
+    androidClientId: '908225121225-bb6ukdvvkj14349fitrmmr62rt4hfsnd.apps.googleusercontent.com',
+    iosClientId: '908225121225-q712pqi84f1sm5r9aod2rkjdfn4ms086.apps.googleusercontent.com',
     iosBundleId: 'centinelas.sportspromotion.com.mx.centinelasApp',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '908225121225',
     projectId: 'centinelas-27d9b',
     storageBucket: 'centinelas-27d9b.appspot.com',
+    androidClientId: '908225121225-bb6ukdvvkj14349fitrmmr62rt4hfsnd.apps.googleusercontent.com',
+    iosClientId: '908225121225-v5mj7efailjbjfo7t7v3btv1ijjka6hb.apps.googleusercontent.com',
     iosBundleId: 'centinelas.sportspromotion.com.mx.centinelasApp.RunnerTests',
   );
 }

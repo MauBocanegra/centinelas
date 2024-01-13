@@ -28,7 +28,8 @@ class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
       } else {
         emit(RaceDetailLoadedState(raceFull: raceFull.left));
       }
-    }on Exception {
+    }catch(exception) {
+      debugPrint(exception.toString());
       emit(const RaceDetailErrorState());
     }
   }
