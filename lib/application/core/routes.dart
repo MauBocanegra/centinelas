@@ -47,12 +47,29 @@ final routes = GoRouter(
     GoRoute(
       name: ProfilePage.pageConfig.name,
       path: '/${ProfilePage.pageConfig.name}',
-      builder: (context, state) => ProfileScreen(
-        actions: [
-          SignedOutAction((context) {
-            context.go(LoginPage.pageConfig.name);
-          }),
-        ],
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Perfil'),
+          leading: BackButton(
+            onPressed: (){
+              if(context.canPop()){
+                context.pop();
+              } else {
+                context.goNamed(
+                  HomePage.pageConfig.name,
+                  pathParameters: {'tab' : RacesPage.pageConfig.name},
+                );
+              }
+            },
+          ),
+        ),
+        body: ProfileScreen(
+          actions: [
+            SignedOutAction((context) {
+              context.goNamed(LoginPage.pageConfig.name);
+            }),
+          ],
+        ),
       ),
     ),
     ShellRoute(

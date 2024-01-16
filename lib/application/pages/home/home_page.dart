@@ -46,13 +46,16 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: AdaptiveLayout(
+
           primaryNavigation: SlotLayout(
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.mediumAndUp: SlotLayout.from(
                 key: const Key('primary-navigation-medium'),
                 builder: (context) => AdaptiveScaffold.standardNavigationRail(
-                  leading: IconButton(
-                      onPressed:(){debugPrint('Profile pressed');},
+                  trailing: IconButton(
+                      onPressed:(){
+                        context.goNamed(ProfilePage.pageConfig.name,);
+                      },
                       icon: Icon((ProfilePage.pageConfig.icon))
                   ),
                   selectedIndex: widget.index,
@@ -78,10 +81,35 @@ class HomePageState extends State<HomePage> {
           ),
           body: SlotLayout(
             config: <Breakpoint, SlotLayoutConfig>{
-              Breakpoints.smallAndUp: SlotLayout.from(
+              Breakpoints.small: SlotLayout.from(
                   key: const Key('primary-body-small'),
+                  builder: (_) => Scaffold(
+                    appBar: AppBar(
+                      title: const Text('Centinelas'),
+                      automaticallyImplyLeading: false,
+                      elevation: 8.0,
+                      actions: [
+                        Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: GestureDetector(
+                              onTap: (){
+                                context.goNamed(ProfilePage.pageConfig.name,);
+                              },
+                              child: const Icon(
+                                Icons.person_2_rounded,
+                                size: 26.0,
+                              ),
+                            )
+                        ),
+                      ],
+                    ),
+                    body: HomePage.tabs[widget.index].child,
+                  )
+              ),
+              Breakpoints.mediumAndUp: SlotLayout.from(
+                  key: const Key('primary-body-medium-up'),
                   builder: (_) => HomePage.tabs[widget.index].child
-              )
+              ),
             },
           ),
           secondaryBody: SlotLayout(

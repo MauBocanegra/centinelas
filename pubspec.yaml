@@ -30,6 +30,8 @@ dependencies:
   provider: ^6.1.1
   http: ^1.1.2
   get_it: ^7.6.6
+  cloud_firestore: ^4.14.0
+  # hive, json_annotation?
 
 dev_dependencies:
   flutter_test:
