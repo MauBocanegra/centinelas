@@ -1,4 +1,5 @@
 import 'package:centinelas_app/application/core/routes_constants.dart';
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bloc.dart';
 import 'package:centinelas_app/application/pages/race_detail/view_states/race_detail_view_error.dart';
 import 'package:centinelas_app/application/pages/race_detail/view_states/race_detail_view_loaded.dart';
@@ -29,12 +30,8 @@ class RaceDetailPageProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RaceDetailBloc>(
-      create: (context) => RaceDetailBloc(
-          raceIdCollectionId: raceIdCollectionId,
-          loadRaceFullUseCase: LoadRaceFullUseCase(
-            racesRepository: RepositoryProvider.of(context),
-          )
-      )..readRaceFull(),
+      create: (context) => serviceLocator<RaceDetailBloc>()
+        ..readRaceFull(raceIdCollectionId),
       child: RaceDetailPage(
         raceIdCollectionId: raceIdCollectionId,
       ),

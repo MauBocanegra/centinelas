@@ -1,5 +1,6 @@
 import 'package:centinelas_app/application/app/bloc/auth_bloc.dart';
 import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/di/injection.dart' as di;
 import 'package:centinelas_app/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,11 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/app/centinelas_app.dart';
+import 'application/di/injection.dart';
 import 'data/repository/races_collection_mock.dart';
 import 'domain/repositories/races_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,7 +25,7 @@ void main() async {
     GoogleProvider(clientId: googleClientId),
   ]);
 
-  final authBloc = AuthBloc();
+  final authBloc = serviceLocator<AuthBloc>();
   final authSubscription = FirebaseAuth
       .instance
       .authStateChanges()
@@ -33,7 +36,7 @@ void main() async {
   );
 
   runApp(RepositoryProvider<RacesRepository>(
-      create: (context) => RacesRepositoryMock(),
+      create: (context) => serviceLocator<RacesRepository>(),
       child: BlocProvider<AuthBloc>(
           create: (context) => authBloc,
         child: const CentinelasApp(),

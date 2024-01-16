@@ -18,28 +18,8 @@ const waitInMilis = 200;
 
 class RacesRepositoryMock implements RacesRepository {
 
-  /*
-  final List<RaceEntry> raceEntries = List.generate(
-      maxNumberOfMockedRaces,
-      (index) => RaceEntry(
-        id: RaceEntryId.fromUniqueString(index.toString()),
-        description: 'description $index',
-      ),
-  );
-  */
-
   final List<RaceEntry> raceEntries = racesFake;
 
-  /*
-  final raceCollections = List<RaceCollection>.generate(
-    numberOfMockedRaces,
-        (index) => RaceCollection(
-      id: CollectionId.fromUniqueString(index.toString()),
-      title: 'title $index',
-      color: RaceColor(colorIndex: index % RaceColor.predifinedColors.length),
-    ),
-  );
-  */
   final raceCollections = [
     RaceCollection(
         id: CollectionId.fromUniqueString('0'),

@@ -293,6 +293,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.6.0"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: d0b88dc35a7f97fd91fec0cf8f165abd97a57977968d8fc02ba0bc92e14ba07e
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.6"
   go_router:
     dependency: "direct main"
     description:
@@ -350,7 +358,7 @@ packages:
     source: hosted
     version: "0.12.3+2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: d4872660c46d929f6b8a9ef4e7a7eff7e49bbf0c4ec3f385ee32df5119175139
@@ -462,7 +470,7 @@ packages:
     source: hosted
     version: "2.1.8"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"

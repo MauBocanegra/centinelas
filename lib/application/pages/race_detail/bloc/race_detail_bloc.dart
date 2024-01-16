@@ -12,14 +12,12 @@ part 'race_detail_state.dart';
 
 class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
   RaceDetailBloc({
-    required this.raceIdCollectionId,
     required this.loadRaceFullUseCase,
   }) : super(const RaceDetailLoadingState());
 
   final LoadRaceFullUseCase loadRaceFullUseCase;
-  final RaceIdCollectionId raceIdCollectionId;
 
-  Future<void> readRaceFull() async{
+  Future<void> readRaceFull(RaceIdCollectionId raceIdCollectionId) async{
     emit(const RaceDetailLoadingState());
     try{
       final raceFull = await loadRaceFullUseCase.call(raceIdCollectionId);

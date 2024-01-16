@@ -1,0 +1,1 @@
+const isServerDataFetched = false;

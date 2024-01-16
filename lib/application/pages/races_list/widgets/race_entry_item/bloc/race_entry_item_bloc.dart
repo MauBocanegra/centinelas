@@ -12,20 +12,19 @@ part 'race_entry_item_event.dart';
 part 'race_entry_item_state.dart';
 
 class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
-  final RaceEntryId raceEntryId;
-  final CollectionId collectionId;
-  final LoadRaceEntryUseCase loadRaceEntry;
+  final LoadRaceEntryUseCase loadRaceEntryUseCase;
 
   //final UpdateRaceEntry updateRaceEntry??
   RaceEntryItemBloc({
-    required this.loadRaceEntry,
-    required this.raceEntryId,
-    required this.collectionId,
+    required this.loadRaceEntryUseCase,
   }) : super(const RaceEntryItemLoadingState());
 
-  Future<void> fetch() async {
+  Future<void> readRaceEntryItem(
+    RaceEntryId raceEntryId,
+    CollectionId collectionId
+  ) async {
     try {
-      final entry = await loadRaceEntry.call(
+      final entry = await loadRaceEntryUseCase.call(
         RaceEntryIdsParam(
           collectionId: collectionId,
           entryId: raceEntryId,

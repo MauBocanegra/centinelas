@@ -1,10 +1,10 @@
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/view_states_full/races_view_error.dart';
 import 'package:centinelas_app/application/pages/races_list/view_states_full/races_view_loaded.dart';
 import 'package:centinelas_app/application/pages/races_list/view_states_full/races_view_loading.dart';
-import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,13 +14,7 @@ class RacesProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RacesBloc>(
-      create: (context) {
-        return RacesBloc(
-            loadRacesUseCase: LoadRacesUseCase(
-          racesRepository: RepositoryProvider.of(context),
-        ))
-          ..readRaces();
-      },
+      create: (context) => serviceLocator<RacesBloc>()..readRaces(),
       child: const RacesPage(),
     );
   }
