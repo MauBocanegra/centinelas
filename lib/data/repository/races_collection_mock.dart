@@ -23,8 +23,7 @@ class RacesRepositoryMock implements RacesRepository {
   final raceCollections = [
     RaceCollection(
         id: CollectionId.fromUniqueString('0'),
-        title: '2024',
-        color: RaceColor(colorIndex: 0)
+        raceCollectionTitle: '2024',
     )
   ];
 
@@ -53,25 +52,6 @@ class RacesRepositoryMock implements RacesRepository {
     }
   }
 
-  /*
-  @override
-  Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds(CollectionId collectionId) {
-    try{
-      final startIndex = int.parse(collectionId.value) * numberOfMockedRaces;
-      final endIndex = startIndex + numberOfMockedRaces;
-      final entryIds = raceEntries.sublist(
-          startIndex,
-          endIndex
-      ).map((entry) => entry.id).toList();
-      return Future.delayed(
-        const Duration(milliseconds: waitInMilis),
-        () => Left(entryIds)
-      );
-    } on Exception catch(exception){
-      return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
-    }
-  }
-  */
   Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds(CollectionId collectionId) {
     try {
       final entryIds = [

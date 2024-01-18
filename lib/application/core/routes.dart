@@ -1,14 +1,16 @@
+import 'package:centinelas_app/application/app/bloc/auth_cubit.dart' as auth;
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
+import 'package:centinelas_app/application/pages/session/session_page.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../pages/home/home_page.dart';
 import '../pages/login/login_page.dart';
-import '../pages/splash/splash_page.dart';
 import 'go_router_observer.dart';
 import 'routes_constants.dart';
 
@@ -19,11 +21,17 @@ GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final routes = GoRouter(
   navigatorKey: rootNavigatorKey,
-  //initialLocation: '/$homeRoute/${RacesPage.pageConfig.name}',
-  //initialLocation: '/${SplashPage.pageConfig.name}',
-  initialLocation: '/${LoginPage.pageConfig.name}',
+  initialLocation: '/${SessionPage.pageConfig.name}',
   observers: [GoRouterObserver()],
   routes: [
+    GoRoute(
+      name: SessionPage.pageConfig.name,
+      path: '/${SessionPage.pageConfig.name}',
+      builder: (context, state) => BlocProvider<auth.AuthCubit>(
+        create: (context) => serviceLocator<auth.AuthCubit>(),
+        child: const SessionPage(),
+      ),
+    ),
     GoRoute(
       name: LoginPage.pageConfig.name,
       path: '/${LoginPage.pageConfig.name}',

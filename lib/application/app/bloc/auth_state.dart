@@ -1,4 +1,4 @@
-part of 'auth_bloc.dart';
+part of 'auth_cubit.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -12,4 +12,6 @@ class AuthInitialState extends AuthState{
     required this.isLoggedIn,
     this.userId
   });
+
+  @override List<Object?> get props => [isLoggedIn, userId];
 }

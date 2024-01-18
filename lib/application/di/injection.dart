@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/app/bloc/auth_bloc.dart';
+import 'package:centinelas_app/application/app/bloc/auth_cubit.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
@@ -10,8 +10,11 @@ import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final serviceLocator = GetIt.I;
 
@@ -20,7 +23,7 @@ Future<void> init() async {
   // singleton = only one instance
 
   // application layer
-  serviceLocator.registerFactory(() => AuthBloc());
+  serviceLocator.registerFactory(() => AuthCubit());
   serviceLocator.registerFactory(() => NavigationCubit());
   serviceLocator.registerFactory(() => RacesBloc(
       loadRacesUseCase: serviceLocator()
@@ -56,4 +59,25 @@ Future<void> init() async {
 
   // library instances
   serviceLocator.registerFactory(() => Client());
+  serviceLocator.registerFactory(() async => await SharedPreferences.getInstance());
+  serviceLocator.registerFactory(() => FirebaseAuth.instance);
+  serviceLocator.registerFactory(() => serviceLocator<FirebaseAuth>().authStateChanges().listen((user) {
+    // debugPrint here ?
+    debugPrint('user: ${user.toString()}');
+    serviceLocator<AuthCubit>().authStateChanged(user: user);
+  }));
 }
+
+/*
+*
+* BlocListener<OrdersBloc, OrdersState>(
+  listenWhen: (context, state) {
+    return state is OrdersState.OrderCompleted;
+  },
+  listener: (context, state) {
+    // Navigate to next screen
+    Navigator.of(context).pushNamed('OrderCompletedScreen');
+  },
+  child: Container(child: Text('Always draw this text!')),
+);
+* */

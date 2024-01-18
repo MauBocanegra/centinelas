@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_state.dart';
 part 'auth_event.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState>{
-  AuthBloc() : super(
+class AuthCubit extends Cubit<AuthState>{
+  AuthCubit() : super(
       const AuthInitialState(isLoggedIn: false)
   );
 

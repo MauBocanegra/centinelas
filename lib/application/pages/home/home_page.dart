@@ -46,7 +46,6 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: AdaptiveLayout(
-
           primaryNavigation: SlotLayout(
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.mediumAndUp: SlotLayout.from(

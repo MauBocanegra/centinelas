@@ -1,4 +1,5 @@
 const splashRoute = 'splash';
+const sessionRoute = 'session';
 const loginRoute = 'login';
 const homeRoute = 'home';
 const racesListRoute = 'races_list';

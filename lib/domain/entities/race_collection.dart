@@ -3,20 +3,17 @@ import 'unique_id.dart';
 
 class RaceCollection {
   final CollectionId id;
-  final String title;
-  final RaceColor color;
+  final String raceCollectionTitle;
 
   RaceCollection({
     required this.id,
-    required this.title,
-    required this.color,
+    required this.raceCollectionTitle,
   });
 
   factory RaceCollection.empty() {
     return RaceCollection(
         id: CollectionId(),
-        title: '',
-        color: RaceColor(colorIndex: 0,),
+        raceCollectionTitle: '',
     );
   }
 }
