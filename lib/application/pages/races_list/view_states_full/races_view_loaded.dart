@@ -5,19 +5,16 @@ import 'package:flutter/material.dart';
 class RacesViewLoaded extends StatelessWidget {
   const RacesViewLoaded({
     super.key,
-    required this.collectionId,
     required this.raceEntryIds,
   });
 
   final List<RaceEntryId> raceEntryIds;
-  final CollectionId collectionId;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: raceEntryIds.length,
       itemBuilder: (context, index) => RaceEntryItemProvider(
-          collectionId: collectionId,
           raceEntryId: raceEntryIds[index]
       ),
     );

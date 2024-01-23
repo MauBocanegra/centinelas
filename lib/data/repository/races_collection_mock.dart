@@ -27,6 +27,7 @@ class RacesRepositoryMock implements RacesRepository {
     )
   ];
 
+  /*
   @override
   Future<Either<List<RaceCollection>, Failure>> readRacesCollections() {
     try{
@@ -38,9 +39,10 @@ class RacesRepositoryMock implements RacesRepository {
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
     }
   }
+  */
 
   @override
-  Future<Either<RaceEntry, Failure>> readRaceEntry(CollectionId collectionId, RaceEntryId raceEntryId) {
+  Future<Either<RaceEntry, Failure>> readRaceEntry(RaceEntryId raceEntryId) {
     try{
       final selectedEntryItem = raceEntries.firstWhere((element) => element.id == raceEntryId);
       return Future.delayed(
@@ -52,7 +54,8 @@ class RacesRepositoryMock implements RacesRepository {
     }
   }
 
-  Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds(CollectionId collectionId) {
+  @override
+  Future<Either<List<RaceEntryId>, Failure>> readRaceEntryIds() {
     try {
       final entryIds = [
         RaceEntryId.fromUniqueString('0'),
@@ -86,7 +89,7 @@ class RacesRepositoryMock implements RacesRepository {
   }
 
   @override
-  Future<Either<RaceFull, Failure>> readRaceFull(CollectionId collectionId, RaceEntryId raceEntryId) {
+  Future<Either<RaceFull, Failure>> readRaceFull(RaceEntryId raceEntryId) {
     try{
       return Future.delayed(
         const Duration(milliseconds: waitInMilis),

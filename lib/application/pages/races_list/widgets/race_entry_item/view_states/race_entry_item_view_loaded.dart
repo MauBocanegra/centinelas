@@ -1,7 +1,6 @@
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/domain/entities/race_entry.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,11 +10,9 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
   const RaceEntryItemViewLoaded({
     super.key,
     required this.raceEntry,
-    required this.collectionId,
   });
 
   final RaceEntry raceEntry;
-  final CollectionId collectionId;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +35,7 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
               ),
               child: ListTile(
                 title: Text(
-                  raceEntry.description.split('-').first,
+                  raceEntry.title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
@@ -48,14 +45,13 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                 leading: const Icon(Icons.directions_run_rounded),
                 selected: state.selectedRaceId == raceEntry.id,
                 onTap: (){
-                  debugPrint('onTap race:${raceEntry.id.value} collection:${collectionId.value}');
+                  debugPrint('onTap race:${raceEntry.id.value}');
                   context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
                   if(Breakpoints.small.isActive(context)){
                     context.pushNamed(
                       RaceDetailPage.pageConfig.name,
                       pathParameters: {
                         'raceEntryId': raceEntry.id.value.toString(),
-                        'collectionId': collectionId.value.toString()
                       },
                     );
                   }

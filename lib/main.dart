@@ -2,6 +2,7 @@ import 'package:centinelas_app/application/app/bloc/auth_cubit.dart';
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart' as di;
 import 'package:centinelas_app/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
@@ -18,6 +19,9 @@ void main() async {
   await di.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  serviceLocator<FirebaseFirestore>().settings = const Settings(
+    persistenceEnabled: true,
   );
 
   FirebaseUIAuth.configureProviders([

@@ -37,8 +37,7 @@ class RacesPage extends StatelessWidget {
         return const RacesViewLoading();
       } else if (state is RacesLoadedState) {
         return RacesViewLoaded(
-            collectionId: state.racesIdsAndRaceCollection.collectionId,
-            raceEntryIds: state.racesIdsAndRaceCollection.raceEntryIds
+            raceEntryIds: state.racesEntryIdsList
         );
       } else {
         return const RacesViewError();

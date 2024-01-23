@@ -4,12 +4,21 @@ import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bl
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
 import 'package:centinelas_app/core/config.dart';
+import 'package:centinelas_app/data/data_sources/interfaces/race_collection_id_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/interfaces/race_entry_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/interfaces/race_full_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/interfaces/races_collection_firestore_datesource_interface.dart';
+import 'package:centinelas_app/data/data_sources/remote_impl/race_entry_firestore_datasource.dart';
+import 'package:centinelas_app/data/data_sources/remote_impl/race_full_firestore_datasource.dart';
+import 'package:centinelas_app/data/data_sources/remote_impl/races_collection_firestore_remote_datasource.dart';
+import 'package:centinelas_app/data/data_sources/remote_impl/races_collection_id_firestore_remote_datasource.dart';
 import 'package:centinelas_app/data/repository/races_collection_mock.dart';
 import 'package:centinelas_app/data/repository/races_repository_imp.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -57,27 +66,36 @@ Future<void> init() async {
     );
   }
 
+  // datasources
+  serviceLocator
+      .registerFactory<RaceCollectionIdFirestoreDatasourceInterface>(
+          () =>RaceCollectionIdFirestoreDatasource()
+  );
+  serviceLocator
+      .registerFactory<RacesEntriesIdsFirestoreDateSourceInterface>(
+          () => RacesEntriesIdsFirestoreDatasource()
+  );
+  serviceLocator
+      .registerFactory<RaceEntryFirestoreDatasourceInterface>(
+          () => RaceEntryFirestoreDatasource()
+  );
+  serviceLocator
+      .registerFactory<RaceFullFirestoreDatasourceInterface>(
+          () => RaceFullFirestoreDatasource()
+  );
+
+
   // library instances
   serviceLocator.registerFactory(() => Client());
   serviceLocator.registerFactory(() async => await SharedPreferences.getInstance());
   serviceLocator.registerFactory(() => FirebaseAuth.instance);
+
+  // Is this still needed?
   serviceLocator.registerFactory(() => serviceLocator<FirebaseAuth>().authStateChanges().listen((user) {
     // debugPrint here ?
     debugPrint('user: ${user.toString()}');
     serviceLocator<AuthCubit>().authStateChanged(user: user);
   }));
-}
 
-/*
-*
-* BlocListener<OrdersBloc, OrdersState>(
-  listenWhen: (context, state) {
-    return state is OrdersState.OrderCompleted;
-  },
-  listener: (context, state) {
-    // Navigate to next screen
-    Navigator.of(context).pushNamed('OrderCompletedScreen');
-  },
-  child: Container(child: Text('Always draw this text!')),
-);
-* */
+  serviceLocator.registerFactory(() => FirebaseFirestore.instance);
+}

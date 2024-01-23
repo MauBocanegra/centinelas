@@ -13,7 +13,7 @@ class RacesErrorState extends RacesState {
   const RacesErrorState();
 }
 class RacesLoadedState extends RacesState {
-  const RacesLoadedState({required this.racesIdsAndRaceCollection});
-  final RacesIdsAndRaceCollection racesIdsAndRaceCollection;
-  @override List<Object?> get props => [racesIdsAndRaceCollection];
+  final List<RaceEntryId> racesEntryIdsList;
+  const RacesLoadedState({required this.racesEntryIdsList});
+  @override List<Object?> get props => [racesEntryIdsList];
 }

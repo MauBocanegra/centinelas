@@ -10,18 +10,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RaceEntryItemProvider extends StatelessWidget {
   const RaceEntryItemProvider({
     super.key,
-    required this.collectionId,
     required this.raceEntryId
   });
 
-  final CollectionId collectionId;
   final RaceEntryId raceEntryId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RaceEntryItemBloc>(
       create: (context) => serviceLocator<RaceEntryItemBloc>()
-        ..readRaceEntryItem(raceEntryId, collectionId),
+        ..readRaceEntryItem(raceEntryId),
       child: const RaceEntryItem(),
     );
   }
@@ -41,7 +39,6 @@ class RaceEntryItem extends StatelessWidget {
           } else if(state is RaceEntryItemLoadedState) {
             return RaceEntryItemViewLoaded(
               raceEntry: state.raceEntry,
-              collectionId: state.collectionId,
             );
           } else {
             return RaceEntryItemViewError();

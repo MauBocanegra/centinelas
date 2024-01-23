@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:centinelas_app/domain/entities/helpers/race_id_collection_id.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
+import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,10 @@ class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
 
   final LoadRaceFullUseCase loadRaceFullUseCase;
 
-  Future<void> readRaceFull(RaceIdCollectionId raceIdCollectionId) async{
+  Future<void> readRaceFull(RaceEntryId raceEntryId) async{
     emit(const RaceDetailLoadingState());
     try{
-      final raceFull = await loadRaceFullUseCase.call(raceIdCollectionId);
+      final raceFull = await loadRaceFullUseCase.call(raceEntryId);
       if(raceFull.isRight){
         emit(const RaceDetailErrorState());
       } else {

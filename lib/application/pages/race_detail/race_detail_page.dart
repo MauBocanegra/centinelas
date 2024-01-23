@@ -7,7 +7,6 @@ import 'package:centinelas_app/application/pages/race_detail/view_states/race_de
 import 'package:centinelas_app/domain/entities/helpers/race_id_collection_id.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
-import 'package:centinelas_app/domain/usecases/load_race_entry_ids_for_collection.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,21 +18,17 @@ class RaceDetailPageProvider extends StatelessWidget {
   RaceDetailPageProvider({
     super.key,
     required String raceEntryIdString,
-    required String collectionIdString,
-  }): raceIdCollectionId = RaceIdCollectionId(
-      collectionId: CollectionId.fromUniqueString(collectionIdString),
-      raceEntryId: RaceEntryId.fromUniqueString(raceEntryIdString),
-  );
+  }): raceEntryId = RaceEntryId.fromUniqueString(raceEntryIdString);
 
-  final RaceIdCollectionId raceIdCollectionId;
+  final RaceEntryId raceEntryId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RaceDetailBloc>(
       create: (context) => serviceLocator<RaceDetailBloc>()
-        ..readRaceFull(raceIdCollectionId),
+        ..readRaceFull(raceEntryId),
       child: RaceDetailPage(
-        raceIdCollectionId: raceIdCollectionId,
+        raceEntryId: raceEntryId,
       ),
     );
   }
@@ -42,9 +37,9 @@ class RaceDetailPageProvider extends StatelessWidget {
 class RaceDetailPage extends StatelessWidget {
   const RaceDetailPage({
     super.key,
-    required this.raceIdCollectionId
+    required this.raceEntryId
   });
-  final RaceIdCollectionId raceIdCollectionId;
+  final RaceEntryId raceEntryId;
 
   static const pageConfig = PageConfig(
     icon: Icons.stadium_outlined,

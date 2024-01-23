@@ -96,7 +96,7 @@ final routes = GoRouter(
     ),
     GoRoute(
       name: RaceDetailPage.pageConfig.name,
-      path: '/$homeRoute/$racesRoute/:collectionId/:raceEntryId',
+      path: '/$homeRoute/$racesRoute/:raceEntryId',
       builder: (context, state) {
         return BlocListener<NavigationCubit, NavigationCubitState>(
           listenWhen: (previous, current) => previous.isSecondBodyDisplayed != current.isSecondBodyDisplayed,
@@ -122,7 +122,6 @@ final routes = GoRouter(
               ),
             ),
             body: RaceDetailPageProvider(
-              collectionIdString: state.pathParameters['collectionId'] ?? '',
               raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
             ),
           ),

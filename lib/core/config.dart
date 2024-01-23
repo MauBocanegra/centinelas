@@ -1,1 +1,1 @@
-const isServerDataFetched = false;
+const isServerDataFetched = true;

@@ -21,20 +21,15 @@ class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
 
   Future<void> readRaceEntryItem(
     RaceEntryId raceEntryId,
-    CollectionId collectionId
   ) async {
     try {
       final entry = await loadRaceEntryUseCase.call(
-        RaceEntryIdsParam(
-          collectionId: collectionId,
-          entryId: raceEntryId,
-        ),
+        raceEntryId
       );
 
       return entry.fold(
             (left) => emit(RaceEntryItemLoadedState(
                 raceEntry: left,
-                collectionId: collectionId
             )),
             (right) => emit(const RaceEntryItemErrorState()),
       );

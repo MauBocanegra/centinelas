@@ -1,9 +1,14 @@
-class RaceCollectionModel {
-  final String id;
-  final String raceCollectionTitle;
+import 'package:equatable/equatable.dart';
 
-  RaceCollectionModel({
-    required this.id,
-    required this.raceCollectionTitle,
+class RaceEntriesIdsModel extends Equatable{
+  final String raceCollectionId;
+  final List<String> raceEntryIds;
+
+  const RaceEntriesIdsModel({
+    required this.raceCollectionId,
+    required this.raceEntryIds,
   });
+
+  @override
+  List<Object?> get props => [raceCollectionId, raceEntryIds];
 }

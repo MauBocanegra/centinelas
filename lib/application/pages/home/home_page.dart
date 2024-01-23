@@ -132,7 +132,6 @@ class HomePageState extends State<HomePage> {
                           return RaceDetailPageProvider(
                             key: Key(selectedRaceId.value),
                             raceEntryIdString: selectedRaceId.value,
-                            collectionIdString: selectedCollectionId?.value ?? '',
                           );
                         },
                       ),
