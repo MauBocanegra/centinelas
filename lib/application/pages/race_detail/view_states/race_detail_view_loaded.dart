@@ -1,6 +1,8 @@
+import 'package:centinelas_app/application/pages/race_detail/widgets/widget_race_details_buttons.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RaceDetailViewLoaded extends StatelessWidget {
   const RaceDetailViewLoaded({
@@ -25,7 +27,7 @@ class RaceDetailViewLoaded extends StatelessWidget {
                 ),
               ),
               Image.network(
-                  raceFull.imageUrl ?? 'https://www.zonaturistica.com/files/ferias/995/F4_995.jpg'
+                  raceFull.imageUrl ?? ''
               ),
               Text(
                 raceFull.discipline ?? '',
@@ -48,30 +50,28 @@ class RaceDetailViewLoaded extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              ElevatedButton(
-                style: raisedBlueButtonStyle,
-                onPressed: () { },
-                child: Text('Registrarse'),
+              const Spacer(),
+              RaceDetailsButtonsWidgetProvider(
+                  raceFull: raceFull,
               ),
-              ElevatedButton(
-                style: raisedOrangeButtonStyle,
-                onPressed: () { },
-                child: Text('CheckIn'),
-              ),
-              ElevatedButton(
-                style: raisedYellowButtonStyle,
-                onPressed: () { },
-                child: Text('Solicitar asistencia'),
-              ),
-              ElevatedButton(
-                style: raisedRedButtonStyle,
-                onPressed: () { },
-                child: Text('Reportar EMERGENCIA'),
-              ),
+              const Spacer(),
             ],
 
           ))
         ),
     );
+  }
+
+  bool showEmergencyButton(){
+    return raceFull.isRaceActive &&
+        raceFull.raceEngagementState is CheckedInEngagementState;
+  }
+
+  bool showCheckInButton(){
+    return raceFull.raceEngagementState is RegisteredEngagementState;
+  }
+
+  bool showRegisterButton(){
+    return raceFull.raceEngagementState is EmptyEngagementState;
   }
 }

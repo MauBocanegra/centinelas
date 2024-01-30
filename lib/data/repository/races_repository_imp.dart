@@ -4,8 +4,8 @@ import 'package:centinelas_app/data/data_sources/interfaces/race_entry_firestore
 import 'package:centinelas_app/data/data_sources/interfaces/race_full_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/interfaces/races_collection_firestore_datesource_interface.dart';
 import 'package:centinelas_app/data/mappers/race_entries_ids_model_to_list_race_entry_id_mapper.dart';
-import 'package:centinelas_app/data/mappers/race_entry_model_to_race_entry.dart';
-import 'package:centinelas_app/data/mappers/race_full_model_to_race_full.dart';
+import 'package:centinelas_app/data/mappers/race_entry_model_to_race_entry_mapper.dart';
+import 'package:centinelas_app/data/mappers/race_full_model_to_race_full_mapper.dart';
 import 'package:centinelas_app/domain/entities/race_collection.dart';
 import 'package:centinelas_app/domain/entities/race_entry.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
@@ -14,14 +14,10 @@ import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:either_dart/src/either.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-
-import '../data_sources/remote_impl/races_collection_firestore_remote_datasource.dart';
 
 class RacesRepositoryImpl extends RacesRepository{
 
-  final Client client;
-  RacesRepositoryImpl({required this.client});
+  RacesRepositoryImpl();
 
   @override
   Future<Either<RaceEntry, Failure>> readRaceEntry(RaceEntryId raceEntryId) async {

@@ -1,8 +1,12 @@
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
+import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +47,17 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+        final uid = serviceLocator<FirebaseAuth>().currentUser;
+        if (uid != null) {
+          final writeUserIdUseCase = serviceLocator<WriteUserIdUseCase>();
+          await writeUserIdUseCase.call(uid.uid);
+        }
+      });
+    } on Exception catch(exception){
+      debugPrint('Unable to write user: ${exception.toString()}');
+    }
     return Scaffold(
       body: SafeArea(
         child: AdaptiveLayout(

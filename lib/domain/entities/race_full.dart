@@ -9,6 +9,9 @@ class RaceFull extends Equatable {
   final String? address;
   final String? description;
   final String? imageUrl;
+  final bool isRaceActive;
+  final bool isCheckinEnabled;
+  final RaceEngagementState raceEngagementState;
 
   const RaceFull(
       this.title,
@@ -18,6 +21,9 @@ class RaceFull extends Equatable {
       this.imageUrl,
       {
         required this.id,
+        required this.isRaceActive,
+        required this.isCheckinEnabled,
+        required this.raceEngagementState,
       }
   );
 
@@ -30,5 +36,12 @@ class RaceFull extends Equatable {
     address,
     description,
     imageUrl,
+    isRaceActive,
+    raceEngagementState,
   ];
 }
+
+sealed class RaceEngagementState{}
+class EmptyEngagementState extends RaceEngagementState{}
+class RegisteredEngagementState extends RaceEngagementState{}
+class CheckedInEngagementState extends RaceEngagementState{}

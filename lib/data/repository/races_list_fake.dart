@@ -58,7 +58,10 @@ final List<RaceFull> racesFullFake = [
           "Súper Sprint (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n"
           "WomanUp (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n",
       'https://www.zonaturistica.com/files/ferias/995/F1_995.jpg',
-      id: RaceEntryId.fromUniqueString('0')
+      id: RaceEntryId.fromUniqueString('0'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       'Triatlón AsTri Campeche 2024',
@@ -68,7 +71,10 @@ final List<RaceFull> racesFullFake = [
           "Junior 14-15 años (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n"
           "Súper Sprint (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n",
       'https://www.zonaturistica.com/files/ferias/995/F3_995.jpg',
-      id: RaceEntryId.fromUniqueString('1')
+      id: RaceEntryId.fromUniqueString('1'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       'LeEtapè La Paz (Tour de France)',
@@ -78,7 +84,10 @@ final List<RaceFull> racesFullFake = [
           "Junior 14-15 años (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n"
           "Súper Sprint (Natación 400 m /Ciclismo 10 km / Carrera 2.5km)\n",
       'https://www.canyon.com/dw/image/v2/BCML_PRD/on/demandware.static/-/Library-Sites-canyon-shared/default/dwcb8cfa7a/images/blog/Pro-Sports/tour-de-france-2022-mvdp-yellow-jersey.jpg?sw=1064&sfrm=jpg&q=80',
-      id: RaceEntryId.fromUniqueString('2')
+      id: RaceEntryId.fromUniqueString('2'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       '18º Medio Maratón Veracruz',
@@ -87,7 +96,10 @@ final List<RaceFull> racesFullFake = [
       "Lugar sede: Malecón de Boca del Río\n"
           "21 Km,13.5 mts sobre nivel del Mar, Humedad relativa 58%\n",
       'https://escueladerunning.com/wp-content/uploads/2017/03/correr-running-runner-playa.jpg',
-      id: RaceEntryId.fromUniqueString('3')
+      id: RaceEntryId.fromUniqueString('3'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       'Triatlón AsTri Cancún 2024',
@@ -100,7 +112,10 @@ final List<RaceFull> racesFullFake = [
           "Triatlón Olímpico (individual y relevos): Natación 1,500 m / Ciclismo 40 km / Carrera 10 km\n"
           "Duatlón Sprint (individual): Carrera 5 km / Ciclismo 20 km / Carrera 2.5 km\n",
       'https://escueladerunning.com/wp-content/uploads/2017/03/correr-running-runner-playa.jpg',
-      id: RaceEntryId.fromUniqueString('4')
+      id: RaceEntryId.fromUniqueString('4'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       'Carrera del Ajolote',
@@ -110,7 +125,10 @@ final List<RaceFull> racesFullFake = [
           "10 Km, 2,240 mts sobre nivel del Mar, Humedad relativa 32%\n"
           "10 Km, 2,240 mts sobre nivel del Mar, Humedad relativa 32%\n",
       'https://i0.wp.com/blog.claroshop.com/wp-content/uploads/2022/01/What-is-mindful-running-small.jpg?w=1200&ssl=1',
-      id: RaceEntryId.fromUniqueString('5')
+      id: RaceEntryId.fromUniqueString('5'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
   RaceFull(
       'XLI Maratón CDMX',
@@ -119,6 +137,9 @@ final List<RaceFull> racesFullFake = [
       "Lugar sede: Zócalo Centro Histórico\n"
           "21 Km, 2,240 mts sobre nivel del Mar, Humedad relativa 32%\n",
       'https://www.capital21.cdmx.gob.mx/noticias/wp-content/uploads/2022/11/marato%CC%81ncdmx.jpeg',
-      id: RaceEntryId.fromUniqueString('6')
+      id: RaceEntryId.fromUniqueString('6'),
+      isRaceActive: false,
+      isCheckinEnabled: false,
+      raceEngagementState: EmptyEngagementState()
   ),
 ];

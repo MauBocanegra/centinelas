@@ -5,3 +5,13 @@ const collectionIdToBeDisplayedRoute = 'coleccion_visible';
 const collectionIdToBeDisplayedId = 'coleccion_visible_en_app';
 const raceEntryCollectionKey = 'titulares_de_carrera';
 const racesCollectionKey = 'eventos';
+const usersInfoCollectionKey = 'usuarios';
+const userDataKey = 'datos_usuario';
+const lastActiveDayKeyForUser = 'ultimo_dia_activo';
+const userRacesDataKey = 'datos_carreras';
+const raceEngagementEmpty = 'vacio';
+const raceEngagementRegistered = 'registrada';
+const raceEngagementCheckedIn = 'checkedin';
+
+const raceIdKeyForMapping = 'raceIdString';
+const raceEngagementKeyForMapping = 'raceEngagementObj';

@@ -18,4 +18,3 @@ class RaceDetailLoadedState extends RaceDetailState {
   final RaceFull raceFull;
   @override List<Object?> get props => [raceFull];
 }
-

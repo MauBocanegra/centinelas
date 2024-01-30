@@ -7,8 +7,11 @@ class RaceFullModel extends Equatable {
   final String address;
   final String description;
   final String imageUrl;
-  late final bool isRegistered;
-  late final bool isCheckedIn;
+
+  /// can be 'vacio' || registrada' || 'checkedin' see constants.dart
+  late final String raceEngagementState;
+  final bool isRaceActive;
+  final bool isCheckInEnabled;
 
   RaceFullModel({
     required this.raceId,
@@ -17,6 +20,8 @@ class RaceFullModel extends Equatable {
     required this.address,
     required this.description,
     required this.imageUrl,
+    required this.isRaceActive,
+    required this.isCheckInEnabled,
   });
 
   factory RaceFullModel.withNoUserData(
@@ -28,21 +33,39 @@ class RaceFullModel extends Equatable {
     String imageUrl,
   ){
     return RaceFullModel(
-        raceId: raceId,
-        title: title,
-        discipline: discipline,
-        address: address,
-        description: description,
-        imageUrl: imageUrl
+      raceId: raceId,
+      title: title,
+      discipline: discipline,
+      address: address,
+      description: description,
+      imageUrl: imageUrl,
+      isRaceActive: false,
+      isCheckInEnabled: false,
     );
   }
 
   factory RaceFullModel.empty(){
     return RaceFullModel(
-        raceId: '', title: '', discipline: '', address: '', description: '', imageUrl: ''
+        raceId: '',
+        title: '',
+        discipline: '',
+        address: '',
+        description: '',
+        imageUrl: '',
+        isRaceActive: false,
+      isCheckInEnabled: false,
     );
   }
 
   @override
-  List<Object?> get props => [raceId];
+  List<Object?> get props => [
+    raceId,
+    title,
+    discipline,
+    address,
+    description,
+    imageUrl,
+    isRaceActive,
+    isCheckInEnabled
+  ];
 }

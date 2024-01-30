@@ -27,19 +27,6 @@ class RacesBloc extends Bloc<RacesEvent, RacesState> {
           )),
           (failure) => emit(const RacesErrorState())
       );
-      /*
-      final racesFuture = loadRacesUseCase.call(NoParams());
-      final races = await racesFuture;
-
-      if(races.isRight){ // errorState
-        debugPrint('races_bloc emits ErrorState from isRight');
-        emit(const RacesErrorState());
-      } else {
-        emit(RacesLoadedState(
-            racesEntryIdsList: races.left
-        ));
-      }
-      */
     } on Exception catch(exception){
       debugPrint('races_bloc catches correctly the exception and emits RacesErrorState');
       emit(const RacesErrorState());
