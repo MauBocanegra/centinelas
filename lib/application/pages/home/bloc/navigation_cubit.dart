@@ -16,7 +16,6 @@ class NavigationCubit extends Cubit<NavigationCubitState>{
     if (state.isSecondBodyDisplayed != isSecondBodyDisplayed) {
       emit(NavigationCubitState(
         isSecondBodyDisplayed: isSecondBodyDisplayed,
-        selectedCollectionId: state.selectedCollectionId,
       ));
     }
   }

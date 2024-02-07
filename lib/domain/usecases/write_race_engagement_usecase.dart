@@ -17,7 +17,7 @@ class WriteRaceEngagementUseCase implements UseCase<bool, Map<String, dynamic>>{
               params[raceEngagementKeyForMapping],
           );
       return wasAbleToWriteRaceEngagement.then(
-              (value) => value ? Left(value) : Right(ServerFailure())
+        (value) => value ? Left(value) : Right(ServerFailure())
       );
     }on Exception catch(exception){
       return Right(ServerFailure(stackTrace: exception.toString()));

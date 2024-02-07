@@ -20,6 +20,9 @@ class CentinelasApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        supportedLocales: const [
+          Locale('es'), // Spanish
+        ],
         themeMode: ThemeMode.system,
         theme: ThemeData.from(
             useMaterial3: true,

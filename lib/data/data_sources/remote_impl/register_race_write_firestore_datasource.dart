@@ -9,13 +9,14 @@ import 'package:flutter/material.dart';
 class WriteEngagementRaceFirestoreDatasource implements
     WriteEngagementRaceFirestoreDatasourceInterface {
 
+  final FirebaseFirestore firestore = serviceLocator<FirebaseFirestore>();
+  final uid = serviceLocator<FirebaseAuth>().currentUser?.uid;
+
   @override
   Future<bool> writeRaceEngagement(
       String raceId,
       RaceEngagementRequestType engagementType,
   ) async {
-    final FirebaseFirestore firestore = serviceLocator<FirebaseFirestore>();
-    final uid = serviceLocator<FirebaseAuth>().currentUser?.uid;
     try{
       late final String engagementString;
         if(engagementType is RegisterEngagementRequest){
@@ -34,7 +35,7 @@ class WriteEngagementRaceFirestoreDatasource implements
         debugPrint('writeRaceRegistration EXCEPTION: ${error.toString()}');
         throw Exception('Unable to writeRaceRegistration from remote source');
       });
-        return true;
+      return true;
     } on Exception catch (exception) {
       debugPrint('writeRaceRegistration EXCEPTION: ${exception.toString()}');
       throw Exception('Unable to writeRaceRegistration from remote source');

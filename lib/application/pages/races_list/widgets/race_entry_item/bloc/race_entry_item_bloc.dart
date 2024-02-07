@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/entities/race_entry.dart';
+import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../../domain/entities/unique_id.dart';
-import '../../../../../../domain/usecases/load_race_entry_usecase.dart';
 
 part 'race_entry_item_event.dart';
 part 'race_entry_item_state.dart';
@@ -36,24 +34,6 @@ class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
     } on Exception {
       emit(const RaceEntryItemErrorState());
     }
-  }
-
-  Future<void> registerToRace(){
-    throw UnimplementedError(
-        'race_entry_item_bloc registerToRace not implemented!'
-    );
-  }
-
-  Future<void> checkinToRace(){
-    throw UnimplementedError(
-        'race_entry_item_bloc checkinToRace not implemented!'
-    );
-  }
-
-  Future<void> sendSingleLocation(){
-    throw UnimplementedError(
-        'race_entry_item_bloc sendSingleLocation not implemented!'
-    );
   }
 }
 

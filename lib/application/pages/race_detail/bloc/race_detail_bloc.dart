@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:centinelas_app/domain/entities/helpers/race_id_collection_id.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';

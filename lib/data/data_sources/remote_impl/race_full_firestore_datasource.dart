@@ -47,7 +47,6 @@ class RaceFullFirestoreDatasource
              '$apiEnv/$usersInfoCollectionKey/${uid?.uid}/$userRacesDataKey'
          ).get().then((DocumentSnapshot doc){
            final data = doc.data() as Map<String, dynamic>;
-           debugPrint('engagementData = ${data.toString()}');
            final hasCurrentRaceInfo = data.keys.contains(raceId);
            /// has race engagement data for current race
            if(hasCurrentRaceInfo){
@@ -60,7 +59,6 @@ class RaceFullFirestoreDatasource
        }else{
          /// NO race engagement data
          raceFullModel.raceEngagementState = raceEngagementEmpty;
-         debugPrint('No racesUserData');
        }
     } catch (e) {
       throw Exception('[raceFull Doc] fetch/mapping error');

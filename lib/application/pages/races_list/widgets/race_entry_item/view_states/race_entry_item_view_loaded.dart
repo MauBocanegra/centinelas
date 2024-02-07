@@ -48,12 +48,24 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                   debugPrint('onTap race:${raceEntry.id.value}');
                   context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
                   if(Breakpoints.small.isActive(context)){
+                    debugPrint('small: ${raceEntry.id.value}');
                     context.pushNamed(
                       RaceDetailPage.pageConfig.name,
                       pathParameters: {
                         'raceEntryId': raceEntry.id.value.toString(),
                       },
                     );
+                  }else {
+                    /*
+                    context.read<NavigationCubit>().secondBodyHasChanged(isSecondBodyDisplayed: true);
+                    debugPrint('mediumAndUp: ${raceEntry.id.value}');
+                    context.goNamed(
+                      RaceDetailPage.pageConfig.name,
+                      pathParameters: {
+                        'raceEntryId': raceEntry.id.value.toString(),
+                      },
+                    );
+                    */
                   }
                 },
               ),

@@ -2,13 +2,11 @@ part of 'navigation_cubit.dart';
 
 class NavigationCubitState extends Equatable{
   final RaceEntryId? selectedRaceId;
-  final CollectionId? selectedCollectionId;
   final bool? isSecondBodyDisplayed;
 
   const NavigationCubitState({
     this.isSecondBodyDisplayed,
     this.selectedRaceId,
-    this.selectedCollectionId,
   });
 
   @override
@@ -16,6 +14,5 @@ class NavigationCubitState extends Equatable{
   List<Object?> get props => [
     isSecondBodyDisplayed,
     selectedRaceId,
-    selectedCollectionId
   ];
 }

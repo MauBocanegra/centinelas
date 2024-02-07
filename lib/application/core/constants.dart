@@ -12,6 +12,11 @@ const userRacesDataKey = 'datos_carreras';
 const raceEngagementEmpty = 'vacio';
 const raceEngagementRegistered = 'registrada';
 const raceEngagementCheckedIn = 'checkedin';
+const userDataPhoneKey = 'telefono';
 
 const raceIdKeyForMapping = 'raceIdString';
 const raceEngagementKeyForMapping = 'raceEngagementObj';
+const phoneKeyForMapping = 'phoneIdString';
+const incidenceTextKeyForMapping = 'incidenceTextString';
+const incidenceTypeKeyForMapping = 'incidenceTypeObj';
+const uidKeyForMapping = 'uidString';

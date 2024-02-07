@@ -130,19 +130,18 @@ class HomePageState extends State<HomePage> {
             config: <Breakpoint, SlotLayoutConfig>{
               Breakpoints.mediumAndUp: SlotLayout.from(
                   key: const Key('secondary-body-medium'),
-                  builder: widget.index != 0 ? AdaptiveScaffold.emptyBuilder : (_) =>
+                  builder: widget.index != 0 ? null : (_) =>
                       BlocBuilder<NavigationCubit, NavigationCubitState>(
                         builder: (context, state) {
                           final selectedRaceId = state.selectedRaceId;
-                          final selectedCollectionId = state.selectedCollectionId;
-
                           final isSecondBodyDisplayed = Breakpoints.mediumAndUp.isActive(context);
+
                           context.read<NavigationCubit>().secondBodyHasChanged(
                             isSecondBodyDisplayed: isSecondBodyDisplayed,
                           );
 
                           if(selectedRaceId == null){
-                            return const Placeholder();
+                            return const Center();
                           }
                           return RaceDetailPageProvider(
                             key: Key(selectedRaceId.value),

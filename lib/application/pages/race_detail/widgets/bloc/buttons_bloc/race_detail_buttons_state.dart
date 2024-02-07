@@ -2,26 +2,14 @@ part of 'race_detail_buttons_bloc.dart';
 
 abstract class RaceDetailButtonsState extends Equatable{
   const RaceDetailButtonsState();
-}
-class RaceDetailButtonsLoadingState extends RaceDetailButtonsState{
   @override List<Object?> get props => [];
 }
-class RaceDetailButtonsOnlyRegisterState extends RaceDetailButtonsState {
-  const RaceDetailButtonsOnlyRegisterState({
-    required this.raceFull,
-    required this.uid,
-  });
-  final RaceFull raceFull;
-  final String uid;
-  @override List<Object?> get props => [raceFull, uid];
-}
-class RaceDetailButtonsOnlyCheckInState extends RaceDetailButtonsState {
-  @override List<Object?> get props => [];
-}
-class RaceDetailButtonsOnlyEmergencyState extends RaceDetailButtonsState {
-  @override List<Object?> get props => [];
-}
-
-class RaceDetailButtonsErrorState extends RaceDetailButtonsState {
-  @override List<Object?> get props => [];
-}
+class RaceDetailButtonsLoadingState extends RaceDetailButtonsState{}
+class RaceDetailButtonsOnlyRegisterState extends RaceDetailButtonsState {}
+class RaceDetailButtonsOnlyCheckInState extends RaceDetailButtonsState {}
+class RaceDetailButtonsCheckedInNotActiveState extends RaceDetailButtonsState {}
+class RaceDetailButtonsIncidenceState extends RaceDetailButtonsState {}
+class RaceDetailButtonsIncidenceWithSuccessState extends RaceDetailButtonsState {}
+class RaceDetailButtonsIncidenceWithErrorState extends RaceDetailButtonsState {}
+class RaceDetailButtonsErrorState extends RaceDetailButtonsState {}
+class RaceDetailButtonsPhoneUpdateState extends RaceDetailButtonsState {}
