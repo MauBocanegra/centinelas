@@ -1,7 +1,7 @@
 import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/register_race_write_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/user_data_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/user_id_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/register_race_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';

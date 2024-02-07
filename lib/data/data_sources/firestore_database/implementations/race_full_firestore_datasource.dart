@@ -1,6 +1,6 @@
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/race_full_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_full_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/models/race_full_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

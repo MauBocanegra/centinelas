@@ -1,6 +1,6 @@
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/races_collection_firestore_datesource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/races_collection_firestore_datesource_interface.dart';
 import 'package:centinelas_app/data/models/race_collection_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

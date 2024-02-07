@@ -1,8 +1,8 @@
 import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/race_collection_id_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/race_entry_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/race_full_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/interfaces/races_collection_firestore_datesource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_collection_id_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_entry_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_full_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/races_collection_firestore_datesource_interface.dart';
 import 'package:centinelas_app/data/mappers/race_entries_ids_model_to_list_race_entry_id_mapper.dart';
 import 'package:centinelas_app/data/mappers/race_entry_model_to_race_entry_mapper.dart';
 import 'package:centinelas_app/data/mappers/race_full_model_to_race_full_mapper.dart';
