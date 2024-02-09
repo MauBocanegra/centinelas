@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
@@ -27,7 +29,25 @@ class UserDataFirestoreDatasource implements
         throw Exception('[raceFull Doc] doc/mapping error');
       });
     } on Exception catch(e){
-      throw Exception('[raceFull] error getting userData');
+      throw Exception('[raceFull] error getting userData: ${e.toString()}');
+    }
+
+    return userDataModel;
+  }
+
+  @override
+  Future<UserDataModel> fetchCustomUserData(String userId) async {
+    try{
+      await firestore.doc(
+          '$apiEnv/$usersInfoCollectionKey/$userId/$userDataKey'
+      ).get().then((DocumentSnapshot doc){
+        final data = doc.data() as Map<String, dynamic>;
+        userDataModel = userDataDocToUserDataModel(data);
+      }).onError((error, stackTrace){
+        throw Exception('[raceFull Doc] doc/mapping error');
+      });
+    } on Exception catch(e){
+      throw Exception('[raceFull] error getting userData: ${e.toString()}');
     }
 
     return userDataModel;
@@ -41,13 +61,44 @@ class UserDataFirestoreDatasource implements
       ).set({
         userDataPhoneKey : userDataModel.phone,
       }, SetOptions(merge: true)).onError((error, stackTrace){
-        debugPrint('writeUserData EXCEPTION: ${error.toString()}');
+        //debugPrint('writeUserData EXCEPTION: ${error.toString()}');
         throw Exception('Unable to userDataModel to firestore');
       });
       return true;
     } on Exception catch (exception) {
-      debugPrint('writeUserDAta EXCEPTION: ${exception.toString()}');
+      //debugPrint('writeUserDAta EXCEPTION: ${exception.toString()}');
       throw Exception('Unable to writeUserData to firestore');
+    }
+  }
+
+  @override
+  Future<bool> verifyUserHasDispatchClearance() async {
+    try{
+      late final bool hasDispatchClearance;
+      final userEmail = serviceLocator<FirebaseAuth>().currentUser?.email;
+      await firestore.doc(
+        '$apiEnv/$adminsDataKey'
+      ).get().then((DocumentSnapshot doc){
+        final data = doc.data() as Map<String, dynamic>;
+        //debugPrint('dispatchFetched data: ${data.toString()}');
+        if(
+          (data[dispatchersDataKey] as List).contains(userEmail) ||
+              (data[dispatchersDataKey] as List).contains(uid)
+        ){
+          //debugPrint('hasClearance from userDatasource');
+          hasDispatchClearance = true;
+        }else{
+          //debugPrint('DENIEDClearance from userDatasource');
+          hasDispatchClearance = false;
+        }
+      }).onError((error, stackTrace){
+        hasDispatchClearance = false;
+        throw Exception('[despachadores Doc] doc/mapping error');
+      });
+      return hasDispatchClearance;
+    } on Exception catch (exception) {
+      debugPrint('verifyUserDispatchClearance EXCEPTION: ${exception.toString()}');
+      throw Exception('Unable to verifyUserDispatchClearance from firestore');
     }
   }
 }

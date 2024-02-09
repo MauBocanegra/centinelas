@@ -39,7 +39,7 @@ dependencies:
   flutter_native_text_input: ^2.4.0
   adaptive_dialog: ^2.0.0
   firebase_database: ^10.4.3
-  # hive, json_annotation?
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:

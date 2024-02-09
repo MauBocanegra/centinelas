@@ -1,10 +1,19 @@
+import 'dart:async';
+
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
+import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:flutter/material.dart';
 
 class RealtimeRepositoryImpl extends RealtimeRepository{
   RealtimeRepositoryImpl();
+
+  final  incidenceObserverRealtimeDatasource =
+    serviceLocator<IncidenceObserverRealtimeDatasourceInterface>();
+  final StreamController<Iterable<IncidenceModel>> outputStreamController = StreamController();
 
   @override
   Future<bool> writeIncidenceInRealtimeDB(Map<String, dynamic> data) async {
@@ -17,6 +26,23 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
     } on Exception catch(exception){
       debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
       return false;
+    }
+  }
+
+  @override
+  StreamController<Iterable<IncidenceModel>> getIncidenceModelStream() {
+    try{
+      final userDatasource =
+        serviceLocator<UserDataFirestoreDatasourceInterface>();
+      final incidenceModelStream =
+        incidenceObserverRealtimeDatasource.getIncidenceModelStream();
+      incidenceModelStream?.stream.listen((event) {
+        outputStreamController.add(event);
+      });
+      return outputStreamController;
+    } on Exception catch(exception){
+      debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
+      return outputStreamController;
     }
   }
 }

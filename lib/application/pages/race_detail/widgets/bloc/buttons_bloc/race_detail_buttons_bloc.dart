@@ -132,9 +132,9 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
       writeIncidenceResult.fold(
           (wasAbleToWriteIncidence){
             if(wasAbleToWriteIncidence){
-              emit(RaceDetailButtonsIncidenceState());
+              emit(RaceDetailButtonsIncidenceWithSuccessState());
             } else {
-              emit(RaceDetailButtonsIncidenceState());
+              emit(RaceDetailButtonsIncidenceWithErrorState());
             }
           },
           (right) => emit(RaceDetailButtonsIncidenceState())

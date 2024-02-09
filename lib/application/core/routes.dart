@@ -1,5 +1,7 @@
 import 'package:centinelas_app/application/app/bloc/auth_cubit.dart' as auth;
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
@@ -21,15 +23,15 @@ GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final routes = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/${SessionPage.pageConfig.name}',
+  initialLocation: '/${SessionPageProvider.pageConfig.name}',
   observers: [GoRouterObserver()],
   routes: [
     GoRoute(
-      name: SessionPage.pageConfig.name,
-      path: '/${SessionPage.pageConfig.name}',
+      name: SessionPageProvider.pageConfig.name,
+      path: '/${SessionPageProvider.pageConfig.name}',
       builder: (context, state) => BlocProvider<auth.AuthCubit>(
         create: (context) => serviceLocator<auth.AuthCubit>(),
-        child: const SessionPage(),
+        child: const SessionPageProvider(),
       ),
     ),
     GoRoute(
@@ -93,6 +95,15 @@ final routes = GoRouter(
           ),
         ),
       ],
+    ),
+    GoRoute(
+      name: DispatchPageProvider.pageConfig.name,
+      path: '/$dispatchRoute/:$activeRaceIdParamKey',
+      builder: (context, state) {
+        return DispatchPageProvider(
+            activeRaceId: state.pathParameters[activeRaceIdParamKey] ?? ''
+        );
+      }
     ),
     GoRoute(
       name: RaceDetailPage.pageConfig.name,

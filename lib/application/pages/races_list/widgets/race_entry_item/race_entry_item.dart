@@ -35,13 +35,13 @@ class RaceEntryItem extends StatelessWidget {
     return BlocBuilder<RaceEntryItemBloc, RaceEntryItemState>(
         builder: (context, state){
           if(state is RaceEntryItemLoadingState){
-            return RaceEntryItemViewLoading();
+            return const RaceEntryItemViewLoading();
           } else if(state is RaceEntryItemLoadedState) {
             return RaceEntryItemViewLoaded(
               raceEntry: state.raceEntry,
             );
           } else {
-            return RaceEntryItemViewError();
+            return const RaceEntryItemViewError();
           }
         },
     );

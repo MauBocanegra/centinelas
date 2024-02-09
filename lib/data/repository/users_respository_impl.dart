@@ -69,4 +69,34 @@ class UsersRepositoryImpl extends UsersRepository{
     }
   }
 
+  @override
+  Future<bool> isCurrentUserDispatchAuthorized() async {
+    try{
+      final userDataFirestoreDatasource =
+        serviceLocator<UserDataFirestoreDatasourceInterface>();
+      final userHasDispatchClearance =
+          await userDataFirestoreDatasource.verifyUserHasDispatchClearance();
+      return userHasDispatchClearance;
+    } on Exception catch(exception){
+      return false;
+    }
+  }
+
+  @override
+  Future<Either<UserDataModel, Failure>> readCustomUserData(
+    String customUserId
+  ) async{
+    try{
+      final userDataFirestoreDatasource =
+        serviceLocator<UserDataFirestoreDatasourceInterface>();
+      final userDataModel =
+        await userDataFirestoreDatasource.fetchCustomUserData(customUserId);
+      return Left(userDataModel);
+    } on Exception catch(exception){
+      return Future.value(Right(
+          ServerFailure(stackTrace: exception.toString())
+      ));
+    }
+  }
+
 }

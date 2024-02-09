@@ -10,5 +10,9 @@ abstract class UsersRepository{
     RaceEngagementRequestType engagementType,
   );
   Future<Either<UserDataModel,Failure>> readUserData();
+  Future<Either<UserDataModel,Failure>> readCustomUserData(
+    String customUserId
+  );
   Future<bool> updateUserData(UserDataModel data);
+  Future<bool> isCurrentUserDispatchAuthorized();
 }

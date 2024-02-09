@@ -13,6 +13,8 @@ const raceEngagementEmpty = 'vacio';
 const raceEngagementRegistered = 'registrada';
 const raceEngagementCheckedIn = 'checkedin';
 const userDataPhoneKey = 'telefono';
+const adminsDataKey = 'administradores';
+const dispatchersDataKey = 'despachadores';
 
 const raceIdKeyForMapping = 'raceIdString';
 const raceEngagementKeyForMapping = 'raceEngagementObj';
@@ -20,3 +22,19 @@ const phoneKeyForMapping = 'phoneIdString';
 const incidenceTextKeyForMapping = 'incidenceTextString';
 const incidenceTypeKeyForMapping = 'incidenceTypeObj';
 const uidKeyForMapping = 'uidString';
+
+const incidenceEmergencyTypeForMapping = 'incidenciaEmergencia';
+const incidenceAssistanceTypeForMapping = 'incidenciaAsistencia';
+
+const incidencesRealtimeDBPath = '$apiEnv/incidencias';
+const assistanceIncidencesRealtimeDBPath = '$apiEnv/asistencias-incidencias';
+const emergencyIncidencesRealtimeDBPath = '$apiEnv/emergencias-incidencias';
+const usersIncidencesRealtimeDBPath = '$apiEnv/usuarios-incidencias';
+const racesIncidencesRealtimeDBPath = '$apiEnv/carreras-incidencias';
+const raceIdRealtimeDBKey = 'carrera_id';
+const incidenceTextRealtimeDBKey = 'texto_incidencia';
+const incidenceTimeRealtimeDBKey = 'hora_incidencia';
+const incidenceTypeRealtimeDBKey = 'tipo_incidencia';
+const centinelIdRealtimeDBKey = 'centinela_id';
+
+const activeRaceIdParamKey = 'activeRaceId';

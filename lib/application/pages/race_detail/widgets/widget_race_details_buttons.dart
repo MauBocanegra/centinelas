@@ -42,13 +42,12 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
             if(state is RaceDetailButtonsIncidenceWithSuccessState){
               final result = await showModalActionSheet<String>(
                 context: context,
-                message: 'Incidencia reportada!',
+                message: incidenceReportedConfirmationText,
               );
-              debugPrint(result.toString());
             } else if (state is RaceDetailButtonsIncidenceWithErrorState) {
               final result = await showModalActionSheet<String>(
                 context: context,
-                message: 'Ocurrio un error, intenta nuevamente',
+                message: incidenceReportedErrorText,
               );
               debugPrint(result.toString());
             }
@@ -158,21 +157,21 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
       context: context,
       textFields: [
         const DialogTextField(
-          hintText: 'Incluye referencias y señas particulares',
-          maxLines: 3,
+          hintText: assistanceDialogHint,
+          maxLines: 2,
         ),
       ],
-      title: 'Solicitar asistencia',
-      message: 'Asistencia sin caracter de urgencia, un despachador se pondra en contacto pronto',
+      title: assistanceDialogTitle,
+      message: assistanceDialogDescription,
     );
-    if(context.mounted) {
+    if(context.mounted && inputText != null && inputText.isNotEmpty) {
       context.read<RaceDetailButtonsBloc>().writeIncidence({
         raceIdKeyForMapping : widget.raceFull.id.value,
-        incidenceTextKeyForMapping : inputText,
+        incidenceTextKeyForMapping : inputText.first,
         incidenceTypeKeyForMapping : SimpleIncidenceRequestType(),
       });
     }
-    debugPrint('inputedText = ${inputText}');
+    debugPrint('inputedText = ${inputText?.first}');
   }
 
   void onTapEmergencyButton(BuildContext context) async {
@@ -187,13 +186,13 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
       title: 'Reportar EMERGENCIA',
       message: 'Asistencia CON caracter de urgencia, un despachador se pondra en contacto IMEDIATAMENTE',
     );
-    if(context.mounted) {
+    if(context.mounted && inputText != null && inputText.isNotEmpty) {
       context.read<RaceDetailButtonsBloc>().writeIncidence({
         raceIdKeyForMapping : widget.raceFull.id.value,
-        incidenceTextKeyForMapping : inputText,
+        incidenceTextKeyForMapping : inputText.first,
         incidenceTypeKeyForMapping : EmergencyIncidenceRequestType(),
       });
     }
-    debugPrint('inputedText = ${inputText}');
+    debugPrint('inputedText = ${inputText?.first}');
   }
 }

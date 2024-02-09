@@ -15,32 +15,23 @@ class IncidenceWriteRealtimeDatasource
 
   @override
   Future<bool> writeIncidence(Map<String, dynamic> params) async {
-    debugPrint(params.toString());
-
-    DatabaseReference incidenceReference = firebase.ref("incidencias");
+    DatabaseReference incidenceReference = firebase.ref(incidencesRealtimeDBPath);
     late DatabaseReference incidenceIncidenceTypeReference;
 
     final newIncidenceKey = incidenceReference.push().key;
     final IncidenceRequestType incidenceRequestType = params[incidenceTypeKeyForMapping];
-    debugPrint('incidenceRequestType: ${incidenceRequestType.toString()}');
+    late final String incidenceTypeString;
     if(incidenceRequestType is SimpleIncidenceRequestType){
-      debugPrint('IncidenceOfType Simple');
-      incidenceIncidenceTypeReference = firebase.ref("asistencias-incidencias");
+      incidenceTypeString = incidenceAssistanceTypeForMapping;
+      incidenceIncidenceTypeReference = firebase.ref(assistanceIncidencesRealtimeDBPath);
     } else if (incidenceRequestType is EmergencyIncidenceRequestType){
-      debugPrint('IncidenceOfType Emergency');
-      incidenceIncidenceTypeReference = firebase.ref("emergencias-incidencias");
+      incidenceTypeString = incidenceEmergencyTypeForMapping;
+      incidenceIncidenceTypeReference = firebase.ref(emergencyIncidencesRealtimeDBPath);
     }
 
-    DatabaseReference userIncidenceReference = firebase.ref("usuarios-incidencias/$uid");
+    DatabaseReference userIncidenceReference = firebase.ref("$usersIncidencesRealtimeDBPath/$uid");
     DatabaseReference raceIncidenceReference =
-      firebase.ref("carreras-incidencias/${params[raceIdKeyForMapping]}");
-
-    final incidenceData = {
-      'carrera_id':params[raceIdKeyForMapping],
-      'texto_incidencia': params[incidenceTextKeyForMapping],
-      'hora_incidencia': '',
-      'centinela_id': uid,
-    };
+      firebase.ref("$racesIncidencesRealtimeDBPath/${params[raceIdKeyForMapping]}");
 
     final date = getDate();
 
@@ -48,11 +39,19 @@ class IncidenceWriteRealtimeDatasource
       'timestamp' : '${date.hour}:${date.minute}:${date.second}'
     };
 
+    final incidenceData = {
+      raceIdRealtimeDBKey : params[raceIdKeyForMapping],
+      incidenceTextRealtimeDBKey : params[incidenceTextKeyForMapping],
+      incidenceTimeRealtimeDBKey : '${date.hour}:${date.minute}:${date.second}',
+      incidenceTypeRealtimeDBKey : incidenceTypeString,
+      centinelIdRealtimeDBKey : uid,
+    };
+
     final Map<String, Map> updates = {};
-    updates[incidenceReference.path+'/'+(newIncidenceKey ?? '')] = incidenceData;
-    updates[incidenceIncidenceTypeReference.path+'/'+(newIncidenceKey ?? '')] = incidenceRelationData;
-    updates[userIncidenceReference.path+'/'+(newIncidenceKey ?? '')] = incidenceRelationData;
-    updates[raceIncidenceReference.path+'/'+(newIncidenceKey ?? '')] = incidenceRelationData;
+    updates['${incidenceReference.path}/${newIncidenceKey ?? ''}'] = incidenceData;
+    updates['${incidenceIncidenceTypeReference.path}/${newIncidenceKey ?? ''}'] = incidenceRelationData;
+    updates['${userIncidenceReference.path}/${newIncidenceKey ?? ''}'] = incidenceRelationData;
+    updates['${raceIncidenceReference.path}/${newIncidenceKey ?? ''}'] = incidenceRelationData;
 
     late final bool wasAble;
     await firebase.ref().update(updates).then((_){

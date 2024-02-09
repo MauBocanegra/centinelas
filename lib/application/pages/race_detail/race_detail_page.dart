@@ -43,7 +43,7 @@ class RaceDetailPage extends StatelessWidget {
 
   static const pageConfig = PageConfig(
     icon: Icons.stadium_outlined,
-    name: raceDetail,
+    name: raceDetailRoute,
     child: Placeholder(),
   );
 
