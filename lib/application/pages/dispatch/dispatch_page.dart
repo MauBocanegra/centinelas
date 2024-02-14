@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/bloc/dispatch_bloc.dart';
 import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/incidence_entry_item.dart';
-import 'package:centinelas_app/data/data_sources/realtime_database/implementations/incidence_observer_realtime_datasource.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,15 +44,6 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
       serviceLocator<RealtimeRepository>();
     final incidenceModelStream = realtimeRepository.getIncidenceModelStream();
     streamController.addStream(incidenceModelStream.stream);
-
-    /*
-    incidenceModelStream.stream.listen((event) {
-      debugPrint('dispatchPage: ${event.toString()}');
-      for(var incidenceModel in event){
-        debugPrint('dispatchPage(item): ${incidenceModel.toString()}');
-      }
-    });
-     */
   }
 
   @override
@@ -76,7 +67,8 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
                   return IncidenceEntryItemProvider(
                       incidenceModel: snapshot.data!.elementAt(index)
                   );
-                }
+                },
+                key:  Key("${Random().nextDouble()}"),
             );
           }
         },),

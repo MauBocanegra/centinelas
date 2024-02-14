@@ -37,27 +37,18 @@ class RaceDetailViewLoadedState extends State<RaceDetailViewLoaded> {
                       widget.raceFull.imageUrl ?? ''
                   ),
                   Text(
-                    widget.raceFull.discipline ?? '',
+                    widget.raceFull.address?.replaceAll("\\n", "\n") ?? '',
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    widget.raceFull.address ?? '',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Text(
                     widget.raceFull.description?.replaceAll("\\n", "\n") ?? '',
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 50.0,),
+                  const SizedBox(height: 30.0,),
                   RaceDetailsButtonsWidgetProvider(
                       raceFull: widget.raceFull,
                   ),

@@ -32,8 +32,6 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
   @override
   StreamController<Iterable<IncidenceModel>> getIncidenceModelStream() {
     try{
-      final userDatasource =
-        serviceLocator<UserDataFirestoreDatasourceInterface>();
       final incidenceModelStream =
         incidenceObserverRealtimeDatasource.getIncidenceModelStream();
       incidenceModelStream?.stream.listen((event) {

@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/core/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/page_config.dart';
@@ -14,6 +15,12 @@ class ReportsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.blue);
+    return const Padding(
+      padding: EdgeInsets.all(24.0),
+      child: Center(
+        child:
+        Text(reportsPlaceholderText),
+      ),
+    );
   }
 }

@@ -104,7 +104,13 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
               );
             } else if(state is RaceDetailButtonsCheckedInNotActiveState){
               return const Center(
-                child: Text(checkedInNotActiveRaceText),
+                child: Text(
+                  checkedInNotActiveRaceText,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
               );
             }else if (
             state is RaceDetailButtonsIncidenceState ||
@@ -171,7 +177,6 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
         incidenceTypeKeyForMapping : SimpleIncidenceRequestType(),
       });
     }
-    debugPrint('inputedText = ${inputText?.first}');
   }
 
   void onTapEmergencyButton(BuildContext context) async {
@@ -179,12 +184,12 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
       context: context,
       textFields: [
         const DialogTextField(
-          hintText: 'Incluye referencias y señas particulares',
+          hintText: emergencyDialogHint,
           maxLines: 3,
         ),
       ],
-      title: 'Reportar EMERGENCIA',
-      message: 'Asistencia CON caracter de urgencia, un despachador se pondra en contacto IMEDIATAMENTE',
+      title: emergencyDialogTitle,
+      message: emergencyDialogDescription,
     );
     if(context.mounted && inputText != null && inputText.isNotEmpty) {
       context.read<RaceDetailButtonsBloc>().writeIncidence({
@@ -193,6 +198,5 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
         incidenceTypeKeyForMapping : EmergencyIncidenceRequestType(),
       });
     }
-    debugPrint('inputedText = ${inputText?.first}');
   }
 }
