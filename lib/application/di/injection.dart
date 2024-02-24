@@ -47,8 +47,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final serviceLocator = GetIt.I;
 
@@ -169,7 +167,6 @@ Future<void> init() async {
 
 
   // library instances
-  serviceLocator.registerFactory(() async => await SharedPreferences.getInstance());
   serviceLocator.registerFactory(() => FirebaseAuth.instance);
 
   // Is this still needed?
