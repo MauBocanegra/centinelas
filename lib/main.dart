@@ -18,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   await Firebase.initializeApp(
+    name:'centinelasApp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   serviceLocator<FirebaseFirestore>().settings = const Settings(
