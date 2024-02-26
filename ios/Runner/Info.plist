@@ -20,6 +20,39 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+    
+    <key>GIDClientID</key>
+    <string>908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.908225121225-775b6uq57a57nm6c3j6pki745e36r5r3</string>
+        </array>
+      </dict>
+    </array>
+    
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+          <key>CFBundleTypeRole</key>
+          <string>Editor</string>
+          <key>CFBundleURLSchemes</key>
+          <array>
+            <string>centinelas.sportspromotion.com.mx.centinelasApp</string>
+          </array>
+        </dict>
+        <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.908225121225-775b6uq57a57nm6c3j6pki745e36r5r3</string>
+        </array>
+      </dict>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -51,5 +84,13 @@
     <string>La ubicación es necesaria para reportar emergencias</string>
     <key>UIBackgroundModes</key>
     <string>location</string>
+    
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <!--Include to allow all connections (DANGER)-->
+      <key>NSAllowsArbitraryLoads</key>
+          <true/>
+    </dict>
+    
 </dict>
 </plist>
