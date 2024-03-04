@@ -8,3 +8,4 @@ const raceDetailRoute = 'race_detail';
 const reportsRoute = 'Reportes';
 const profileRoute = 'profile';
 const dispatchRoute = 'dispatch';
+const mapRoute = 'map';

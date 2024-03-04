@@ -7,6 +7,8 @@ class IncidenceModel extends Equatable{
   final String time;
   final String text;
   final String type;
+  final double lat;
+  final double lon;
   String? phoneNumber;
 
   IncidenceModel({
@@ -15,10 +17,12 @@ class IncidenceModel extends Equatable{
     required this.time,
     required this.text,
     required this.type,
+    required this.lat,
+    required this.lon,
   });
 
   @override
-  List<Object?> get props => [raceId, centinelId, time, text];
+  List<Object?> get props => [raceId, centinelId, time, text, lat, lon];
 
   bool isEmergencyType(){
     return type == incidenceEmergencyTypeForMapping;

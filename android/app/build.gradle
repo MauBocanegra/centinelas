@@ -22,6 +22,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = '20'
+}
+
 android {
     namespace "centinelas.sportspromotion.com.mx.centinelas_app"
     compileSdkVersion flutter.compileSdkVersion
@@ -43,9 +48,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "centinelas.sportspromotion.com.mx.centinelas_app"
-        // You can update the following values to match your application needs.
+        // You can update the following values to mat
+        // ch your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion flutterMinSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

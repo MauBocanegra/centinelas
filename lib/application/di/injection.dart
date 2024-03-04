@@ -45,6 +45,7 @@ import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -178,4 +179,5 @@ Future<void> init() async {
 
   serviceLocator.registerFactory(() => FirebaseFirestore.instance);
   serviceLocator.registerFactory(() => FirebaseDatabase.instance);
+  serviceLocator.registerFactory(() => FirebaseMessaging.instance);
 }

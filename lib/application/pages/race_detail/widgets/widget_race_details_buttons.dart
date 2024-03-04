@@ -1,7 +1,9 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
@@ -9,6 +11,7 @@ import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// hay que limpiar este codigo :(
 class RaceDetailsButtonsWidgetProvider extends StatefulWidget{
@@ -117,6 +120,16 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
             state is RaceDetailButtonsIncidenceWithSuccessState ||
             state is RaceDetailButtonsIncidenceWithErrorState
             ){
+              return ElevatedButton(
+                  onPressed: (){
+                    context.goNamed(
+                      MapPageProvider.pageConfig.name,
+                      pathParameters: {raceFullIdParamKey : widget.raceFull.id.value},
+                    );
+                  },
+                  child: const Text('Seguimiento de carrera'),
+              );
+              /*
               return Center(child: Column(children: [
                 ElevatedButton(
                   style: raisedYellowButtonStyle,
@@ -132,6 +145,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                   child: const Text(emergencyButtonText),
                 ),
               ],),);
+              */
             } else {
               return const Center(
                 child: Text(errorRaceDetailButtonsWidget),

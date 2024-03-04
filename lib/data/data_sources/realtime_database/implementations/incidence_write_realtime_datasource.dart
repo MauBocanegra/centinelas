@@ -45,6 +45,8 @@ class IncidenceWriteRealtimeDatasource
       incidenceTimeRealtimeDBKey : '${date.hour}:${date.minute}:${date.second}',
       incidenceTypeRealtimeDBKey : incidenceTypeString,
       centinelIdRealtimeDBKey : uid,
+      incidenceLatitudeRealtimeDBKey : params[incidenceLatitudeKeyForMapping],
+      incidenceLongitudeRealtimeDBKey : params[incidenceLongitudeKeyForMapping],
     };
 
     final Map<String, Map> updates = {};

@@ -4,6 +4,7 @@ import 'package:centinelas_app/application/di/injection.dart' as di;
 import 'package:centinelas_app/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,28 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   await Firebase.initializeApp(
-    name:'centinelasApp',
+    //name:'centinelasApp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   serviceLocator<FirebaseFirestore>().settings = const Settings(
     persistenceEnabled: true,
   );
+  final fcmToken = await serviceLocator<FirebaseMessaging>().getToken(
+    vapidKey: fcmVapidKey
+  );
+  debugPrint('fcmToken: $fcmToken');
+  serviceLocator<FirebaseMessaging>().onTokenRefresh
+      .listen((fcmToken) {
+    // TODO: If necessary send token to application server.
+
+    // Note: This callback is fired at each app startup and whenever a new
+    // token is generated.
+    debugPrint('onTokenRefresh: $fcmToken');
+  })
+      .onError((err) {
+    // Error getting token.
+    debugPrint('onERRORTokenRefresh: $err');
+  });
 
   FirebaseUIAuth.configureProviders([
     GoogleProvider(clientId: googleClientId),

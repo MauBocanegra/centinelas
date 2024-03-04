@@ -3,6 +3,7 @@ import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
@@ -37,6 +38,8 @@ final routes = GoRouter(
     GoRoute(
       name: LoginPage.pageConfig.name,
       path: '/${LoginPage.pageConfig.name}',
+      builder: (context, state) => LoginPage()
+      /*
       builder: (context, state) => SignInScreen(
         actions: [
           AuthStateChangeAction<SignedIn>((context, state) {
@@ -53,6 +56,7 @@ final routes = GoRouter(
           }),
         ],
       ),
+      */
     ),
     GoRoute(
       name: ProfilePage.pageConfig.name,
@@ -102,6 +106,32 @@ final routes = GoRouter(
       builder: (context, state) {
         return DispatchPageProvider(
             activeRaceId: state.pathParameters[activeRaceIdParamKey] ?? ''
+        );
+      }
+    ),
+    GoRoute(
+      name: MapPageProvider.pageConfig.name,
+      path: '/$homeRoute/$racesRoute/${MapPageProvider.pageConfig.name}/:$raceFullIdParamKey',
+      builder: (context, state){
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Mapa'),
+            leading: BackButton(
+              onPressed: (){
+                if(context.canPop()){
+                  context.pop();
+                } else {
+                  context.goNamed(
+                    HomePage.pageConfig.name,
+                    pathParameters: {'tab' : RacesPage.pageConfig.name},
+                  );
+                }
+              },
+            ),
+          ),
+          body: MapPageProvider(
+            raceIdString: (state.pathParameters[raceFullIdParamKey] ?? ''),
+          ),
         );
       }
     ),

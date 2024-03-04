@@ -64,7 +64,7 @@ class SessionPageState extends State<SessionPageProvider> {
             }
           }
         }on Exception catch(e){
-          debugPrint('error insessionPage ${e.toString()}');
+          debugPrint('error inSessionPage ${e.toString()}');
         }
       } else {
         debugPrint('shouldGoToLogin');

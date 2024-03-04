@@ -1,6 +1,9 @@
 const googleClientId = '908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com';
+const fcmVapidKey = 'BPembO7RJ6ind06ohC8gdUXRoAtmBbCG3WFOYYPVC6EzWoz9QeXCJMS6NcljvvGFDh57UNSPYVnXCnNKjx7G05M';
 
-const apiEnv = 'prod';
+const apiEnv = 'development';
+const apiEnvDev = 'development';
+const apiEnvProd = 'prod';
 const collectionIdToBeDisplayedRoute = 'coleccion_visible';
 const collectionIdToBeDisplayedId = 'coleccion_visible_en_app';
 const raceEntryCollectionKey = 'titulares_de_carrera';
@@ -21,6 +24,8 @@ const raceEngagementKeyForMapping = 'raceEngagementObj';
 const phoneKeyForMapping = 'phoneIdString';
 const incidenceTextKeyForMapping = 'incidenceTextString';
 const incidenceTypeKeyForMapping = 'incidenceTypeObj';
+const incidenceLatitudeKeyForMapping = 'incidenceLatitudeString';
+const incidenceLongitudeKeyForMapping = 'incidenceLongitudeString';
 const uidKeyForMapping = 'uidString';
 
 const incidenceEmergencyTypeForMapping = 'incidenciaEmergencia';
@@ -36,5 +41,10 @@ const incidenceTextRealtimeDBKey = 'texto_incidencia';
 const incidenceTimeRealtimeDBKey = 'hora_incidencia';
 const incidenceTypeRealtimeDBKey = 'tipo_incidencia';
 const centinelIdRealtimeDBKey = 'centinela_id';
+const incidenceLatitudeRealtimeDBKey = 'latitud_incidencia';
+const incidenceLongitudeRealtimeDBKey = 'longitud_incidencia';
 
 const activeRaceIdParamKey = 'activeRaceId';
+const raceFullIdParamKey = 'raceFullParam';
+
+const minIncidenceLength = apiEnv=='dev' ? 3 : 10;

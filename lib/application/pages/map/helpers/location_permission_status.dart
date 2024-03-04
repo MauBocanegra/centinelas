@@ -1,0 +1,5 @@
+sealed class LocationPermissionStatus {}
+class LocationPermissionGranted implements LocationPermissionStatus {}
+class LocationPermissionDenied implements LocationPermissionStatus {}
+class LocationPermissionDisabled implements LocationPermissionStatus {}
+class LocationPermissionPermanentlyDenied implements LocationPermissionStatus {}

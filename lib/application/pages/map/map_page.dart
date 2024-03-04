@@ -1,0 +1,291 @@
+import 'dart:async';
+
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/core/page_config.dart';
+import 'package:centinelas_app/application/core/routes_constants.dart';
+import 'package:centinelas_app/application/core/strings.dart';
+import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/application/pages/map/helpers/location_permission_status.dart';
+import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
+import 'package:centinelas_app/application/widgets/button_style.dart';
+import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart' as CustomPermissionHandler;
+
+class MapPageProvider extends StatefulWidget {
+  final String raceIdString;
+  late LocationPermissionStatus locationPermissionStatus;
+  MapPageProvider({
+    super.key,
+    required this.raceIdString,
+  });
+
+  static const pageConfig = PageConfig(
+      icon: Icons.map,
+      name: mapRoute
+  );
+
+  @override
+  State<MapPageProvider> createState() => _MapPageState();
+}
+
+class _MapPageState extends State<MapPageProvider> {
+
+  Location location = Location();
+  late bool serviceEnabled;
+  late PermissionStatus permissionGranted;
+  late LocationData locationData;
+
+  late final Completer<GoogleMapController> googleMapController =
+  Completer<GoogleMapController>();
+
+  late final BlocProvider<RaceDetailButtonsBloc> raceDetailButtonsBloc;
+
+  @override
+  void initState(){
+    super.initState();
+    checkNotifsPermissions();
+    checkAndRequestLocationPermissions();
+    raceDetailButtonsBloc = BlocProvider<RaceDetailButtonsBloc>(
+      create: (context) => serviceLocator<RaceDetailButtonsBloc>(),
+      child: BlocConsumer<RaceDetailButtonsBloc, RaceDetailButtonsState>(
+        listener: (context, state) async {
+          if(state is RaceDetailButtonsLoadingState){
+            await showModalActionSheet<String>(
+                context: context,
+              message: 'Obteniendo ubicacion y enviando incidencia...',
+              isDismissible: false,
+            );
+          } else if(state is RaceDetailButtonsIncidenceWithSuccessState){
+            //Pop loading modalActionSheet
+            Navigator.pop(context, '');
+            await showModalActionSheet<String>(
+              context: context,
+              message: incidenceReportedConfirmationText,
+            );
+          } else if (state is RaceDetailButtonsIncidenceWithErrorState) {
+            //Pop loading modalActionSheet
+            Navigator.pop(context, '');
+            await showModalActionSheet<String>(
+              context: context,
+              message: incidenceReportedErrorText,
+            );
+          }
+        },
+        builder: (context, state){
+            return Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      onPressed: (){
+                        onTapIncidenceButton(
+                            context,
+                            SimpleIncidenceRequestType()
+                        );
+                      },
+                      style: raisedBlueButtonStyle,
+                      child: const Text(assistanceButtonText),
+                    ),
+                    ElevatedButton(
+                      onPressed: (){
+                        onTapIncidenceButton(
+                            context,
+                            EmergencyIncidenceRequestType()
+                        );
+                      },
+                      style: raisedRedButtonStyle,
+                      child: const Wrap(
+                        children: <Widget>[
+                          Icon(
+                            Icons.warning_rounded,
+                          ),
+                          SizedBox(
+                            width:10,
+                          ),
+                          Text(emergencyButtonText),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
+      ),
+    );
+  }
+
+  void checkNotifsPermissions() async {
+    NotificationSettings settings =
+    await serviceLocator<FirebaseMessaging>().requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    debugPrint('User granted permission: ${settings.authorizationStatus}');
+  }
+
+  void checkAndRequestLocationPermissions() async {
+    if(await CustomPermissionHandler.Permission.location.serviceStatus.isEnabled){
+      // enabled
+      var status = await CustomPermissionHandler.Permission.location.status;
+      if(await CustomPermissionHandler.Permission.location.isPermanentlyDenied){
+        widget.locationPermissionStatus = LocationPermissionPermanentlyDenied();
+      }
+      if(status.isGranted){
+        // Location permission granted
+        widget.locationPermissionStatus = LocationPermissionGranted();
+      } else {
+        // location permission not granted
+        Map<
+            CustomPermissionHandler.Permission,
+            CustomPermissionHandler.PermissionStatus
+        > requestStatus = await [CustomPermissionHandler.Permission.location].request();
+        var locationStatus = await CustomPermissionHandler.Permission.location.status;
+        if(locationStatus.isGranted){
+          widget.locationPermissionStatus = LocationPermissionGranted();
+        } else {
+          widget.locationPermissionStatus = LocationPermissionDenied();
+        }
+      }
+    } else {
+      // disabled
+      widget.locationPermissionStatus = LocationPermissionDisabled();
+    }
+  }
+
+  static const CameraPosition estelaLuzCameraPosition =
+      CameraPosition(
+          target: LatLng(19.423096795906307, -99.17567078650453),
+          zoom: 17,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        GoogleMap(
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+          mapType: MapType.normal,
+          initialCameraPosition: estelaLuzCameraPosition,
+          onMapCreated: (GoogleMapController gMController){
+            googleMapController.complete(gMController);
+          },
+        ),
+        raceDetailButtonsBloc,
+      ],
+    );
+  }
+
+  void onTapIncidenceButton(
+      BuildContext context,
+      IncidenceRequestType incidenceRequestType,
+  ) async {
+    String dialogHint = '';
+    String dialogTitle = '';
+    String dialogDescription = '';
+    String dialogNoEmptyText = '';
+    if(incidenceRequestType is SimpleIncidenceRequestType){
+      dialogHint = assistanceDialogHint;
+      dialogTitle = assistanceDialogTitle;
+      dialogDescription = assistanceDialogDescription;
+      dialogNoEmptyText = assistanceDialogNoEmptyText;
+    } else if (incidenceRequestType is EmergencyIncidenceRequestType){
+      dialogHint = emergencyDialogHint;
+      dialogTitle = emergencyDialogTitle;
+      dialogDescription = emergencyDialogDescription;
+      dialogNoEmptyText = emergencyDialogNoEmptyText;
+    }
+
+    checkAndRequestLocationPermissions();
+
+    switch(widget.locationPermissionStatus){
+      case LocationPermissionDenied():{
+        await showOkAlertDialog(
+          context: context,
+          message: locationDeniedDialogTitle,
+          okLabel: locationErrorDialogOkButton
+        );
+      }
+
+      case LocationPermissionDisabled():{
+        await showOkAlertDialog(
+          context: context,
+          message: locationOffDialogTitle,
+          okLabel: locationErrorDialogOkButton
+        );
+      }
+
+      case LocationPermissionPermanentlyDenied():{
+        await showOkAlertDialog(
+          context: context,
+          message: locationDeniedDialogTitle,
+          okLabel: locationErrorDialogOkButton
+        );
+      }
+
+      case _:{}
+    }
+
+    List<String>? inputText = null;
+    if(context.mounted) {
+      inputText = await showTextInputDialog(
+        context: context,
+        barrierDismissible: false,
+        textFields: [
+          DialogTextField(
+            hintText: dialogHint,
+            maxLines: 2,
+          ),
+        ],
+        title: dialogTitle,
+        message: dialogDescription,
+      );
+    }
+
+    var inputedText = inputText?.first;
+    if (inputedText != null && inputedText.length > minIncidenceLength) {
+      bool locationDataAvailable = false;
+      if(widget.locationPermissionStatus is LocationPermissionGranted) {
+        locationDataAvailable = true;
+        locationData = await location.getLocation();
+      }
+      double doubleFallback = 0.0;
+      if(context.mounted) {
+        context.read<RaceDetailButtonsBloc>().writeIncidence({
+          raceIdKeyForMapping: widget.raceIdString,
+          incidenceTextKeyForMapping: inputedText,
+          incidenceTypeKeyForMapping: incidenceRequestType,
+          incidenceLatitudeKeyForMapping:
+            locationDataAvailable ? locationData.latitude : doubleFallback,
+          incidenceLongitudeKeyForMapping:
+            locationDataAvailable ? locationData.longitude : doubleFallback,
+        });
+      }
+
+      if(!locationDataAvailable){
+        locationData = await location.getLocation();
+      }
+    } else if(inputedText != null && context.mounted){
+      await showModalActionSheet<String>(
+        context: context,
+        message: dialogNoEmptyText,
+      );
+    }
+  }
+}
