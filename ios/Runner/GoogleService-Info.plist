@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBfAmOm4krXWPI9elI3maYsrexSUFU6fzI</string>
+	<string>AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E</string>
 	<key>GCM_SENDER_ID</key>
 	<string>917068382197</string>
 	<key>PLIST_VERSION</key>
@@ -11,22 +11,22 @@
 	<key>BUNDLE_ID</key>
 	<string>centinelas.sportspromotion.com.mx.centinelasApp</string>
 	<key>CLIENT_ID</key>
-    <string>908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com</string>
+	<string>908225121225-q712pqi84f1sm5r9aod2rkjdfn4ms086.apps.googleusercontent.com</string>
 	<key>PROJECT_ID</key>
 	<string>centinelas-53c9b</string>
 	<key>STORAGE_BUCKET</key>
 	<string>centinelas-53c9b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:917068382197:ios:b4d8ca8e53a25bb59b2abc</string>
+	<string>1:908225121225:ios:8d2c1170d29e1464d33618</string>
 </dict>
 </plist>

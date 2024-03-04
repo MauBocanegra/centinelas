@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -9,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>centinelas.sportspromotion.com.mx.centinelasApp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,43 +22,52 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-    
-    <key>GIDClientID</key>
-    <string>908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.908225121225-775b6uq57a57nm6c3j6pki745e36r5r3</string>
-        </array>
-      </dict>
-    </array>
-    
-    
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-          <key>CFBundleTypeRole</key>
-          <string>Editor</string>
-          <key>CFBundleURLSchemes</key>
-          <array>
-            <string>centinelas.sportspromotion.com.mx.centinelasApp</string>
-          </array>
-        </dict>
-        <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.908225121225-775b6uq57a57nm6c3j6pki745e36r5r3</string>
-        </array>
-      </dict>
-    </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>centinelas.sportspromotion.com.mx.centinelasApp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.908225121225-q712pqi84f1sm5r9aod2rkjdfn4ms086</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.908225121225-775b6uq57a57nm6c3j6pki745e36r5r3</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>GIDClientID</key>
+	<string>908225121225-q712pqi84f1sm5r9aod2rkjdfn4ms086.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>La ubicación es necesaria para reportar emergencias</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>La ubicación es necesaria para reportar emergencias</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<string>location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -74,23 +85,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>La ubicación es necesaria para reportar emergencias</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>La ubicación es necesaria para reportar emergencias</string>
-    <key>UIBackgroundModes</key>
-    <string>location</string>
-    
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <!--Include to allow all connections (DANGER)-->
-      <key>NSAllowsArbitraryLoads</key>
-          <true/>
-    </dict>
-    
 </dict>
 </plist>
