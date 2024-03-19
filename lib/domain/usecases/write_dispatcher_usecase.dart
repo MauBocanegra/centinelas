@@ -1,25 +1,26 @@
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
+import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-class WriteDispatcherUseCase implements UseCase<String, NoParams>{
-
-  const WriteDispatcherUseCase({
-    required this.usersRepository,
-  });
-  final UsersRepository usersRepository;
+class WriteDispatcherUseCase implements UseCase<bool, NoParams>{
+  const WriteDispatcherUseCase({required this.realtimeRepository});
+  final RealtimeRepository realtimeRepository;
 
   @override
-  Future<Either<String, Failure>> call(NoParams params) async {
+  Future<Either<bool, Failure>> call(NoParams params) async {
     try{
-      final String userEmail = serviceLocator<FirebaseAuth>().currentUser?.email ?? '';
-      final String userId = serviceLocator<FirebaseAuth>().currentUser?.uid ?? '';
-      throw UnimplementedError();
+      final wasAbleToWriteDispatcher =
+        realtimeRepository.writeDispatcherInRealtimeDB();
+      return wasAbleToWriteDispatcher.then(
+              (value) => value ? Left(value) :
+                throw Exception('Error writing FCMToken in RTBD')
+      );
     } on Exception catch(exception){
       debugPrint('Exception WriteFCMTokenUseCase: ${exception.toString()}');
       return Right(ServerFailure(stackTrace: exception.toString()));

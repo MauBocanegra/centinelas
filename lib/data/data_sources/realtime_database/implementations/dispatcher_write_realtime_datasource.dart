@@ -3,6 +3,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
 class DispatcherWriteRealtimeDatasource
@@ -17,13 +18,28 @@ class DispatcherWriteRealtimeDatasource
     final FirebaseDatabase realtimeDatabase = serviceLocator<FirebaseDatabase>();
     late final bool wasAble;
     try{
-      DatabaseReference incidenceReference = realtimeDatabase.ref(dispatchersRealtimeDBPath);
-      wasAble = false;
+      DatabaseReference dispatcherReference = realtimeDatabase.ref(
+          "$dispatchersRealtimeDBPath/$userId"
+      );
+      final fcmToken = await serviceLocator<FirebaseMessaging>().getToken(
+          vapidKey: fcmVapidKey
+      );
+      final dispatcherData = {
+        dispatcherFCMTokenRealtimeDBKey : fcmToken,
+        dispatcherEmailRealtimeDBKey : userEmail,
+      };
+      final Map<String, Map> updates = {};
+      updates[dispatcherReference.path] = dispatcherData;
+      await realtimeDatabase.ref().update(updates).then((_){
+        wasAble = true;
+      }).catchError((error){
+        debugPrint('DispatcherWrite RealtimeDB error: ${error.toString()}');
+        wasAble = false;
+      });
     } on Exception catch(exception){
       debugPrint('IncidenceWrite[Centinela] RealtimeDB error: ${exception.toString()}');
       wasAble = false;
     }
     return wasAble;
   }
-
 }

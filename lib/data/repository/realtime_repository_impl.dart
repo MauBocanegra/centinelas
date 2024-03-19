@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
@@ -14,6 +15,20 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
   final  incidenceObserverRealtimeDatasource =
     serviceLocator<IncidenceObserverRealtimeDatasourceInterface>();
   final StreamController<Iterable<IncidenceModel>> outputStreamController = StreamController();
+
+  @override
+  Future<bool> writeDispatcherInRealtimeDB() async {
+    try{
+      final writeDispatcherInRTDBDatasource =
+          serviceLocator<DispatcherWriteRealtimeDatasourceInterface>();
+      final wasAbleToWriteDispatcher =
+          await writeDispatcherInRTDBDatasource.writeDispatcher();
+      return wasAbleToWriteDispatcher;
+    } on Exception catch(exception){
+      debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
+      return false;
+    }
+  }
 
   @override
   Future<bool> writeIncidenceInRealtimeDB(Map<String, dynamic> data) async {

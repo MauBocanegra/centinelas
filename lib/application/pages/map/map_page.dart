@@ -49,7 +49,6 @@ class _MapPageState extends State<MapPageProvider> {
   @override
   void initState(){
     super.initState();
-    checkNotifsPermissions();
     checkAndRequestLocationPermissions();
     raceDetailButtonsBloc = BlocProvider<RaceDetailButtonsBloc>(
       create: (context) => serviceLocator<RaceDetailButtonsBloc>(),
@@ -123,20 +122,6 @@ class _MapPageState extends State<MapPageProvider> {
           }
       ),
     );
-  }
-
-  void checkNotifsPermissions() async {
-    NotificationSettings settings =
-    await serviceLocator<FirebaseMessaging>().requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    debugPrint('User granted permission: ${settings.authorizationStatus}');
   }
 
   void checkAndRequestLocationPermissions() async {

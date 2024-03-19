@@ -37,10 +37,10 @@ class SessionPageState extends State<SessionPageProvider> {
       if(serviceLocator<FirebaseAuth>().currentUser != null) {
         try {
           final dispatchClearanceAndActiveRaceUseCase =
-          serviceLocator<DispatchClearanceAndActiveRaceUseCase>();
+            serviceLocator<DispatchClearanceAndActiveRaceUseCase>();
           /// TODO this is probable am antipattern so this must be refactored
           final clearanceAndActiveRaceResult =
-          await dispatchClearanceAndActiveRaceUseCase.call(NoParams());
+            await dispatchClearanceAndActiveRaceUseCase.call(NoParams());
           late final String activeRace;
           clearanceAndActiveRaceResult.fold(
                 (fetchedActiveRace) {

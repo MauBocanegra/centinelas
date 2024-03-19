@@ -45,6 +45,9 @@ const centinelIdRealtimeDBKey = 'centinela_id';
 const incidenceLatitudeRealtimeDBKey = 'latitud_incidencia';
 const incidenceLongitudeRealtimeDBKey = 'longitud_incidencia';
 
+const dispatcherEmailRealtimeDBKey = 'despachador_email';
+const dispatcherFCMTokenRealtimeDBKey = 'despachador_fcm_token';
+
 const activeRaceIdParamKey = 'activeRaceId';
 const raceFullIdParamKey = 'raceFullParam';
 

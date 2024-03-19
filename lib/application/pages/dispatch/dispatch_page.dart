@@ -6,12 +6,18 @@ import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/bloc/dispatch_bloc.dart';
 import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/incidence_entry_item.dart';
+import 'package:centinelas_app/application/pages/login/login_page.dart';
+import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
+import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class DispatchPageProvider extends StatefulWidget {
   const DispatchPageProvider({
@@ -42,13 +48,11 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
     // a terminated state.
     RemoteMessage? initialMessage =
     await FirebaseMessaging.instance.getInitialMessage();
-
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
     if (initialMessage != null) {
       _handleMessage(initialMessage);
     }
-
     // Also handle any interaction when the app is in the background via a
     // Stream listener
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
@@ -62,6 +66,8 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
   void initState(){
     super.initState();
 
+    checkNotifsPermissions();
+
     debugPrint('raceId: ${widget.activeRaceId}');
     final realtimeRepository =
       serviceLocator<RealtimeRepository>();
@@ -69,8 +75,42 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
     streamController.addStream(incidenceModelStream.stream);
   }
 
+  void checkNotifsPermissions() async {
+    NotificationSettings settings =
+    await serviceLocator<FirebaseMessaging>().requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    debugPrint('User granted permission: ${settings.authorizationStatus}');
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      if(serviceLocator<FirebaseAuth>().currentUser != null){
+        try{
+          final writeDispatcherUseCase =
+              serviceLocator<WriteDispatcherUseCase>();
+          final dispatcherWasWritten =
+              await writeDispatcherUseCase.call(NoParams());
+          if(dispatcherWasWritten.isRight){
+            throw Exception('Unable to write dispatcher in RTDB');
+          }
+        }on Exception catch(e){
+          debugPrint('error inSessionPage ${e.toString()}');
+        }
+      } else {
+        debugPrint('shouldGoToLogin');
+        context.go('/${LoginPage.pageConfig.name}');
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Incidencias'),

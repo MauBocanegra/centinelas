@@ -39,6 +39,7 @@ import 'package:centinelas_app/domain/usecases/load_custom_user_data_usecase.dar
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
+import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_incidence_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_phone_write_checkin_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_race_checkin_usecase.dart';
@@ -111,6 +112,9 @@ Future<void> init() async {
   ));
   serviceLocator.registerFactory(() => LoadCustomUserDataUseCase(
       usersRepository: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => WriteDispatcherUseCase(
+      realtimeRepository: serviceLocator(),
   ));
 
   // data layer
