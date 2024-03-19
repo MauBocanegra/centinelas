@@ -21,8 +21,10 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/register_race_write_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/realtime_database/implementations/dispatcher_write_realtime_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/incidence_observer_realtime_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/incidence_write_realtime_datasource.dart';
+import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/repository/races_collection_mock.dart';
@@ -164,6 +166,10 @@ Future<void> init() async {
   serviceLocator
       .registerFactory<IncidenceObserverRealtimeDatasourceInterface>(
           () => IncidenceObserverRealtimeDatasource()
+  );
+  serviceLocator
+      .registerFactory<DispatcherWriteRealtimeDatasourceInterface>(
+          () => DispatcherWriteRealtimeDatasource()
   );
 
 

@@ -4,6 +4,7 @@ import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:either_dart/either.dart';
 
 abstract class UsersRepository{
+  Future<bool> writeDispatcherInRealtimeDatabase();
   Future<bool> writeLoggedUserInFirestore(String uid);
   Future<bool> writeRaceEngagementInFirestore(
     String raceId,

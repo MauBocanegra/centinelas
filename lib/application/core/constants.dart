@@ -36,6 +36,7 @@ const assistanceIncidencesRealtimeDBPath = '$apiEnv/asistencias-incidencias';
 const emergencyIncidencesRealtimeDBPath = '$apiEnv/emergencias-incidencias';
 const usersIncidencesRealtimeDBPath = '$apiEnv/usuarios-incidencias';
 const racesIncidencesRealtimeDBPath = '$apiEnv/carreras-incidencias';
+const dispatchersRealtimeDBPath = '$apiEnv/despachadores';
 const raceIdRealtimeDBKey = 'carrera_id';
 const incidenceTextRealtimeDBKey = 'texto_incidencia';
 const incidenceTimeRealtimeDBKey = 'hora_incidencia';
