@@ -22,7 +22,7 @@ class IncidenceModel extends Equatable{
   });
 
   @override
-  List<Object?> get props => [raceId, centinelId, time, text, lat, lon];
+  List<Object?> get props => [raceId, centinelId, time, text, type, lat, lon];
 
   bool isEmergencyType(){
     return type == incidenceEmergencyTypeForMapping;

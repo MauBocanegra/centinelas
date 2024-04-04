@@ -1,9 +1,9 @@
 const googleClientId = '908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com';
 const fcmVapidKey = 'BPembO7RJ6ind06ohC8gdUXRoAtmBbCG3WFOYYPVC6EzWoz9QeXCJMS6NcljvvGFDh57UNSPYVnXCnNKjx7G05M';
 
-const apiEnv = 'development';
+const apiEnv = apiEnvProd;
 const apiEnvDev = 'development';
-const apiEnvProd = 'prod';
+const apiEnvProd = 'production';
 const collectionIdToBeDisplayedRoute = 'coleccion_visible';
 const collectionIdToBeDisplayedId = 'coleccion_visible_en_app';
 const raceEntryCollectionKey = 'titulares_de_carrera';

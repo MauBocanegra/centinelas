@@ -9,3 +9,4 @@ const reportsRoute = 'Reportes';
 const profileRoute = 'profile';
 const dispatchRoute = 'dispatch';
 const mapRoute = 'map';
+const privacyRoute = 'privacy';

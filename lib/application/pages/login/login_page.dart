@@ -1,6 +1,8 @@
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/pages/login/widgets/google_sign_in_button.dart';
+import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/page_config.dart';
 import '../../core/routes_constants.dart';
@@ -51,9 +53,11 @@ class LoginPageState extends State<LoginPage> {
                     child: Image.asset('assets/icon/icon.png'),
                   ),
                   const SizedBox(height: 48,),
-                  GoogleSignInButton(),
+                  const GoogleSignInButton(),
                   TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        context.go('/${PrivacyPageProvider.pageConfig.name}');
+                      },
                       child: const Text.rich(
                         TextSpan(
                           text: privacyButtonText1,

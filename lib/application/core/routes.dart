@@ -4,6 +4,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/map/map_page.dart';
+import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
@@ -108,6 +109,13 @@ final routes = GoRouter(
             activeRaceId: state.pathParameters[activeRaceIdParamKey] ?? ''
         );
       }
+    ),
+    GoRoute(
+        name: PrivacyPageProvider.pageConfig.name,
+        path: '/${PrivacyPageProvider.pageConfig.name}',
+        builder: (context, state) {
+          return const PrivacyPageProvider();
+        }
     ),
     GoRoute(
       name: MapPageProvider.pageConfig.name,

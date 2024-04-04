@@ -4,6 +4,7 @@ import 'package:centinelas_app/domain/entities/race_entry.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'race_entry_item_event.dart';
@@ -31,7 +32,8 @@ class RaceEntryItemBloc extends Bloc<RaceEntryItemEvent, RaceEntryItemState> {
             )),
             (right) => emit(const RaceEntryItemErrorState()),
       );
-    } on Exception {
+    } on Exception catch(exception){
+      debugPrint('error at RaceEntryItemProvider: ${exception.toString()}');
       emit(const RaceEntryItemErrorState());
     }
   }

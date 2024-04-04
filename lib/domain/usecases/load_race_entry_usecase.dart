@@ -4,6 +4,7 @@ import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:either_dart/either.dart';
+import 'package:flutter/cupertino.dart';
 
 class LoadRaceEntryUseCase implements UseCase<RaceEntry, RaceEntryId>{
   const LoadRaceEntryUseCase({required this.raceRepository,});
@@ -21,6 +22,7 @@ class LoadRaceEntryUseCase implements UseCase<RaceEntry, RaceEntryId>{
               (failure) => Right(failure),
       );
     } on Exception catch(exception){
+      debugPrint('error at LoadRaceEntryUseCase: ${exception.toString()}');
       return Right(ServerFailure(stackTrace: exception.toString()));
     }
   }

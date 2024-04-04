@@ -7,7 +7,9 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/bloc/dispatch_bloc.dart';
 import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/incidence_entry_item.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
+import 'package:centinelas_app/application/pages/map/helpers/location_permission_status.dart';
 import 'package:centinelas_app/core/usecase.dart';
+import 'package:centinelas_app/data/mappers/iterable_datasnapshot_to_iterable_marker_maps.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
@@ -16,11 +18,17 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart' as CustomPermissionHandler;
 
 class DispatchPageProvider extends StatefulWidget {
-  const DispatchPageProvider({
+  late LocationPermissionStatus locationPermissionStatus;
+
+  DispatchPageProvider({
     super.key,
     required this.activeRaceId,
   });
@@ -38,9 +46,19 @@ class DispatchPageProvider extends StatefulWidget {
 
 class DispatchPageProviderState extends State<DispatchPageProvider> {
 
+  Location location = Location();
+  late bool serviceEnabled;
+  late PermissionStatus permissionGranted;
+  late LocationData locationData;
+
+  late final Completer<GoogleMapController> googleMapController =
+  Completer<GoogleMapController>();
+
   late final BlocProvider<DispatchBloc> dispatchBloc;
   final StreamController<Iterable<IncidenceModel>> streamController =
     StreamController();
+
+  late GoogleMap googleMap;
 
   // It is assumed that all messages contain a data field with the key 'type'
   Future<void> setupInteractedMessage() async {
@@ -72,8 +90,69 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
     final realtimeRepository =
       serviceLocator<RealtimeRepository>();
     final incidenceModelStream = realtimeRepository.getIncidenceModelStream();
+    initGoogleMap();
     streamController.addStream(incidenceModelStream.stream);
   }
+
+  void initGoogleMap(){
+    googleMap = GoogleMap(
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+      mapType: MapType.normal,
+      initialCameraPosition: estelaLuzCameraPosition,
+      onMapCreated: (GoogleMapController gMController){
+        googleMapController.complete(gMController);
+      },
+    );
+  }
+
+  GoogleMap reCreateGoogleMap(Iterable<Marker> markers){
+    return GoogleMap(
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+      mapType: MapType.normal,
+      initialCameraPosition: estelaLuzCameraPosition,
+      onMapCreated: (GoogleMapController gMController){
+        googleMapController.complete(gMController);
+      },
+      markers: markers.toSet(),
+    );
+  }
+
+  void checkAndRequestLocationPermissions() async {
+    if(await CustomPermissionHandler.Permission.location.serviceStatus.isEnabled){
+      // enabled
+      var status = await CustomPermissionHandler.Permission.location.status;
+      if(await CustomPermissionHandler.Permission.location.isPermanentlyDenied){
+        widget.locationPermissionStatus = LocationPermissionPermanentlyDenied();
+      }
+      if(status.isGranted){
+        // Location permission granted
+        widget.locationPermissionStatus = LocationPermissionGranted();
+      } else {
+        // location permission not granted
+        Map<
+            CustomPermissionHandler.Permission,
+            CustomPermissionHandler.PermissionStatus
+        > requestStatus = await [CustomPermissionHandler.Permission.location].request();
+        var locationStatus = await CustomPermissionHandler.Permission.location.status;
+        if(locationStatus.isGranted){
+          widget.locationPermissionStatus = LocationPermissionGranted();
+        } else {
+          widget.locationPermissionStatus = LocationPermissionDenied();
+        }
+      }
+    } else {
+      // disabled
+      widget.locationPermissionStatus = LocationPermissionDisabled();
+    }
+  }
+
+  static const CameraPosition estelaLuzCameraPosition =
+  CameraPosition(
+    target: LatLng(19.423096795906307, -99.17567078650453),
+    zoom: 15,
+  );
 
   void checkNotifsPermissions() async {
     NotificationSettings settings =
@@ -124,14 +203,42 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }else{
-            return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (BuildContext context, int index){
-                  return IncidenceEntryItemProvider(
-                      incidenceModel: snapshot.data!.elementAt(index)
-                  );
-                },
-                key:  Key("${Random().nextDouble()}"),
+            debugPrint('incidences: ${snapshot.data.toString()}');
+            return Column(
+              children: [
+                Expanded(
+                  child: Card(
+                    elevation: 6,
+                    shadowColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: ListView.builder(
+                        itemCount: snapshot.data?.length,
+                        itemBuilder: (BuildContext context, int index){
+                          return IncidenceEntryItemProvider(
+                              incidenceModel: snapshot.data!.elementAt(index)
+                          );
+                        },
+                        key:  Key("${Random().nextDouble()}"),
+                    ),
+                  ),
+                ),
+                Expanded(
+                    child: Card(
+                      elevation: 6,
+                      shadowColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: reCreateGoogleMap(
+                          mapIterableDataSnapshotToIterableGoogleMapsMarker(
+                              snapshot.data!
+                          )
+                      ),
+                    )
+                ),
+              ],
             );
           }
         },),

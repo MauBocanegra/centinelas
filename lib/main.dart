@@ -28,7 +28,6 @@ void main() async {
   final fcmToken = await serviceLocator<FirebaseMessaging>().getToken(
     vapidKey: fcmVapidKey
   );
-  debugPrint('fcmToken: $fcmToken');
   serviceLocator<FirebaseMessaging>().onTokenRefresh
       .listen((fcmToken) {
     // TODO: If necessary send token to application server.
