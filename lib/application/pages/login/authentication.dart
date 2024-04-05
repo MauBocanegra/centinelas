@@ -43,6 +43,12 @@ class Authentication {
             ),
           );
         }
+        ScaffoldMessenger.of(context).showSnackBar(
+          Authentication.customSnackBar(
+            content:
+            'Error occurred while accessing credentials. Try again.',
+          ),
+        );
       } catch (e) {
         // handle the error here
         if(context.mounted) {
@@ -53,6 +59,8 @@ class Authentication {
           );
         }
       }
+    } else {
+      debugPrint("GoogleSignInAccount is null");
     }
 
     return user;

@@ -2,31 +2,38 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_KEY</key>
-	<string>AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E</string>
-	<key>GCM_SENDER_ID</key>
-	<string>917068382197</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
-	<key>BUNDLE_ID</key>
-	<string>centinelas.sportspromotion.com.mx.centinelasApp</string>
-	<key>CLIENT_ID</key>
-	<string>908225121225-q712pqi84f1sm5r9aod2rkjdfn4ms086.apps.googleusercontent.com</string>
-	<key>PROJECT_ID</key>
-	<string>centinelas-53c9b</string>
-	<key>STORAGE_BUCKET</key>
-	<string>centinelas-53c9b.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false/>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
-	<key>IS_GCM_ENABLED</key>
-	<true/>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:908225121225:ios:8d2c1170d29e1464d33618</string>
+    <key>CLIENT_ID</key>
+    <string>908225121225-gldpmsk25rsc5f3i3hqv9tdhmtjubcio.apps.googleusercontent.com</string>
+    <key>REVERSED_CLIENT_ID</key>
+    <string>com.googleusercontent.apps.908225121225-gldpmsk25rsc5f3i3hqv9tdhmtjubcio</string>
+    <key>ANDROID_CLIENT_ID</key>
+    <string>908225121225-bb6ukdvvkj14349fitrmmr62rt4hfsnd.apps.googleusercontent.com</string>
+    <key>API_KEY</key>
+    <string>AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E</string>
+    <key>GCM_SENDER_ID</key>
+    <string>908225121225</string>
+    <key>PLIST_VERSION</key>
+    <string>1</string>
+    <key>BUNDLE_ID</key>
+    <string>centinelas.sportspromotion.com.mx.centinelasApp</string>
+    <key>PROJECT_ID</key>
+    <string>centinelas-27d9b</string>
+    <key>STORAGE_BUCKET</key>
+    <string>centinelas-27d9b.appspot.com</string>
+    <key>IS_ADS_ENABLED</key>
+    <false></false>
+    <key>IS_ANALYTICS_ENABLED</key>
+    <false></false>
+    <key>IS_APPINVITE_ENABLED</key>
+    <true></true>
+    <key>IS_GCM_ENABLED</key>
+    <true></true>
+    <key>IS_SIGNIN_ENABLED</key>
+    <true></true>
+    <key>GOOGLE_APP_ID</key>
+    <string>1:908225121225:ios:8d2c1170d29e1464d33618</string>
+    <key>DATABASE_URL</key>
+    <string>https://centinelas-27d9b-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
+
