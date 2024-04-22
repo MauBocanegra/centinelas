@@ -81,6 +81,8 @@ class UsersRepositoryImpl extends UsersRepository{
         await userDataFirestoreDatasource.updateUserData(data);
       return wasAbleToUpdateData;
     } on Exception catch(exception){
+      debugPrint('error updating UserData[UsersRepository]: '
+          '${exception.toString()}');
       return false;
     }
   }
@@ -94,6 +96,8 @@ class UsersRepositoryImpl extends UsersRepository{
           await userDataFirestoreDatasource.verifyUserHasDispatchClearance();
       return userHasDispatchClearance;
     } on Exception catch(exception){
+      debugPrint('error isCurrentUserDispatchAuthorized[UsersRepository]: '
+          '${exception.toString()}');
       return false;
     }
   }

@@ -68,9 +68,9 @@ class HomePageState extends State<HomePage> {
                 builder: (context) => AdaptiveScaffold.standardNavigationRail(
                   trailing: IconButton(
                       onPressed:(){
-                        context.goNamed(ProfilePage.pageConfig.name,);
+                        context.goNamed(ProfilePageWidgetProvider.pageConfig.name,);
                       },
-                      icon: Icon((ProfilePage.pageConfig.icon))
+                      icon: Icon((ProfilePageWidgetProvider.pageConfig.icon))
                   ),
                   selectedIndex: widget.index,
                   destinations: destinations.map( (element) =>
@@ -107,7 +107,7 @@ class HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(right: 20.0),
                             child: GestureDetector(
                               onTap: (){
-                                context.goNamed(ProfilePage.pageConfig.name,);
+                                context.goNamed(ProfilePageWidgetProvider.pageConfig.name,);
                               },
                               child: const Icon(
                                 Icons.person_2_rounded,

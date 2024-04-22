@@ -24,6 +24,4 @@ class LoadCustomUserDataUseCase implements UseCase<UserDataModel, String>{
       return Right(ServerFailure(stackTrace: exception.toString()));
     }
   }
-
-
 }

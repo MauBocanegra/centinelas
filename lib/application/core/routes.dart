@@ -9,7 +9,6 @@ import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/session/session_page.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -60,9 +59,10 @@ final routes = GoRouter(
       */
     ),
     GoRoute(
-      name: ProfilePage.pageConfig.name,
-      path: '/${ProfilePage.pageConfig.name}',
-      builder: (context, state) => Scaffold(
+      name: ProfilePageWidgetProvider.pageConfig.name,
+      path: '/${ProfilePageWidgetProvider.pageConfig.name}',
+      builder: (context, state) => const ProfilePageWidgetProvider()
+          /*Scaffold(
         appBar: AppBar(
           title: const Text('Perfil'),
           leading: BackButton(
@@ -86,6 +86,7 @@ final routes = GoRouter(
           ],
         ),
       ),
+      */
     ),
     ShellRoute(
       navigatorKey: shellNavigatorKey,

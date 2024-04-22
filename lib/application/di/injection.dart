@@ -2,6 +2,7 @@ import 'package:centinelas_app/application/app/bloc/auth_cubit.dart';
 import 'package:centinelas_app/application/pages/dispatch/bloc/dispatch_bloc.dart';
 import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/bloc/incidence_entry_item_bloc.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/profile/bloc/profile_bloc.dart';
 import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bloc.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
@@ -44,6 +45,7 @@ import 'package:centinelas_app/domain/usecases/write_incidence_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_phone_write_checkin_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_race_checkin_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_race_engagement_usecase.dart';
+import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,6 +82,10 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => IncidenceEntryItemBloc(
       loadCustomUserDataUseCase: serviceLocator(),
   ));
+  serviceLocator.registerFactory(() => ProfileBloc(
+    loadCustomUserDataUseCase: serviceLocator(),
+    writeUserDataUseCase: serviceLocator(),
+  ));
 
   // domain layer
   serviceLocator.registerFactory(() => LoadRacesUseCase(
@@ -115,6 +121,9 @@ Future<void> init() async {
   ));
   serviceLocator.registerFactory(() => WriteDispatcherUseCase(
       realtimeRepository: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => WriteUserDataUseCase(
+      usersRepository: serviceLocator(),
   ));
 
   // data layer

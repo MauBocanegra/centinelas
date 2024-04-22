@@ -1,19 +1,326 @@
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:centinelas_app/application/core/strings.dart';
+import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/application/pages/home/home_page.dart';
+import 'package:centinelas_app/application/pages/login/login_page.dart';
+import 'package:centinelas_app/application/pages/profile/bloc/profile_bloc.dart';
+import 'package:centinelas_app/application/utils/authentication.dart';
+import 'package:centinelas_app/application/widgets/button_style.dart';
+import 'package:centinelas_app/domain/entities/user_data_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+import '../races_list/races_page.dart';
+
+class ProfilePageWidgetProvider extends StatefulWidget {
+  const ProfilePageWidgetProvider({
+    super.key
+  });
 
   static const pageConfig = PageConfig(
-    icon: Icons.person_2_rounded,
+    icon: Icons.person,
     name: profileRoute,
-    child: ProfilePage(),
   );
 
   @override
+  State<ProfilePageWidgetProvider> createState() => ProfilePageState();
+}
+
+class ProfilePageState extends State<ProfilePageWidgetProvider> {
+
+  final phoneController = TextEditingController();
+  String typedPhone = '';
+  final emergencyContactNameController = TextEditingController();
+  String typedEmergencyContactName = '';
+  final emergencyContactPhoneController = TextEditingController();
+  String typedEmergencyContactPhone = '';
+  final allergiesController = TextEditingController();
+  String typedAllergies = '';
+  final drugSensitivityController = TextEditingController();
+  String typedDrugSensitivities = '';
+
+  bool isInitialDataUnmodified = false;
+
+  late final BlocProvider<ProfileBloc> profileBloc;
+  UserDataModel? initialUserData;
+
+  @override
+  void initState() {
+    super.initState();
+
+    phoneController.addListener(() {
+      typedPhone = phoneController.value.text;
+      verifyDataModification();
+    });
+    emergencyContactNameController.addListener(() {
+      typedEmergencyContactName =
+          emergencyContactNameController.value.text;
+      verifyDataModification();
+    });
+    emergencyContactPhoneController.addListener(() {
+      typedEmergencyContactPhone =
+          emergencyContactPhoneController.value.text;
+      verifyDataModification();
+    });
+    allergiesController.addListener(() {
+      typedAllergies = allergiesController.value.text;
+      verifyDataModification();
+    });
+    drugSensitivityController.addListener(() {
+      typedAllergies = drugSensitivityController.value.text;
+      verifyDataModification();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const ProfileScreen();
+    return BlocProvider<ProfileBloc>(
+      create: (context) => serviceLocator<ProfileBloc>()
+        ..loadUserData(),
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (context, state){
+          if(state is ProfileLoadedState){
+            initialUserData = state.userDataModel;
+            phoneController.text = initialUserData?.phone ?? '';
+            emergencyContactNameController.text =
+                initialUserData?.emergencyContactName ?? '';
+            emergencyContactPhoneController.text =
+                initialUserData?.emergencyContactPhone ?? '';
+            allergiesController.text =
+                initialUserData?.severeAllergies ?? '';
+            drugSensitivityController.text =
+                initialUserData?.drugSensitivities ?? '';
+          }
+        },
+        builder: (context, state){
+          return buildMainView(context, state);
+        },
+      ),
+    );
+  }
+
+  Widget buildMainView(BuildContext context, ProfileState state){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Perfil'),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            if(context.canPop()){
+              context.pop();
+            } else {
+              context.goNamed(
+                HomePage.pageConfig.name,
+                pathParameters: {'tab' : RacesPage.pageConfig.name},
+              );
+            }
+          },
+        ),
+      ),
+      floatingActionButton: Visibility(
+          visible: !isInitialDataUnmodified,
+          child: FloatingActionButton(
+              onPressed: (){
+                writeUserData(context);
+              },
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              child: const Icon(Icons.check)
+          )
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              LayoutBuilder(
+                  builder: (context, constraints){
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.width / 3,
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child: Image.asset('assets/icon/icon.png'),
+                      ),
+                    );
+                  }
+              ),
+              const SizedBox(height: 24,),
+              Text(
+                serviceLocator<FirebaseAuth>().currentUser?.email ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 16,),
+              signOutButton(),
+              /// progress bar
+              (state is ProfileLoadedState)
+                  ? Container()
+                  : const Padding(
+                padding: EdgeInsets.fromLTRB(0,24,0,0),
+                child: CircularProgressIndicator(),
+              ),
+              /// phone
+              (state is ProfileLoadedState)
+                  ? textContainer(stringPhoneTitle)
+                  : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                      hintText: hintPhone
+                  ),
+                  keyboardType: TextInputType.phone,
+                  controller: phoneController,
+                ),
+              ) : spacer(),
+              /// emergencyContactName
+              (state is ProfileLoadedState)
+                  ? textContainer(stringEmergencyContactName)
+                  : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                      hintText: hintEmergencyContactName
+                  ),
+                  keyboardType: TextInputType.name,
+                  controller: emergencyContactNameController,
+                ),
+              ) : spacer(),
+              /// emergencyContactPhone
+              (state is ProfileLoadedState)
+                  ? textContainer(stringEmergencyContactPhone)
+                  : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                      hintText: hintEmergencyContactPhone
+                  ),
+                  keyboardType: TextInputType.phone,
+                  controller: emergencyContactPhoneController,
+                ),
+              ) : spacer(),
+              /// alergies
+              (state is ProfileLoadedState)
+                  ? textContainer(stringAllergies)
+                  : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                      hintText: hintAllergies
+                  ),
+                  keyboardType: TextInputType.text,
+                  controller: allergiesController,
+                ),
+              ) : spacer(),
+              /// drugSensitivities
+              (state is ProfileLoadedState)
+                  ? textContainer(stringDrugSensitivity)
+                  : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                      hintText: hintDrugSensitivity
+                  ),
+                  keyboardType: TextInputType.text,
+                  controller: drugSensitivityController,
+                ),
+              ) : spacer(),
+              const SizedBox(height: 48,),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget spacer(){
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 36, 24, 0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(),
+      ),
+    );
+  }
+
+  Widget textContainer(String textToPlace){
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 36, 24, 0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(textToPlace),
+      ),
+    );
+  }
+
+  Widget signOutButton(){
+    return ElevatedButton(
+        onPressed: () async {
+          await Authentication.signOut(context: context);
+          if(context.mounted) {
+            context.goNamed(LoginPage.pageConfig.name);
+          }
+        },
+        style: raisedRedButtonStyle,
+        child: const Wrap(
+          children: <Widget>[
+            Icon(
+              Icons.logout,
+            ),
+            SizedBox(
+              width:10,
+            ),
+            Text("Cerrar sesión"),
+          ],
+        )
+    );
+  }
+
+  void verifyDataModification(){
+    try {
+      bool isTypedPhoneSameAsCloud =
+          typedPhone == (initialUserData?.phone ?? '');
+      bool isTypedContactSameAsCloud =
+          typedEmergencyContactName == (initialUserData?.emergencyContactName ?? '');
+      bool isTypedContactPhoneSameAsCloud =
+          typedEmergencyContactPhone == (initialUserData?.emergencyContactPhone ?? '');
+      bool isTypedAllergiesSameAsCloud =
+          typedAllergies == (initialUserData?.severeAllergies ?? '');
+      bool areTypedSensitivitiesSameAsCloud =
+          typedDrugSensitivities == (initialUserData?.drugSensitivities ?? '');
+
+      setState(() {
+        isInitialDataUnmodified = isTypedPhoneSameAsCloud
+            && isTypedContactSameAsCloud
+            && isTypedContactPhoneSameAsCloud
+            && isTypedAllergiesSameAsCloud
+            && areTypedSensitivitiesSameAsCloud;
+      });
+
+    }catch (e){
+      setState(() {
+        isInitialDataUnmodified = false;
+      });
+    }
+  }
+
+  void writeUserData(BuildContext viewContext) async {
+    UserDataModel userDataModel = UserDataModel();
+    userDataModel.phone = typedPhone;
+    userDataModel.emergencyContactName = typedEmergencyContactName;
+    userDataModel.emergencyContactPhone = typedEmergencyContactPhone;
+    userDataModel.severeAllergies = typedAllergies;
+    userDataModel.drugSensitivities = typedDrugSensitivities;
+
+    await BlocProvider.of<ProfileBloc>(viewContext).updateUserData(userDataModel);
   }
 }

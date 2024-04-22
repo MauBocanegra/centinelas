@@ -84,7 +84,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                       children: [
                         TextField(
                           decoration: const InputDecoration(
-                            hintText: hintTelefono
+                            hintText: hintPhone
                           ),
                           keyboardType: TextInputType.phone,
                           controller: textEditingController,

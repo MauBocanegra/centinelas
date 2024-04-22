@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentication {
+
+  static Future<void> signOutFromGoogle({required BuildContext context}) async {
+    FirebaseAuth auth = serviceLocator<FirebaseAuth>();
+    final signOutResult = await auth.signOut();
+    return signOutResult;
+  }
+
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = serviceLocator<FirebaseAuth>();
     User? user;
@@ -67,8 +74,6 @@ class Authentication {
   }
 
   static Future<void> signOut({required BuildContext context}) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
     try {
       await FirebaseAuth.instance.signOut();
     } catch (e) {

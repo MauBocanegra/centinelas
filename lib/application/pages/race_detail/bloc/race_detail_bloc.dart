@@ -31,14 +31,4 @@ class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
       emit(const RaceDetailErrorState());
     }
   }
-
-  @override
-  Stream<int> mapEventToState(RaceDetailEvent event) async* {
-    debugPrint('mapEventToState ${event.toString()}');
-  }
-
-  @override
-  void onEvent(RaceDetailEvent event) {
-    debugPrint('onEvent ${event.toString()}');
-  }
 }

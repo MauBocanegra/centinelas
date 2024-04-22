@@ -5,6 +5,10 @@ UserDataModel userDataDocToUserDataModel(Map<String, dynamic> data){
   final UserDataModel userDataModel = UserDataModel();
 
   userDataModel.phone = data[userDataPhoneKey];
+  userDataModel.emergencyContactName = data[userDataEmergencyContactNameKey];
+  userDataModel.emergencyContactPhone = data[userDataEmergencyContactPhoneKey];
+  userDataModel.severeAllergies = data[userDataSevereAllergiesKey];
+  userDataModel.drugSensitivities = data[userDataDrugAllergiesKey];
 
   return userDataModel;
 }

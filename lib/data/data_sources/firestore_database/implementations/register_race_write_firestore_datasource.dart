@@ -1,5 +1,6 @@
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/core/utils/utils.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/register_race_write_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,6 +36,24 @@ class WriteEngagementRaceFirestoreDatasource implements
         debugPrint('writeRaceRegistration EXCEPTION: ${error.toString()}');
         throw Exception('Unable to writeRaceRegistration from remote source');
       });
+
+      int timestamp = DateTime
+          .now()
+          .millisecondsSinceEpoch;
+      var arrayData = {
+        engagementString : timestamp
+      };
+      await firestore.doc(
+          '$apiEnv/$usersInfoCollectionKey/$uid/$userRacesDataKey'
+      ).set({
+          '$raceActivityLog$raceId' : arrayData
+      },
+          SetOptions(merge: true)
+      ).onError((error, stackTrace){
+        debugPrint('writeRaceRegistration EXCEPTION: ${error.toString()}');
+        throw Exception('Unable to writeRaceRegistration from remote source');
+      });
+
       return true;
     } on Exception catch (exception) {
       debugPrint('writeRaceRegistration EXCEPTION: ${exception.toString()}');

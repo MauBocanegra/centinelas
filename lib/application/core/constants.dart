@@ -51,4 +51,12 @@ const dispatcherFCMTokenRealtimeDBKey = 'despachador_fcm_token';
 const activeRaceIdParamKey = 'activeRaceId';
 const raceFullIdParamKey = 'raceFullParam';
 
-const minIncidenceLength = apiEnv=='dev' ? 3 : 10;
+const userDataNameKey = 'nombre_centinela';
+const userDataEmergencyContactNameKey = 'contacto_emergencia_nombre';
+const userDataEmergencyContactPhoneKey = 'contacto_emergencia_telefono';
+const userDataSevereAllergiesKey = 'alergias_severas';
+const userDataDrugAllergiesKey = 'sensibilidad_farmacos';
+
+const raceActivityLog = 'bitacora/';
+
+const minIncidenceLength = apiEnv==apiEnvDev ? 3 : 20;

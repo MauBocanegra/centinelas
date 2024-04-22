@@ -10,7 +10,6 @@ import 'package:centinelas_app/application/pages/map/helpers/location_permission
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

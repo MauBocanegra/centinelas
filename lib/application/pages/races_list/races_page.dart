@@ -24,7 +24,7 @@ class RacesPage extends StatelessWidget {
   const RacesPage({super.key});
 
   static const pageConfig = PageConfig(
-    icon: Icons.list,
+    icon: Icons.checklist_rounded,
     name: racesRoute,
     child: RacesProvider(),
   );

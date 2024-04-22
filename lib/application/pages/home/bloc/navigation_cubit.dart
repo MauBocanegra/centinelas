@@ -1,6 +1,5 @@
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'navigation_state.dart';

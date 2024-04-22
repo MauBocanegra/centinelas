@@ -28,7 +28,8 @@ class RacesBloc extends Bloc<RacesEvent, RacesState> {
           (failure) => emit(const RacesErrorState())
       );
     } on Exception catch(exception){
-      debugPrint('races_bloc catches correctly the exception and emits RacesErrorState');
+      debugPrint('races_bloc catches correctly '
+          'the exception and emits RacesErrorState: ${exception.toString()}');
       emit(const RacesErrorState());
     }
   }
