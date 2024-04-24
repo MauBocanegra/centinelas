@@ -7,12 +7,14 @@ import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bl
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
+import 'package:centinelas_app/application/pages/reports/bloc/reports_bloc.dart';
 import 'package:centinelas_app/core/config.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_entry_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_full_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/races_collection_firestore_remote_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/races_collection_id_firestore_remote_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/register_race_write_firestore_datasource.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/implementations/reports_firestore_datasource_impl.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/user_data_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/user_id_write_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_collection_id_firestore_datasource_interface.dart';
@@ -20,6 +22,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_full_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/races_collection_firestore_datesource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/register_race_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/reports_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/dispatcher_write_realtime_datasource.dart';
@@ -31,15 +34,18 @@ import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/in
 import 'package:centinelas_app/data/repository/races_collection_mock.dart';
 import 'package:centinelas_app/data/repository/races_repository_imp.dart';
 import 'package:centinelas_app/data/repository/realtime_repository_impl.dart';
+import 'package:centinelas_app/data/repository/reports_repository_impl.dart';
 import 'package:centinelas_app/data/repository/users_respository_impl.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
+import 'package:centinelas_app/domain/repositories/reports_repository.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:centinelas_app/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_custom_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
+import 'package:centinelas_app/domain/usecases/load_reports_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_incidence_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_phone_write_checkin_usecase.dart';
@@ -86,6 +92,9 @@ Future<void> init() async {
     loadCustomUserDataUseCase: serviceLocator(),
     writeUserDataUseCase: serviceLocator(),
   ));
+  serviceLocator.registerFactory(() => ReportsBloc(
+      loadReportsUseCase:serviceLocator()
+  ));
 
   // domain layer
   serviceLocator.registerFactory(() => LoadRacesUseCase(
@@ -125,6 +134,9 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => WriteUserDataUseCase(
       usersRepository: serviceLocator(),
   ));
+  serviceLocator.registerFactory(() => LoadReportsUseCase(
+      reportsRepository: serviceLocator(),
+  ));
 
   // data layer
   if(isServerDataFetched){
@@ -136,6 +148,9 @@ Future<void> init() async {
     );
     serviceLocator.registerFactory<RealtimeRepository>(() =>
         RealtimeRepositoryImpl()
+    );
+    serviceLocator.registerFactory<ReportsRepository>(() =>
+        ReportsRepositoryImpl()
     );
   } else {
     serviceLocator.registerFactory<RacesRepository>(() =>
@@ -184,7 +199,10 @@ Future<void> init() async {
       .registerFactory<DispatcherWriteRealtimeDatasourceInterface>(
           () => DispatcherWriteRealtimeDatasource()
   );
-
+  serviceLocator
+      .registerFactory<ReportsFirestoreDatasourceInterface>(
+      () => ReportsFirestoreDatasource()
+  );
 
   // library instances
   serviceLocator.registerFactory(() => FirebaseAuth.instance);

@@ -24,7 +24,7 @@ class RaceFullFirestoreDatasource
          final data = doc.data() as Map<String, dynamic>;
          raceFullModel = RaceFullModel(
              raceId: raceId,
-             title: data['titulo'],
+             title: data[raceTitleKey],
              discipline: raceId.split('/').first,
              address: data['ubicacion'],
              description: data['descripcion'],

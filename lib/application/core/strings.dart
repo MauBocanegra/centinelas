@@ -29,13 +29,15 @@ const emergencyDialogNoEmptyText = 'No puedes mandar incidencias que no contenga
 const incidenceReportedConfirmationText = 'Incidencia reportada correctamente\n'
     'Un despachador se pondrá en contacto contigo';
 const incidenceReportedErrorText ='Ocurrio un error, intenta nuevamente';
-const reportsPlaceholderText = 'Aquí podrás ver los reportes que realizaste durante la carrera y se actualizarán una vez que termine el evento.';
+const reportsPlaceholderText = 'Aquí podrás ver los reportes que realizaste durante la carrera.';
 
 const goToMapButtonText = '';
 
 const locationDeniedDialogTitle = 'Denegaste dar a la app Centinelas el acceso a tu ubicación.\nSin acceso a tu ubicación tus reportes de incidencia no incluirán la ubicación';
 const locationOffDialogTitle = 'La ubicación de tu dispositivo no esta encendida.\nSin acceso a tu ubicacion tus reportes de incidencia no incluiran la ubicacion';
 const locationErrorDialogOkButton = 'Continuar';
+
+const reportsErrorString = 'Ocurrió un error al cargar tus reportes, intenta nuevamente más tarde...';
 
 const privacyButtonText1 = 'Al iniciar sesión aceptas la ';
 const privacyButtonText2 = 'Política de privacidad de datos';

@@ -50,13 +50,11 @@ class SessionPageState extends State<SessionPageProvider> {
           );
           if (context.mounted) {
             if (activeRace.isNotEmpty) {
-              debugPrint('cleared and active race: $activeRace');
               context.goNamed(
                 DispatchPageProvider.pageConfig.name,
                 pathParameters: {activeRaceIdParamKey: activeRace},
               );
             } else {
-              debugPrint('shouldGoToHome');
               context.goNamed(
                 HomePage.pageConfig.name,
                 pathParameters: {'tab': RacesPage.pageConfig.name},
@@ -67,7 +65,6 @@ class SessionPageState extends State<SessionPageProvider> {
           debugPrint('error inSessionPage ${e.toString()}');
         }
       } else {
-        debugPrint('shouldGoToLogin');
         context.go('/${LoginPage.pageConfig.name}');
       }
     });

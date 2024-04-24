@@ -19,6 +19,8 @@ const userDataPhoneKey = 'telefono';
 const adminsDataKey = 'administradores';
 const dispatchersDataKey = 'despachadores';
 
+const raceTitleKey = 'titulo';
+
 const raceIdKeyForMapping = 'raceIdString';
 const raceEngagementKeyForMapping = 'raceEngagementObj';
 const phoneKeyForMapping = 'phoneIdString';

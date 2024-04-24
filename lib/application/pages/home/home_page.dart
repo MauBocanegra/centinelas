@@ -1,8 +1,11 @@
+import 'package:centinelas_app/application/core/page_config.dart';
+import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
+import 'package:centinelas_app/application/pages/reports/reports_page.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +13,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/page_config.dart';
-import '../../core/routes_constants.dart';
-import '../reports/reports_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({

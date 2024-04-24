@@ -1,6 +1,4 @@
 import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/entities/race_collection.dart';
-import 'package:centinelas_app/domain/entities/race_ids_collection.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
 import 'package:either_dart/either.dart';

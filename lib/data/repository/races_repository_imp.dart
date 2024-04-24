@@ -104,11 +104,5 @@ class RacesRepositoryImpl extends RacesRepository{
       ));
     }
   }
-
-  @override
-  Future<Either<RaceCollection, Failure>> readSingleRaceCollection() {
-    // TODO: implement readSingleRaceCollection
-    return Future.value(Right(ServerFailure(stackTrace: '')));
-  }
   
 }
