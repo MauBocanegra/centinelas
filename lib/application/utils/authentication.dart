@@ -1,5 +1,6 @@
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -36,6 +37,7 @@ class Authentication {
         user = userCredential.user;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential' && context.mounted) {
+          serviceLocator<FirebaseCrashlytics>().recordError(e, e.stackTrace);
           ScaffoldMessenger.of(context).showSnackBar(
             Authentication.customSnackBar(
               content:
@@ -43,6 +45,7 @@ class Authentication {
             ),
           );
         } else if (e.code == 'invalid-credential' && context.mounted) {
+          serviceLocator<FirebaseCrashlytics>().recordError(e, e.stackTrace);
           ScaffoldMessenger.of(context).showSnackBar(
             Authentication.customSnackBar(
               content:
@@ -50,15 +53,17 @@ class Authentication {
             ),
           );
         }
+        serviceLocator<FirebaseCrashlytics>().recordError(e, e.stackTrace);
         ScaffoldMessenger.of(context).showSnackBar(
           Authentication.customSnackBar(
             content:
             'Error occurred while accessing credentials. Try again.',
           ),
         );
-      } catch (e) {
+      } on Exception catch (e) {
         // handle the error here
         if(context.mounted) {
+          serviceLocator<FirebaseCrashlytics>().recordError(e,null);
           ScaffoldMessenger.of(context).showSnackBar(
             Authentication.customSnackBar(
               content: 'Error occurred using Google Sign In. Try again.',
@@ -75,8 +80,10 @@ class Authentication {
 
   static Future<void> signOut({required BuildContext context}) async {
     try {
+      await GoogleSignIn().disconnect();
       await FirebaseAuth.instance.signOut();
     } catch (e) {
+      serviceLocator<FirebaseCrashlytics>().recordError(e, null);
       ScaffoldMessenger.of(context).showSnackBar(
         Authentication.customSnackBar(
           content: 'Error signing out. Try again.',

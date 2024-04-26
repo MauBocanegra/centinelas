@@ -5,6 +5,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/mappers/iterable_datasnapshot_to_iterable_incidence_mapper.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,6 +30,7 @@ class IncidenceObserverRealtimeDatasource implements IncidenceObserverRealtimeDa
         debugPrint("streamController error");
       });
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Exception on incidence livestreaming: ${exception.toString()}');
     }
     return outputStreamController;

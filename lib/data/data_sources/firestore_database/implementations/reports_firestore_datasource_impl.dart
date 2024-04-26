@@ -5,6 +5,7 @@ import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/data/models/report_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -116,9 +117,8 @@ class ReportsFirestoreDatasource implements ReportsFirestoreDatasourceInterface{
       debugPrint('reportModel: ${reports.toString()}');
       return reports;
     } on Exception catch(e){
+      serviceLocator<FirebaseCrashlytics>().recordError(e, null);
       return [];
-      throw Exception('[ReportsDatasource] '
-          'error getting reportsData: ${e.toString()}');
     }
   }
 

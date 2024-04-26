@@ -2,6 +2,7 @@ import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class UserIdWriteFirsetoreDatasource implements
@@ -27,10 +28,12 @@ class UserIdWriteFirsetoreDatasource implements
         SetOptions(merge: true),
       ).onError((error, stackTrace) {
         debugPrint('write[UserID] ERROR: $error');
+        serviceLocator<FirebaseCrashlytics>().recordError(error, null);
         throw Exception('Unable to set userID from remote source');
       });
       return true;
     } on Exception catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('writeLoggedUser EXCEPTION: ${exception.toString()}');
       throw Exception('Unable to writeLoggedUser from remote source');
     }

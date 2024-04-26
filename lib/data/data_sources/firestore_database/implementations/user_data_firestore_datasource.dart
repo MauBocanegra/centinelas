@@ -7,6 +7,7 @@ import 'package:centinelas_app/data/mappers/user_data_doc_to_user_data_model.dar
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class UserDataFirestoreDatasource implements
@@ -28,8 +29,9 @@ class UserDataFirestoreDatasource implements
       }).onError((error, stackTrace){
         throw Exception('[raceFull Doc] doc/mapping error');
       });
-    } on Exception catch(e){
-      throw Exception('[raceFull] error getting userData: ${e.toString()}');
+    } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
+      throw Exception('[raceFull] error getting userData: ${exception.toString()}');
     }
 
     return userDataModel;
@@ -47,6 +49,7 @@ class UserDataFirestoreDatasource implements
         throw Exception('[raceFull Doc] doc/mapping error');
       });
     } on Exception catch(e){
+      serviceLocator<FirebaseCrashlytics>().recordError(e, null);
       throw Exception('[raceFull] error getting userData: ${e.toString()}');
     }
 
@@ -66,7 +69,8 @@ class UserDataFirestoreDatasource implements
       });
       return true;
     } on Exception catch (exception) {
-      //debugPrint('writeUserDAta EXCEPTION: ${exception.toString()}');
+      debugPrint('writeUserDAta EXCEPTION: ${exception.toString()}');
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       throw Exception('Unable to writeUserData to firestore');
     }
   }
@@ -93,10 +97,12 @@ class UserDataFirestoreDatasource implements
         }
       }).onError((error, stackTrace){
         hasDispatchClearance = false;
+        serviceLocator<FirebaseCrashlytics>().recordError(error, null);
         throw Exception('[despachadores Doc] doc/mapping error');
       });
       return hasDispatchClearance;
     } on Exception catch (exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('verifyUserDispatchClearance EXCEPTION: ${exception.toString()}');
       throw Exception('Unable to verifyUserDispatchClearance from firestore');
     }

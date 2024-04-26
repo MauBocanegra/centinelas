@@ -8,7 +8,6 @@ import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/button
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
 import 'package:centinelas_app/application/pages/reports/bloc/reports_bloc.dart';
-import 'package:centinelas_app/core/config.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_entry_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_full_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/races_collection_firestore_remote_datasource.dart';
@@ -31,7 +30,6 @@ import 'package:centinelas_app/data/data_sources/realtime_database/implementatio
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
-import 'package:centinelas_app/data/repository/races_collection_mock.dart';
 import 'package:centinelas_app/data/repository/races_repository_imp.dart';
 import 'package:centinelas_app/data/repository/realtime_repository_impl.dart';
 import 'package:centinelas_app/data/repository/reports_repository_impl.dart';
@@ -55,6 +53,7 @@ import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -139,24 +138,18 @@ Future<void> init() async {
   ));
 
   // data layer
-  if(isServerDataFetched){
-    serviceLocator.registerFactory<RacesRepository>(() =>
-        RacesRepositoryImpl()
-    );
-    serviceLocator.registerFactory<UsersRepository>(() =>
-        UsersRepositoryImpl()
-    );
-    serviceLocator.registerFactory<RealtimeRepository>(() =>
-        RealtimeRepositoryImpl()
-    );
-    serviceLocator.registerFactory<ReportsRepository>(() =>
-        ReportsRepositoryImpl()
-    );
-  } else {
-    serviceLocator.registerFactory<RacesRepository>(() =>
-        RacesRepositoryMock()
-    );
-  }
+  serviceLocator.registerFactory<RacesRepository>(() =>
+      RacesRepositoryImpl()
+  );
+  serviceLocator.registerFactory<UsersRepository>(() =>
+      UsersRepositoryImpl()
+  );
+  serviceLocator.registerFactory<RealtimeRepository>(() =>
+      RealtimeRepositoryImpl()
+  );
+  serviceLocator.registerFactory<ReportsRepository>(() =>
+      ReportsRepositoryImpl()
+  );
 
   // datasources
   serviceLocator
@@ -217,4 +210,5 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => FirebaseFirestore.instance);
   serviceLocator.registerFactory(() => FirebaseDatabase.instance);
   serviceLocator.registerFactory(() => FirebaseMessaging.instance);
+  serviceLocator.registerFactory(() => FirebaseCrashlytics.instance);
 }
