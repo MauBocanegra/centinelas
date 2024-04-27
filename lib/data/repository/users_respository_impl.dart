@@ -8,6 +8,7 @@ import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/src/either.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class UsersRepositoryImpl extends UsersRepository{
@@ -23,6 +24,7 @@ class UsersRepositoryImpl extends UsersRepository{
           dispatcherWriteRealtimeDatasource.writeDispatcher();
       return wasAbleToWriteDispatcherInRealtime;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Exception writeDispatcherInRealtimeDatabase: ${exception.toString()}');
       return false;
     }
@@ -37,6 +39,7 @@ class UsersRepositoryImpl extends UsersRepository{
         await userIdWriteFirestoreDatasource.writeUserID(uid);
       return wasAbleToWriteUserId;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return false;
     }
   }
@@ -54,6 +57,7 @@ class UsersRepositoryImpl extends UsersRepository{
               .writeRaceEngagement(raceId, engagementType);
       return wasAbleToWriteRaceEngagement;
     }on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return false;
     }
   }
@@ -66,6 +70,7 @@ class UsersRepositoryImpl extends UsersRepository{
       final userDataModel = await userDataFirestoreDatasource.fetchUserData();
       return Left(userDataModel);
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Future.value(Right(
           ServerFailure(stackTrace: exception.toString())
       ));
@@ -81,6 +86,7 @@ class UsersRepositoryImpl extends UsersRepository{
         await userDataFirestoreDatasource.updateUserData(data);
       return wasAbleToUpdateData;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('error updating UserData[UsersRepository]: '
           '${exception.toString()}');
       return false;
@@ -96,6 +102,7 @@ class UsersRepositoryImpl extends UsersRepository{
           await userDataFirestoreDatasource.verifyUserHasDispatchClearance();
       return userHasDispatchClearance;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('error isCurrentUserDispatchAuthorized[UsersRepository]: '
           '${exception.toString()}');
       return false;
@@ -113,6 +120,7 @@ class UsersRepositoryImpl extends UsersRepository{
         await userDataFirestoreDatasource.fetchCustomUserData(customUserId);
       return Left(userDataModel);
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Future.value(Right(
           ServerFailure(stackTrace: exception.toString())
       ));

@@ -4,6 +4,7 @@ import 'package:centinelas_app/data/models/report_model.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/reports_repository.dart';
 import 'package:either_dart/src/either.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class ReportsRepositoryImpl extends ReportsRepository {
   ReportsRepositoryImpl();
@@ -17,6 +18,7 @@ class ReportsRepositoryImpl extends ReportsRepository {
           await reportsFirestoreDatasource.fetchRacesReports();
       return Left(reportsDataModel);
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Future.value(
           Right(ServerFailure(
               stackTrace: exception.toString()

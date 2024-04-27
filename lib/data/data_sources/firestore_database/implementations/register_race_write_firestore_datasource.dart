@@ -5,6 +5,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class WriteEngagementRaceFirestoreDatasource implements
@@ -33,6 +34,7 @@ class WriteEngagementRaceFirestoreDatasource implements
       ).set({ raceId: engagementString },
         SetOptions(merge: true)
       ).onError((error, stackTrace){
+        serviceLocator<FirebaseCrashlytics>().recordError(error, null);
         debugPrint('writeRaceRegistration EXCEPTION: ${error.toString()}');
         throw Exception('Unable to writeRaceRegistration from remote source');
       });
@@ -50,12 +52,13 @@ class WriteEngagementRaceFirestoreDatasource implements
       },
           SetOptions(merge: true)
       ).onError((error, stackTrace){
-        debugPrint('writeRaceRegistration EXCEPTION: ${error.toString()}');
+        debugPrint('writeRaceRegistration ERROR: ${error.toString()}');
         throw Exception('Unable to writeRaceRegistration from remote source');
       });
 
       return true;
     } on Exception catch (exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('writeRaceRegistration EXCEPTION: ${exception.toString()}');
       throw Exception('Unable to writeRaceRegistration from remote source');
     }

@@ -4,6 +4,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/mappers/race_entry_doc_to_race_entry_model_mapper.dart';
 import 'package:centinelas_app/data/models/race_entry_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class RaceEntryFirestoreDatasource implements
@@ -21,7 +22,8 @@ class RaceEntryFirestoreDatasource implements
         final data = doc.data() as Map<String, dynamic>;
         data['id'] = raceEntryId;
         raceEntryModel = mapRaceEntryDocToRaceEntryModel(data);
-      } catch(e){
+      } catch(exception){
+        serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
         raceEntryModel = RaceEntryModel.empty();
         throw Exception('[raceEntry] mapping error');
       }

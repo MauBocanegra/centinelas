@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +29,7 @@ class RaceDetailBloc extends Bloc<RaceDetailEvent, RaceDetailState> {
         emit(RaceDetailLoadedState(raceFull: raceFull.left));
       }
     }catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint(exception.toString());
       emit(const RaceDetailErrorState());
     }

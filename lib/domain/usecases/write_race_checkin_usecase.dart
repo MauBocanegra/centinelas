@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/data/sealed_classes/checkin_race_attempt_resolution.dart';
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
@@ -5,6 +6,7 @@ import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:either_dart/src/either.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class WriteRaceCheckinUseCase implements
     UseCase<CheckInRaceAttemptResolution, String>{
@@ -40,6 +42,7 @@ class WriteRaceCheckinUseCase implements
         }
       }
     } on Exception catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Right(ServerFailure(stackTrace: exception.toString()));
     }
   }

@@ -5,6 +5,7 @@ import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState>{
           (failure) => emit(ProfileErrorState()),
       );
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('errorOnLoadingProfile ${exception.toString()}');
       emit(ProfileErrorState());
     }
@@ -47,6 +49,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState>{
                 (right) => ProfileErrorState()
         );
     } on Exception catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('error updatingUserData[ProfileBloc] ${exception.toString()}');
     }
   }

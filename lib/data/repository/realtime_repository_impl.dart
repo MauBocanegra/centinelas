@@ -7,6 +7,7 @@ import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/in
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class RealtimeRepositoryImpl extends RealtimeRepository{
@@ -25,6 +26,7 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
           await writeDispatcherInRTDBDatasource.writeDispatcher();
       return wasAbleToWriteDispatcher;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
       return false;
     }
@@ -39,6 +41,7 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
           await writeIncidenceRealtimeDatasource.writeIncidence(data);
       return wasAbleToWriteIncidence;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
       return false;
     }
@@ -54,6 +57,7 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
       });
       return outputStreamController;
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Error WriteIncidenceRealtimeDB: ${exception.toString()}');
       return outputStreamController;
     }

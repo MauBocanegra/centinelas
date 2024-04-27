@@ -4,6 +4,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/models/race_full_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class RaceFullFirestoreDatasource 
@@ -60,7 +61,8 @@ class RaceFullFirestoreDatasource
          /// NO race engagement data
          raceFullModel.raceEngagementState = raceEngagementEmpty;
        }
-    } catch (e) {
+    } catch (exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       throw Exception('[raceFull Doc] fetch/mapping error');
     }
 

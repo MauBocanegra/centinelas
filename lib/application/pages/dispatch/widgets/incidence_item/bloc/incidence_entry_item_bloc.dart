@@ -1,6 +1,8 @@
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/usecases/load_custom_user_data_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,6 +30,7 @@ class IncidenceEntryItemBloc extends
               (right) => emit(const IncidenceEntryItemErrorState()),
       );
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('incidenceEntryItemError: ${exception.toString()}');
       emit(const IncidenceEntryItemErrorState());
     }

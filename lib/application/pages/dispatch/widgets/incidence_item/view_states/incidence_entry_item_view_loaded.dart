@@ -1,6 +1,8 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -100,6 +102,7 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
       );
       await launchUrl(launchUri);
     }on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('exception in LaunchURL: ${exception.toString()}');
     }
   }
@@ -108,6 +111,7 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
     try {
       MapsLauncher.launchCoordinates(lat, lon);
     }on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('exception in LaunchURL: ${exception.toString()}');
     }
   }
@@ -116,6 +120,7 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
     try {
       await Clipboard.setData(ClipboardData(text: phoneNumber));
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('exception in LaunchURL: ${exception.toString()}');
     }
   }

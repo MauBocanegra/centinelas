@@ -9,6 +9,7 @@ import 'package:centinelas_app/application/widgets/colors.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
@@ -61,8 +62,9 @@ class SessionPageState extends State<SessionPageProvider> {
               );
             }
           }
-        }on Exception catch(e){
-          debugPrint('error inSessionPage ${e.toString()}');
+        }on Exception catch(exception){
+          serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
+          debugPrint('error inSessionPage ${exception.toString()}');
         }
       } else {
         context.go('/${LoginPage.pageConfig.name}');

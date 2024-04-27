@@ -14,6 +14,7 @@ import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -182,6 +183,7 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
             throw Exception('Unable to write dispatcher in RTDB');
           }
         }on Exception catch(e){
+          serviceLocator<FirebaseCrashlytics>().recordError(e, null);
           debugPrint('error inSessionPage ${e.toString()}');
         }
       } else {

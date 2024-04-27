@@ -13,6 +13,7 @@ import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:either_dart/src/either.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class RacesRepositoryImpl extends RacesRepository{
@@ -27,6 +28,7 @@ class RacesRepositoryImpl extends RacesRepository{
       final raceEntryModel = await raceEntryFirestoreDatasource.fetchRaceEntry(raceEntryId.value);
       return Left(mapRaceEntryModelToRaceEntry(raceEntryModel));
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
     }
   }
@@ -48,6 +50,7 @@ class RacesRepositoryImpl extends RacesRepository{
       return Left(mapRaceEntriesIdsModelToRaceEntryIdList(raceEntriesIdsModel));
 
     } on Exception catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       return Future.value(Right(ServerFailure(stackTrace: exception.toString())));
     }
   }
@@ -63,8 +66,11 @@ class RacesRepositoryImpl extends RacesRepository{
 
       return Left(mapRaceFullModelToRaceFull(raceFullModel));
 
-    } on Exception catch(e){
-      return Future.value(Right(ServerFailure(stackTrace: e.toString())));
+    } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
+      return Future.value(
+          Right(ServerFailure(stackTrace: exception.toString()))
+      );
     }
 
   }
@@ -98,6 +104,7 @@ class RacesRepositoryImpl extends RacesRepository{
           )
       ));
     } on Exception catch(exception) {
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('inRacesRepositoryImp: $exception');
       return Future.value(Right(
           ServerFailure(stackTrace: exception.toString())

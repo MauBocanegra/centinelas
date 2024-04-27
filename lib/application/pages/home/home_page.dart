@@ -8,6 +8,7 @@ import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/reports/reports_page.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
@@ -56,6 +57,7 @@ class HomePageState extends State<HomePage> {
         }
       });
     } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
       debugPrint('Unable to write user: ${exception.toString()}');
     }
     return Scaffold(
