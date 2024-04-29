@@ -87,7 +87,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
       verifyDataModification();
     });
     drugSensitivityController.addListener(() {
-      typedAllergies = drugSensitivityController.value.text;
+      typedDrugSensitivities= drugSensitivityController.value.text;
       verifyDataModification();
     });
   }
@@ -207,7 +207,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                   controller: emergencyContactNameController,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(60),
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                    FilteringTextInputFormatter.allow(RegExp(allowedChars))
                   ],
                 ),
               ) : spacer(),
@@ -239,7 +239,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                   controller: allergiesController,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(100),
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                    FilteringTextInputFormatter.allow(RegExp(allowedChars))
                   ]
                 ),
               ) : spacer(),
@@ -254,7 +254,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                   controller: drugSensitivityController,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(100),
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                    FilteringTextInputFormatter.allow(RegExp(allowedChars))
                   ]
                 ),
               ) : spacer(),

@@ -57,7 +57,7 @@ const userDataNameKey = 'nombre_centinela';
 const userDataEmergencyContactNameKey = 'contacto_emergencia_nombre';
 const userDataEmergencyContactPhoneKey = 'contacto_emergencia_telefono';
 const userDataSevereAllergiesKey = 'alergias_severas';
-const userDataDrugAllergiesKey = 'sensibilidad_farmacos';
+const userDataDrugSensitivitiesKey = 'sensibilidad_farmacos';
 
 const raceActivityLog = 'bitacora/';
 

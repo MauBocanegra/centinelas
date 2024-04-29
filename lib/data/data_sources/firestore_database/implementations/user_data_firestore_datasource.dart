@@ -63,6 +63,11 @@ class UserDataFirestoreDatasource implements
         '$apiEnv/$usersInfoCollectionKey/$uid/$userDataKey'
       ).set({
         userDataPhoneKey : userDataModel.phone,
+        userDataEmergencyContactNameKey: userDataModel.emergencyContactName,
+        userDataEmergencyContactPhoneKey: userDataModel.emergencyContactPhone,
+        userDataSevereAllergiesKey: userDataModel.severeAllergies,
+        userDataDrugSensitivitiesKey: userDataModel.drugSensitivities
+
       }, SetOptions(merge: true)).onError((error, stackTrace){
         //debugPrint('writeUserData EXCEPTION: ${error.toString()}');
         throw Exception('Unable to userDataModel to firestore');

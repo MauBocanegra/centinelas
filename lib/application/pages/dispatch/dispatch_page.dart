@@ -16,10 +16,8 @@ import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -58,6 +56,7 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
   late final BlocProvider<DispatchBloc> dispatchBloc;
   final StreamController<Iterable<IncidenceModel>> streamController =
     StreamController();
+  final ScrollController scrollController = ScrollController();
 
   late GoogleMap googleMap;
 
@@ -169,6 +168,14 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
     debugPrint('User granted permission: ${settings.authorizationStatus}');
   }
 
+  void scrollUp() {
+    scrollController.animateTo(
+      scrollController.position.minScrollExtent,
+      duration: const Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -216,6 +223,9 @@ class DispatchPageProviderState extends State<DispatchPageProvider> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: ListView.builder(
+                        reverse: true,
+                        shrinkWrap: true,
+                        controller: scrollController,
                         itemCount: snapshot.data?.length,
                         itemBuilder: (BuildContext context, int index){
                           return IncidenceEntryItemProvider(

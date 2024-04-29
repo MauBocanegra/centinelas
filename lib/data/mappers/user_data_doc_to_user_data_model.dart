@@ -8,7 +8,7 @@ UserDataModel userDataDocToUserDataModel(Map<String, dynamic> data){
   userDataModel.emergencyContactName = data[userDataEmergencyContactNameKey];
   userDataModel.emergencyContactPhone = data[userDataEmergencyContactPhoneKey];
   userDataModel.severeAllergies = data[userDataSevereAllergiesKey];
-  userDataModel.drugSensitivities = data[userDataDrugAllergiesKey];
+  userDataModel.drugSensitivities = data[userDataDrugSensitivitiesKey];
 
   return userDataModel;
 }

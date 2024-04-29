@@ -16,6 +16,8 @@ const String stringEmergencyContactPhone = 'Teléfono (contacto de emergencia)';
 const String stringAllergies = 'Alergias severas';
 const String stringDrugSensitivity = 'Sensibilidad a Farmacos';
 
+const String allowedChars = '[a-zA-Z áéíóúüçñÑ]';
+
 const assistanceDialogTitle = 'Asistencia';
 const assistanceDialogHint = 'Reportar de manera concisa la alerta';
 const assistanceDialogDescription = 'Describe el incidente con el mayor detalle posible, '

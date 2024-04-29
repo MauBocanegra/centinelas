@@ -20,7 +20,7 @@ import Firebase
          UIApplication.shared.registerForRemoteNotifications()
      }
     GeneratedPluginRegistrant.register(with: self)
-      GMSServices.provideAPIKey("AIzaSyDgsZE2Fs9Di2keB4y2cuk9i_nw9vaHd1g")
+      GMSServices.provideAPIKey("AIzaSyDrPuR5YYwq7e0EN0GFZ5wayWqqd6pB-0E")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
