@@ -1,5 +1,4 @@
 import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/data/sealed_classes/checkin_race_attempt_resolution.dart';
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
@@ -10,7 +9,6 @@ import 'package:centinelas_app/domain/usecases/write_race_engagement_usecase.dar
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 
 part 'race_detail_buttons_state.dart';
 part 'race_detail_buttons_event.dart';

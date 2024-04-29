@@ -1,4 +1,3 @@
-import 'package:centinelas_app/application/app/bloc/auth_cubit.dart' as auth;
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
