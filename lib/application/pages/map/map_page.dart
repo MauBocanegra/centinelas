@@ -10,11 +10,12 @@ import 'package:centinelas_app/application/pages/map/helpers/location_permission
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart' as CustomPermissionHandler;
+import 'package:permission_handler/permission_handler.dart' as custom_permission_handler;
 
 class MapPageProvider extends StatefulWidget {
   final String raceIdString;
@@ -30,10 +31,10 @@ class MapPageProvider extends StatefulWidget {
   );
 
   @override
-  State<MapPageProvider> createState() => _MapPageState();
+  State<MapPageProvider> createState() => MapPageState();
 }
 
-class _MapPageState extends State<MapPageProvider> {
+class MapPageState extends State<MapPageProvider> {
 
   Location location = Location();
   late bool serviceEnabled;
@@ -56,7 +57,7 @@ class _MapPageState extends State<MapPageProvider> {
           if(state is RaceDetailButtonsLoadingState){
             await showModalActionSheet<String>(
                 context: context,
-              message: 'Obteniendo ubicacion y enviando incidencia...',
+              message: obtainingLocationString,
               isDismissible: false,
             );
           } else if(state is RaceDetailButtonsIncidenceWithSuccessState){
@@ -124,10 +125,10 @@ class _MapPageState extends State<MapPageProvider> {
   }
 
   void checkAndRequestLocationPermissions() async {
-    if(await CustomPermissionHandler.Permission.location.serviceStatus.isEnabled){
+    if(await custom_permission_handler.Permission.location.serviceStatus.isEnabled){
       // enabled
-      var status = await CustomPermissionHandler.Permission.location.status;
-      if(await CustomPermissionHandler.Permission.location.isPermanentlyDenied){
+      var status = await custom_permission_handler.Permission.location.status;
+      if(await custom_permission_handler.Permission.location.isPermanentlyDenied){
         widget.locationPermissionStatus = LocationPermissionPermanentlyDenied();
       }
       if(status.isGranted){
@@ -136,10 +137,10 @@ class _MapPageState extends State<MapPageProvider> {
       } else {
         // location permission not granted
         Map<
-            CustomPermissionHandler.Permission,
-            CustomPermissionHandler.PermissionStatus
-        > requestStatus = await [CustomPermissionHandler.Permission.location].request();
-        var locationStatus = await CustomPermissionHandler.Permission.location.status;
+            custom_permission_handler.Permission,
+            custom_permission_handler.PermissionStatus
+        > requestStatus = await [custom_permission_handler.Permission.location].request();
+        var locationStatus = await custom_permission_handler.Permission.location.status;
         if(locationStatus.isGranted){
           widget.locationPermissionStatus = LocationPermissionGranted();
         } else {
@@ -184,16 +185,20 @@ class _MapPageState extends State<MapPageProvider> {
     String dialogTitle = '';
     String dialogDescription = '';
     String dialogNoEmptyText = '';
+    String firebaseEventIncidenceString = '';
+
     if(incidenceRequestType is SimpleIncidenceRequestType){
       dialogHint = assistanceDialogHint;
       dialogTitle = assistanceDialogTitle;
       dialogDescription = assistanceDialogDescription;
       dialogNoEmptyText = assistanceDialogNoEmptyText;
+      firebaseEventIncidenceString = firebaseEventSendAssistanceIncidence;
     } else if (incidenceRequestType is EmergencyIncidenceRequestType){
       dialogHint = emergencyDialogHint;
       dialogTitle = emergencyDialogTitle;
       dialogDescription = emergencyDialogDescription;
       dialogNoEmptyText = emergencyDialogNoEmptyText;
+      firebaseEventIncidenceString = firebaseEventSendEmergencyIncidence;
     }
 
     checkAndRequestLocationPermissions();
@@ -226,7 +231,7 @@ class _MapPageState extends State<MapPageProvider> {
       case _:{}
     }
 
-    List<String>? inputText = null;
+    List<String>? inputText;
     if(context.mounted) {
       inputText = await showTextInputDialog(
         context: context,
@@ -251,6 +256,9 @@ class _MapPageState extends State<MapPageProvider> {
       }
       double doubleFallback = 0.0;
       if(context.mounted) {
+        serviceLocator<FirebaseAnalytics>().logEvent(
+            name: firebaseEventIncidenceString
+        );
         context.read<RaceDetailButtonsBloc>().writeIncidence({
           raceIdKeyForMapping: widget.raceIdString,
           incidenceTextKeyForMapping: inputedText,

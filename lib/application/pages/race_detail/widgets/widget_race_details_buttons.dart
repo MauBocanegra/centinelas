@@ -1,28 +1,24 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
-import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-/// hay que limpiar este codigo :(
 class RaceDetailsButtonsWidgetProvider extends StatefulWidget{
-  RaceDetailsButtonsWidgetProvider({
+  const RaceDetailsButtonsWidgetProvider({
     super.key,
     required this.raceFull,
   });
 
   final RaceFull raceFull;
-  final String uid =
-      serviceLocator<FirebaseAuth>().currentUser?.uid ?? '';
 
   @override
   State<StatefulWidget> createState() => RaceDetailsButtonsWidget();
@@ -31,19 +27,43 @@ class RaceDetailsButtonsWidgetProvider extends StatefulWidget{
 class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
 
   final textEditingController = TextEditingController();
-  late final BlocProvider<RaceDetailButtonsBloc> raceDetailButtonsBloc;
   String typedPhone = '';
+  bool isPhoneCompleted = false;
+  String? get errorPhoneText {
+    final text = textEditingController.value.text;
+    if (text.length < 10) {
+      return errorPhone;
+    }
+    return null;
+  }
 
   @override
   void initState(){
     super.initState();
-    raceDetailButtonsBloc = BlocProvider<RaceDetailButtonsBloc>(
+
+    textEditingController.addListener(() {
+      typedPhone = textEditingController.value.text;
+      if(typedPhone.length == 10){
+        setState(() {
+          isPhoneCompleted = true;
+        });
+      }else{
+        setState(() {
+          isPhoneCompleted = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<RaceDetailButtonsBloc>(
       create: (context) => serviceLocator<RaceDetailButtonsBloc>()
-        ..determineButtonsState(widget.raceFull, widget.uid),
+        ..determineButtonsState(widget.raceFull),
       child: BlocConsumer<RaceDetailButtonsBloc, RaceDetailButtonsState>(
           listener: (context, state) async {
             if(state is RaceDetailButtonsIncidenceWithSuccessState){
-              final result = await showModalActionSheet<String>(
+              await showModalActionSheet<String>(
                 context: context,
                 message: incidenceReportedConfirmationText,
               );
@@ -61,18 +81,26 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
             } else if(state is RaceDetailButtonsOnlyRegisterState){
               return ElevatedButton(
                 style: raisedBlueButtonStyle,
-                onPressed: () { context
+                onPressed: () {
+                  serviceLocator<FirebaseAnalytics>().logEvent(
+                      name: firebaseEventRegister
+                  );
+                  context
                     .read<RaceDetailButtonsBloc>()
-                    .registerForRace(widget.raceFull, widget.uid);
+                    .registerForRace(widget.raceFull);
                 },
                 child: const Text(registerButtonText),
               );
             } else if (state is RaceDetailButtonsOnlyCheckInState){
               return ElevatedButton(
                 style: raisedOrangeButtonStyle,
-                onPressed: () { context
+                onPressed: () {
+                  serviceLocator<FirebaseAnalytics>().logEvent(
+                      name: firebaseEventCheckin
+                  );
+                  context
                     .read<RaceDetailButtonsBloc>()
-                    .checkInRace(widget.raceFull, widget.uid);
+                    .checkInRace(widget.raceFull);
                 },
                 child: const Text(checkInButtonText),
               );
@@ -82,23 +110,23 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                 child: Center(
                     child:Column(
                       children: [
-                        TextField(
-                          decoration: const InputDecoration(
-                            hintText: hintPhone
-                          ),
-                          keyboardType: TextInputType.phone,
-                          controller: textEditingController,
+                        TextFormField(
+                            decoration: InputDecoration(
+                              labelText: stringPhoneTitle,
+                              hintText: hintPhone,
+                              errorText: errorPhoneText,
+                            ),
+                            keyboardType: TextInputType.phone,
+                            controller: textEditingController,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10),
+                              FilteringTextInputFormatter.digitsOnly
+                            ]
                         ),
+                        const SizedBox(height: 8,),
                         ElevatedButton(
                           style: raisedOrangeButtonStyle,
-                          onPressed: () { context
-                              .read<RaceDetailButtonsBloc>()
-                              .updatePhoneThenCheckIn(
-                            widget.raceFull,
-                            widget.uid,
-                            typedPhone,
-                          );
-                          },
+                          onPressed: isPhoneCompleted ? updatePhoneAndCheckin : null,
                           child: const Text(phoneAndCheckInButtonText),
                         )
                       ],
@@ -117,35 +145,21 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
               );
             }else if (
             state is RaceDetailButtonsIncidenceState ||
-            state is RaceDetailButtonsIncidenceWithSuccessState ||
-            state is RaceDetailButtonsIncidenceWithErrorState
+                state is RaceDetailButtonsIncidenceWithSuccessState ||
+                state is RaceDetailButtonsIncidenceWithErrorState
             ){
               return ElevatedButton(
-                  onPressed: (){
-                    context.goNamed(
-                      MapPageProvider.pageConfig.name,
-                      pathParameters: {raceFullIdParamKey : widget.raceFull.id.value},
-                    );
-                  },
-                  child: const Text('Seguimiento de carrera'),
+                onPressed: (){
+                  serviceLocator<FirebaseAnalytics>().logEvent(
+                      name: firebaseEventGoToMap
+                  );
+                  context.goNamed(
+                    MapPageProvider.pageConfig.name,
+                    pathParameters: {raceFullIdParamKey : widget.raceFull.id.value},
+                  );
+                },
+                child: const Text(mapButtonText),
               );
-              /*
-              return Center(child: Column(children: [
-                ElevatedButton(
-                  style: raisedYellowButtonStyle,
-                  onPressed: () { onTapAssistanceButton(context); },
-                  child: const Text(assistanceButtonText),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                ElevatedButton(
-                  style: raisedRedButtonStyle,
-                  onPressed: () { onTapEmergencyButton(context); },
-                  child: const Text(emergencyButtonText),
-                ),
-              ],),);
-              */
             } else {
               return const Center(
                 child: Text(errorRaceDetailButtonsWidget),
@@ -154,63 +168,21 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
           }
       ),
     );
-
-    textEditingController.addListener(() {
-      typedPhone = textEditingController.value.text;
-      debugPrint(typedPhone);
-    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return raceDetailButtonsBloc;
+  void updatePhoneAndCheckin(){
+    serviceLocator<FirebaseAnalytics>().logEvent(
+        name: firebaseEventCheckinAfterPhone
+    );
+    context.read<RaceDetailButtonsBloc>().updatePhoneThenCheckIn(
+      widget.raceFull,
+      typedPhone,
+    );
   }
 
   @override
   void dispose() {
     textEditingController.dispose();
     super.dispose();
-  }
-
-  void onTapAssistanceButton(BuildContext context) async {
-    final inputText = await showTextInputDialog(
-      context: context,
-      textFields: [
-        const DialogTextField(
-          hintText: assistanceDialogHint,
-          maxLines: 2,
-        ),
-      ],
-      title: assistanceDialogTitle,
-      message: assistanceDialogDescription,
-    );
-    if(context.mounted && inputText != null && inputText.isNotEmpty) {
-      context.read<RaceDetailButtonsBloc>().writeIncidence({
-        raceIdKeyForMapping : widget.raceFull.id.value,
-        incidenceTextKeyForMapping : inputText.first,
-        incidenceTypeKeyForMapping : SimpleIncidenceRequestType(),
-      });
-    }
-  }
-
-  void onTapEmergencyButton(BuildContext context) async {
-    final inputText = await showTextInputDialog(
-      context: context,
-      textFields: [
-        const DialogTextField(
-          hintText: emergencyDialogHint,
-          maxLines: 3,
-        ),
-      ],
-      title: emergencyDialogTitle,
-      message: emergencyDialogDescription,
-    );
-    if(context.mounted && inputText != null && inputText.isNotEmpty) {
-      context.read<RaceDetailButtonsBloc>().writeIncidence({
-        raceIdKeyForMapping : widget.raceFull.id.value,
-        incidenceTextKeyForMapping : inputText.first,
-        incidenceTypeKeyForMapping : EmergencyIncidenceRequestType(),
-      });
-    }
   }
 }

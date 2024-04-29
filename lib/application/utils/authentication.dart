@@ -1,4 +1,6 @@
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ class Authentication {
   static Future<void> signOutFromGoogle({required BuildContext context}) async {
     FirebaseAuth auth = serviceLocator<FirebaseAuth>();
     final signOutResult = await auth.signOut();
+    serviceLocator<FirebaseAnalytics>().logEvent(name: firebaseEventLogout);
     return signOutResult;
   }
 
@@ -35,6 +38,8 @@ class Authentication {
         await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        serviceLocator<FirebaseAnalytics>().setUserId(id: user?.email);
+        serviceLocator<FirebaseAnalytics>().logLogin();
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential' && context.mounted) {
           serviceLocator<FirebaseCrashlytics>().recordError(e, e.stackTrace);

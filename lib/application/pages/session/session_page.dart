@@ -8,6 +8,7 @@ import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/widgets/colors.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,9 @@ class SessionPageState extends State<SessionPageProvider> {
           );
           if (context.mounted) {
             if (activeRace.isNotEmpty) {
+              serviceLocator<FirebaseAnalytics>().logEvent(
+                  name: firebaseEventGoToDispatch
+              );
               context.goNamed(
                 DispatchPageProvider.pageConfig.name,
                 pathParameters: {activeRaceIdParamKey: activeRace},

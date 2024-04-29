@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
@@ -7,6 +8,7 @@ import 'package:centinelas_app/application/pages/race_detail/race_detail_page.da
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/reports/reports_page.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +72,9 @@ class HomePageState extends State<HomePage> {
                 builder: (context) => AdaptiveScaffold.standardNavigationRail(
                   trailing: IconButton(
                       onPressed:(){
+                        serviceLocator<FirebaseAnalytics>().logEvent(
+                            name: firebaseEventGoToProfile
+                        );
                         context.goNamed(ProfilePageWidgetProvider.pageConfig.name,);
                       },
                       icon: Icon((ProfilePageWidgetProvider.pageConfig.icon))
@@ -159,6 +164,10 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void tapOnNavigationDestination(BuildContext context, int index) =>
+  void tapOnNavigationDestination(BuildContext context, int index){
+    serviceLocator<FirebaseAnalytics>().logEvent(
+        name: firebaseEventGoToProfile
+    );
       context.go('/$homeRoute/${HomePage.tabs[index].name}');
+  }
 }

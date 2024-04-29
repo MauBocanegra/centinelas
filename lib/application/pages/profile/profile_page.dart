@@ -10,6 +10,7 @@ import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,7 +43,23 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
   final drugSensitivityController = TextEditingController();
   String typedDrugSensitivities = '';
 
-  bool isInitialDataUnmodified = false;
+  String? get errorPhoneText {
+    final text = phoneController.value.text;
+    if (text.isEmpty || text.length < 10) {
+      return errorPhone;
+    }
+    return null;
+  }
+
+  String? get errorEmergencyPhoneText {
+    final text = emergencyContactPhoneController.value.text;
+    if (text.isEmpty || text.length < 10) {
+      return errorPhone;
+    }
+    return null;
+  }
+
+  bool isFABVisible = false;
 
   late final BlocProvider<ProfileBloc> profileBloc;
   UserDataModel? initialUserData;
@@ -121,14 +138,12 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
         ),
       ),
       floatingActionButton: Visibility(
-          visible: !isInitialDataUnmodified,
+          visible: isFABVisible,
           child: FloatingActionButton(
-              onPressed: (){
-                writeUserData(context);
-              },
+              onPressed: (){writeUserData(context);},
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
-              child: const Icon(Icons.check)
+              child: const Icon(Icons.check),
           )
       ),
       body: SafeArea(
@@ -165,73 +180,82 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                 child: CircularProgressIndicator(),
               ),
               /// phone
-              (state is ProfileLoadedState)
-                  ? textContainer(stringPhoneTitle)
-                  : spacer(),
               (state is ProfileLoadedState) ? Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: TextField(
-                  decoration: const InputDecoration(
-                      hintText: hintPhone
-                  ),
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: stringPhoneTitle,
+                      hintText: hintPhone,
+                      errorText: errorPhoneText,
+                    ),
                   keyboardType: TextInputType.phone,
                   controller: phoneController,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly
+                  ]
                 ),
               ) : spacer(),
               /// emergencyContactName
-              (state is ProfileLoadedState)
-                  ? textContainer(stringEmergencyContactName)
-                  : spacer(),
               (state is ProfileLoadedState) ? Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: TextField(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: TextFormField(
                   decoration: const InputDecoration(
-                      hintText: hintEmergencyContactName
+                    labelText: stringEmergencyContactName,
                   ),
                   keyboardType: TextInputType.name,
                   controller: emergencyContactNameController,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(60),
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                  ],
                 ),
               ) : spacer(),
               /// emergencyContactPhone
-              (state is ProfileLoadedState)
-                  ? textContainer(stringEmergencyContactPhone)
-                  : spacer(),
               (state is ProfileLoadedState) ? Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: TextField(
-                  decoration: const InputDecoration(
-                      hintText: hintEmergencyContactPhone
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: stringEmergencyContactPhone,
+                    hintText: hintPhone,
+                    errorText: errorEmergencyPhoneText,
                   ),
                   keyboardType: TextInputType.phone,
                   controller: emergencyContactPhoneController,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly
+                  ]
                 ),
               ) : spacer(),
               /// alergies
-              (state is ProfileLoadedState)
-                  ? textContainer(stringAllergies)
-                  : spacer(),
               (state is ProfileLoadedState) ? Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: TextField(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: TextFormField(
                   decoration: const InputDecoration(
-                      hintText: hintAllergies
+                      labelText: stringAllergies
                   ),
                   keyboardType: TextInputType.text,
                   controller: allergiesController,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(100),
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                  ]
                 ),
               ) : spacer(),
               /// drugSensitivities
-              (state is ProfileLoadedState)
-                  ? textContainer(stringDrugSensitivity)
-                  : spacer(),
               (state is ProfileLoadedState) ? Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: TextField(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: TextFormField(
                   decoration: const InputDecoration(
-                      hintText: hintDrugSensitivity
+                      labelText: stringDrugSensitivity
                   ),
                   keyboardType: TextInputType.text,
                   controller: drugSensitivityController,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(100),
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
+                  ]
                 ),
               ) : spacer(),
               const SizedBox(height: 48,),
@@ -297,18 +321,25 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
           typedAllergies == (initialUserData?.severeAllergies ?? '');
       bool areTypedSensitivitiesSameAsCloud =
           typedDrugSensitivities == (initialUserData?.drugSensitivities ?? '');
+      bool phoneTextIs10Digits =
+          typedPhone.length==10 ;
+      bool emergencyPhoneTextIs10Digits =
+          typedEmergencyContactPhone.length==10
+              ||  typedEmergencyContactPhone.isEmpty;
 
       setState(() {
-        isInitialDataUnmodified = isTypedPhoneSameAsCloud
-            && isTypedContactSameAsCloud
-            && isTypedContactPhoneSameAsCloud
-            && isTypedAllergiesSameAsCloud
-            && areTypedSensitivitiesSameAsCloud;
+        isFABVisible = (!isTypedPhoneSameAsCloud
+            || !isTypedContactSameAsCloud
+            || !isTypedContactPhoneSameAsCloud
+            || !isTypedAllergiesSameAsCloud
+            || !areTypedSensitivitiesSameAsCloud)
+            && phoneTextIs10Digits && emergencyPhoneTextIs10Digits
+        ;
       });
 
     }catch (e){
       setState(() {
-        isInitialDataUnmodified = false;
+        isFABVisible = false;
       });
     }
   }

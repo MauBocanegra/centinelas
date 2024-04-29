@@ -1,6 +1,9 @@
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/login/widgets/google_sign_in_button.dart';
 import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -64,6 +67,9 @@ class LoginPageState extends State<LoginPage> {
                   const GoogleSignInButton(),
                   TextButton(
                       onPressed: (){
+                        serviceLocator<FirebaseAnalytics>().logEvent(
+                            name: firebaseEventGoToPrivacy
+                        );
                         context.go('/${PrivacyPageProvider.pageConfig.name}');
                       },
                       child: const Text.rich(

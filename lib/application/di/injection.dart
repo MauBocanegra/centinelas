@@ -52,6 +52,7 @@ import 'package:centinelas_app/domain/usecases/write_race_engagement_usecase.dar
 import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -211,4 +212,8 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => FirebaseDatabase.instance);
   serviceLocator.registerFactory(() => FirebaseMessaging.instance);
   serviceLocator.registerFactory(() => FirebaseCrashlytics.instance);
+  serviceLocator.registerFactory(() => FirebaseAnalytics.instance);
+  serviceLocator.registerFactory(() => FirebaseAnalyticsObserver(
+      analytics: serviceLocator<FirebaseAnalytics>()
+  ));
 }

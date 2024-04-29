@@ -1,6 +1,9 @@
+import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/domain/entities/race_entry.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +49,9 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                 selected: state.selectedRaceId == raceEntry.id,
                 onTap: (){
                   debugPrint('onTap race:${raceEntry.id.value}');
+                  serviceLocator<FirebaseAnalytics>().logEvent(
+                      name: firebaseEventGoToRace
+                  );
                   context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
                   if(Breakpoints.small.isActive(context)){
                     debugPrint('small: ${raceEntry.id.value}');
@@ -55,18 +61,7 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                         'raceEntryId': raceEntry.id.value.toString(),
                       },
                     );
-                  }else {
-                    /*
-                    context.read<NavigationCubit>().secondBodyHasChanged(isSecondBodyDisplayed: true);
-                    debugPrint('mediumAndUp: ${raceEntry.id.value}');
-                    context.goNamed(
-                      RaceDetailPage.pageConfig.name,
-                      pathParameters: {
-                        'raceEntryId': raceEntry.id.value.toString(),
-                      },
-                    );
-                    */
-                  }
+                  }else {}
                 },
               ),
             ),

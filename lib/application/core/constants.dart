@@ -61,4 +61,18 @@ const userDataDrugAllergiesKey = 'sensibilidad_farmacos';
 
 const raceActivityLog = 'bitacora/';
 
+const firebaseEventLogout = 'logout_cen';
+const firebaseEventRegister = 'register_race_cen';
+const firebaseEventCheckinAfterPhone = 'checkin_afterphone_race_cen';
+const firebaseEventCheckin = 'checkin_race_cen';
+const firebaseEventFollow = 'follow_race_cen';
+const firebaseEventGoToProfile = 'goto_profile_cen';
+const firebaseEventGoToRace = 'goto_race_detail';
+const firebaseEventGoToTab = 'goto_tab';
+const firebaseEventGoToMap = 'goto_map';
+const firebaseEventGoToPrivacy = 'goto_privacy';
+const firebaseEventGoToDispatch = 'goto_dispatch';
+const firebaseEventSendEmergencyIncidence = 'incidence_emergency';
+const firebaseEventSendAssistanceIncidence = 'incidence_assistance';
+
 const minIncidenceLength = apiEnv==apiEnvDev ? 3 : 20;

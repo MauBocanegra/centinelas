@@ -29,7 +29,7 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
   final WritePhoneWriteCheckInUseCase writePhoneWriteCheckInUseCase;
   final WriteIncidenceUseCase writeIncidenceUseCase;
 
-  void determineButtonsState(RaceFull raceFull, String uid){
+  void determineButtonsState(RaceFull raceFull){
     if(raceFull.raceEngagementState is EmptyEngagementState){
       emit(RaceDetailButtonsOnlyRegisterState());
     } else if(raceFull.raceEngagementState is RegisteredEngagementState){
@@ -45,7 +45,7 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
     }
   }
 
-  void registerForRace(RaceFull raceFull, String uid) async {
+  void registerForRace(RaceFull raceFull) async {
     emit(RaceDetailButtonsLoadingState());
     try{
       final wasAbleToRegisterRace =
@@ -67,7 +67,7 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
     }
   }
 
-  void checkInRace(RaceFull raceFull, String uid) async {
+  void checkInRace(RaceFull raceFull) async {
     emit(RaceDetailButtonsLoadingState());
 
     try{
@@ -92,7 +92,7 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
   }
 
   /// todo remove uid from params, this is leakage
-  void updatePhoneThenCheckIn(RaceFull raceFull, String uid, String phone) async {
+  void updatePhoneThenCheckIn(RaceFull raceFull, String phone) async {
     emit(RaceDetailButtonsLoadingState());
 
     try{

@@ -1,21 +1,20 @@
 const registerButtonText = 'Registrate';
 const checkInButtonText = 'Check In';
+const mapButtonText = 'Seguir carrera en tiempo real';
 const String phoneAndCheckInButtonText = 'Guardar / Check In';
 const assistanceButtonText = 'Soliciar asistencia';
 const emergencyButtonText = 'Reportar EMERGENCIA';
 const checkedInNotActiveRaceText = 'Tu Check-In esta completo\nUna vez activa la carrera podrás realizar tus reportes';
+const obtainingLocationString = 'Obteniendo ubicacion y enviando incidencia...';
 const errorRaceDetailButtonsWidget = 'Ocurrio un error, intenta nuevamente mas tarde';
 
 const String stringPhoneTitle = 'Teléfono celular';
-const String hintPhone = 'Núm celular a 10 digitos';
+const String hintPhone = 'Número celular a 10 digitos';
+const String errorPhone = 'El número debe ser de 10 dígitos';
 const String stringEmergencyContactName = 'Nombre (contacto de emergencia)';
-const String hintEmergencyContactName = 'Nombre completo';
 const String stringEmergencyContactPhone = 'Teléfono (contacto de emergencia)';
-const String hintEmergencyContactPhone = 'Núm celular a 10 digitos';
 const String stringAllergies = 'Alergias severas';
-const String hintAllergies = 'Lista tus alergias severas';
 const String stringDrugSensitivity = 'Sensibilidad a Farmacos';
-const String hintDrugSensitivity = 'Lista tus sensibilidades a medicamentos';
 
 const assistanceDialogTitle = 'Asistencia';
 const assistanceDialogHint = 'Reportar de manera concisa la alerta';

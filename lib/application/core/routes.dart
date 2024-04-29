@@ -9,6 +9,7 @@ import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/session/session_page.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +26,10 @@ GlobalKey<NavigatorState>(debugLabel: 'shell');
 final routes = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/${SessionPageProvider.pageConfig.name}',
-  observers: [GoRouterObserver()],
+  observers: [
+    GoRouterObserver(),
+    serviceLocator<FirebaseAnalyticsObserver>()
+  ],
   routes: [
     GoRoute(
       name: SessionPageProvider.pageConfig.name,
@@ -38,55 +42,12 @@ final routes = GoRouter(
     GoRoute(
       name: LoginPage.pageConfig.name,
       path: '/${LoginPage.pageConfig.name}',
-      builder: (context, state) => LoginPage()
-      /*
-      builder: (context, state) => SignInScreen(
-        actions: [
-          AuthStateChangeAction<SignedIn>((context, state) {
-            context.pushNamed(
-              HomePage.pageConfig.name,
-              pathParameters: {'tab': RacesPage.pageConfig.name},
-            );
-          }),
-          AuthStateChangeAction<UserCreated>((context, state) {
-            context.pushNamed(
-              HomePage.pageConfig.name,
-              pathParameters: {'tab': RacesPage.pageConfig.name},
-            );
-          }),
-        ],
-      ),
-      */
+      builder: (context, state) => const LoginPage()
     ),
     GoRoute(
       name: ProfilePageWidgetProvider.pageConfig.name,
       path: '/${ProfilePageWidgetProvider.pageConfig.name}',
       builder: (context, state) => const ProfilePageWidgetProvider()
-          /*Scaffold(
-        appBar: AppBar(
-          title: const Text('Perfil'),
-          leading: BackButton(
-            onPressed: (){
-              if(context.canPop()){
-                context.pop();
-              } else {
-                context.goNamed(
-                  HomePage.pageConfig.name,
-                  pathParameters: {'tab' : RacesPage.pageConfig.name},
-                );
-              }
-            },
-          ),
-        ),
-        body: ProfileScreen(
-          actions: [
-            SignedOutAction((context) {
-              context.goNamed(LoginPage.pageConfig.name);
-            }),
-          ],
-        ),
-      ),
-      */
     ),
     ShellRoute(
       navigatorKey: shellNavigatorKey,
