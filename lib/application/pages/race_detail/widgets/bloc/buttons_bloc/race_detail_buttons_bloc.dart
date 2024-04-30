@@ -89,7 +89,6 @@ Bloc<RaceDetailButtonsEvent, RaceDetailButtonsState>{
     }
   }
 
-  /// todo remove uid from params, this is leakage
   void updatePhoneThenCheckIn(RaceFull raceFull, String phone) async {
     emit(RaceDetailButtonsLoadingState());
 

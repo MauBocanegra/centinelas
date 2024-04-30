@@ -18,6 +18,10 @@ class WritePhoneWriteCheckInUseCase implements
   Future<Either<CheckInRaceAttemptResolution, Failure>> call(Map<String, dynamic> map) async {
     final UserDataModel userDataModel = UserDataModel();
     userDataModel.phone = map[phoneKeyForMapping];
+    userDataModel.emergencyContactPhone = '';
+    userDataModel.emergencyContactName = '';
+    userDataModel.severeAllergies = '';
+    userDataModel.drugSensitivities = '';
     final wasAbleToUpdateData =
       await usersRepository.updateUserData(userDataModel);
 

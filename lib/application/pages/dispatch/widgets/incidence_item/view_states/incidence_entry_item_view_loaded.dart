@@ -22,73 +22,84 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
       child: Material(
         elevation: 8.0,
         shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.0)),
-        child: ListTile(
-          title: Text(
-            incidenceModel.type == incidenceEmergencyTypeForMapping
-                ? 'Emergencia' : 'Asistencia',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(incidenceModel.time),
+                )
             ),
-          ),
-          subtitle: Text(incidenceModel.text),
-          leading: incidenceModel.type == incidenceEmergencyTypeForMapping
-            ? const Icon(
-                Icons.warning_rounded,
-                color: Colors.red,
-              ) // emergency
-            : const Icon(
-                Icons.supervised_user_circle_rounded,
-                color: Colors.blue,
+            ListTile(
+              title: Text(
+                incidenceModel.type == incidenceEmergencyTypeForMapping
+                    ? 'Emergencia' : 'Asistencia',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-          onTap: () async {
-            final phoneNumber = incidenceModel.phoneNumber;
-            final result = await showModalActionSheet<String>(
-                context: context,
-              actions: (incidenceModel.lat!=0.0 &&incidenceModel.lon!=0.0) ? [
-                SheetAction(
-                  icon: Icons.phone,
-                  label: 'Llamar al ${phoneNumber}',
-                  key: 'phoneCall',
-                ),
-                SheetAction(
-                  icon: Icons.copy,
-                  label: 'Copiar \"${phoneNumber}\"',
-                  key: 'clipboard',
-                ),
-                const SheetAction(
-                  icon: Icons.map,
-                  label: 'Abrir ubicación en Maps',
-                  key: 'maps',
-                ),
-                const SheetAction(
-                  icon: Icons.location_on_outlined,
-                  label: 'Copiar ubicación',
-                  key: 'clipboard_map',
-                ),
-              ] : [
-                SheetAction(
-                  icon: Icons.phone,
-                  label: 'Llamar al ${phoneNumber}',
-                  key: 'phoneCall',
-                ),
-                SheetAction(
-                  icon: Icons.copy,
-                  label: 'Copiar \"${phoneNumber}\"',
-                  key: 'clipboard',
-                ),
-              ]
-            );
-            if(result != null && result == 'phoneCall' && phoneNumber!=null ){
-              makePhoneCall(phoneNumber);
-            } else if(result != null && result == 'clipboard' && phoneNumber!=null) {
-              copyToClipboard(phoneNumber);
-            } else if(result != null && result == 'clipboard_map'){
-              copyToClipboard('${incidenceModel.lat}, ${incidenceModel.lon}');
-            } else if(result != null && result == 'maps'){
-              openMaps(incidenceModel.lat, incidenceModel.lon);
-            }
-          },// assistance
+              subtitle: Text(incidenceModel.text),
+              leading: incidenceModel.type == incidenceEmergencyTypeForMapping
+                ? const Icon(
+                    Icons.warning_rounded,
+                    color: Colors.red,
+                  ) // emergency
+                : const Icon(
+                    Icons.supervised_user_circle_rounded,
+                    color: Colors.blue,
+                  ),
+              onTap: () async {
+                final phoneNumber = incidenceModel.phoneNumber;
+                final result = await showModalActionSheet<String>(
+                    context: context,
+                  actions: (incidenceModel.lat!=0.0 &&incidenceModel.lon!=0.0) ? [
+                    SheetAction(
+                      icon: Icons.phone,
+                      label: 'Llamar al ${phoneNumber}',
+                      key: 'phoneCall',
+                    ),
+                    SheetAction(
+                      icon: Icons.copy,
+                      label: 'Copiar \"${phoneNumber}\"',
+                      key: 'clipboard',
+                    ),
+                    const SheetAction(
+                      icon: Icons.map,
+                      label: 'Abrir ubicación en Maps',
+                      key: 'maps',
+                    ),
+                    const SheetAction(
+                      icon: Icons.location_on_outlined,
+                      label: 'Copiar ubicación',
+                      key: 'clipboard_map',
+                    ),
+                  ] : [
+                    SheetAction(
+                      icon: Icons.phone,
+                      label: 'Llamar al ${phoneNumber}',
+                      key: 'phoneCall',
+                    ),
+                    SheetAction(
+                      icon: Icons.copy,
+                      label: 'Copiar \"${phoneNumber}\"',
+                      key: 'clipboard',
+                    ),
+                  ]
+                );
+                if(result != null && result == 'phoneCall' && phoneNumber!=null ){
+                  makePhoneCall(phoneNumber);
+                } else if(result != null && result == 'clipboard' && phoneNumber!=null) {
+                  copyToClipboard(phoneNumber);
+                } else if(result != null && result == 'clipboard_map'){
+                  copyToClipboard('${incidenceModel.lat}, ${incidenceModel.lon}');
+                } else if(result != null && result == 'maps'){
+                  openMaps(incidenceModel.lat, incidenceModel.lon);
+                }
+              },// assistance
+            ),
+          ],
         ),
       ),
     );

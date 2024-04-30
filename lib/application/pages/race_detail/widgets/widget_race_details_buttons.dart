@@ -126,7 +126,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                         const SizedBox(height: 8,),
                         ElevatedButton(
                           style: raisedOrangeButtonStyle,
-                          onPressed: isPhoneCompleted ? updatePhoneAndCheckin : null,
+                          onPressed: isPhoneCompleted ? (){updatePhoneAndCheckin(context);} : null,
                           child: const Text(phoneAndCheckInButtonText),
                         )
                       ],
@@ -170,11 +170,11 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
     );
   }
 
-  void updatePhoneAndCheckin(){
+  void updatePhoneAndCheckin(BuildContext buildContext){
     serviceLocator<FirebaseAnalytics>().logEvent(
         name: firebaseEventCheckinAfterPhone
     );
-    context.read<RaceDetailButtonsBloc>().updatePhoneThenCheckIn(
+    buildContext.read<RaceDetailButtonsBloc>().updatePhoneThenCheckIn(
       widget.raceFull,
       typedPhone,
     );
