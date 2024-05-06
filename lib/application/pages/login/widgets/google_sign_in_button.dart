@@ -46,7 +46,6 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
           if(user != null && context.mounted){
             context.pushNamed(
               HomePage.pageConfig.name,
-              pathParameters: {'tab': RacesPage.pageConfig.name},
             );
           }
         },

@@ -11,6 +11,7 @@ import 'package:centinelas_app/application/pages/map/helpers/location_permission
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -179,7 +180,7 @@ class MapPageState extends State<MapPageProvider> {
   }
 
   void checkAndRequestLocationPermissions() async {
-    if(await custom_permission_handler.Permission.location.serviceStatus.isEnabled){
+    //if(await custom_permission_handler.Permission.location.serviceStatus.isEnabled){
       // enabled
       var status = await custom_permission_handler.Permission.location.status;
       if(await custom_permission_handler.Permission.location.isPermanentlyDenied){
@@ -190,18 +191,36 @@ class MapPageState extends State<MapPageProvider> {
         widget.locationPermissionStatus = LocationPermissionGranted();
       } else {
         // location permission not granted
-        await [custom_permission_handler.Permission.location].request();
+        await [
+          custom_permission_handler.Permission.location,
+        ].request();
         var locationStatus = await custom_permission_handler.Permission.location.status;
         if(locationStatus.isGranted){
           widget.locationPermissionStatus = LocationPermissionGranted();
         } else {
-          widget.locationPermissionStatus = LocationPermissionDenied();
+          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+          try {
+            IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            debugPrint('Running on ${iosInfo.utsname.machine}');
+
+            if(iosInfo!=null){
+              var permissionStatus = await location.hasPermission();
+              if(permissionStatus == PermissionStatus.granted){
+                debugPrint('bluetooth on iOS GRANTED YEEI');
+                widget.locationPermissionStatus = LocationPermissionGranted();
+              } else {
+                debugPrint('bluetooth on iOS DENIED 2x');
+              }
+            }
+          }catch(exception){
+            widget.locationPermissionStatus = LocationPermissionDenied();
+          }
         }
       }
-    } else {
+    //} else {
       // disabled
-      widget.locationPermissionStatus = LocationPermissionDisabled();
-    }
+      //widget.locationPermissionStatus = LocationPermissionDisabled();
+    //}
   }
 
   @override
