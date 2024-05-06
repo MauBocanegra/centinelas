@@ -4,6 +4,7 @@ const fcmVapidKey = 'BPembO7RJ6ind06ohC8gdUXRoAtmBbCG3WFOYYPVC6EzWoz9QeXCJMS6Ncl
 const apiEnv = apiEnvProd;
 const apiEnvDev = 'development';
 const apiEnvProd = 'production';
+
 const collectionIdToBeDisplayedRoute = 'coleccion_visible';
 const collectionIdToBeDisplayedId = 'coleccion_visible_en_app';
 const raceEntryCollectionKey = 'titulares_de_carrera';
@@ -20,6 +21,12 @@ const adminsDataKey = 'administradores';
 const dispatchersDataKey = 'despachadores';
 
 const raceTitleKey = 'titulo';
+const raceAddressKey = 'ubicacion';
+const raceDescriptionKey = 'descripcion';
+const raceImageKey = 'linkImagen';
+const raceActiveKey = 'esta_activa';
+const raceGoogleMapRouteKey = 'ruta_google_map';
+const raceGoogleMapPointsKey = 'puntos_google_map';
 
 const raceIdKeyForMapping = 'raceIdString';
 const raceEngagementKeyForMapping = 'raceEngagementObj';
@@ -52,6 +59,8 @@ const dispatcherFCMTokenRealtimeDBKey = 'despachador_fcm_token';
 
 const activeRaceIdParamKey = 'activeRaceId';
 const raceFullIdParamKey = 'raceFullParam';
+const raceRouteParamKey = 'raceRouteParam';
+const racePointsParamKey = 'racePointsParam';
 
 const userDataNameKey = 'nombre_centinela';
 const userDataEmergencyContactNameKey = 'contacto_emergencia_nombre';

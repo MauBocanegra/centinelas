@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:centinelas_app/application/app/bloc/auth_cubit.dart' as auth;
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
@@ -49,19 +51,10 @@ final routes = GoRouter(
       path: '/${ProfilePageWidgetProvider.pageConfig.name}',
       builder: (context, state) => const ProfilePageWidgetProvider()
     ),
-    ShellRoute(
-      navigatorKey: shellNavigatorKey,
-      builder: (context, state, child) => child,
-      routes: [
-        GoRoute(
-          name: HomePage.pageConfig.name,
-          path: '/$homeRoute/:tab',
-          builder: (context, state) => HomePage(
-            key: state.pageKey,
-            tab: state.pathParameters['tab']!,
-          ),
-        ),
-      ],
+    GoRoute(
+      name: HomePage.pageConfig.name,
+      path: '/$homeRoute',
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       name: DispatchPageProvider.pageConfig.name,
@@ -81,7 +74,7 @@ final routes = GoRouter(
     ),
     GoRoute(
       name: MapPageProvider.pageConfig.name,
-      path: '/$homeRoute/$racesRoute/${MapPageProvider.pageConfig.name}/:$raceFullIdParamKey',
+      path: '/$homeRoute/$racesRoute/${MapPageProvider.pageConfig.name}/:$raceFullIdParamKey/:$raceRouteParamKey/:$racePointsParamKey',
       builder: (context, state){
         return Scaffold(
           appBar: AppBar(
@@ -91,16 +84,15 @@ final routes = GoRouter(
                 if(context.canPop()){
                   context.pop();
                 } else {
-                  context.goNamed(
-                    HomePage.pageConfig.name,
-                    pathParameters: {'tab' : RacesPage.pageConfig.name},
-                  );
+                  context.goNamed(HomePage.pageConfig.name,);
                 }
               },
             ),
           ),
           body: MapPageProvider(
             raceIdString: (state.pathParameters[raceFullIdParamKey] ?? ''),
+            raceRoute: (state.pathParameters[raceRouteParamKey] ?? ''),
+            racePoints: (jsonDecode(state.pathParameters[racePointsParamKey] ?? '')),
           ),
         );
       }

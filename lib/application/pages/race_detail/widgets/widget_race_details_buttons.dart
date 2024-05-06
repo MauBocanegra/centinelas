@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
@@ -155,7 +157,17 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                   );
                   context.goNamed(
                     MapPageProvider.pageConfig.name,
-                    pathParameters: {raceFullIdParamKey : widget.raceFull.id.value},
+                    pathParameters: widget.raceFull.raceRoute !=null ? {
+                      raceFullIdParamKey : widget.raceFull.id.value,
+                      raceRouteParamKey: widget.raceFull.raceRoute ?? '',
+                      racePointsParamKey: json.encode(widget.raceFull.racePoints ?? ''),
+                    } :
+                    {
+                    raceFullIdParamKey : widget.raceFull.id.value,
+                      raceRouteParamKey: 'null',
+                      racePointsParamKey: '{}',
+                    }
+                    ,
                   );
                 },
                 child: const Text(mapButtonText),

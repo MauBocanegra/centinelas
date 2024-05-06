@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
@@ -19,10 +20,14 @@ import 'package:permission_handler/permission_handler.dart' as custom_permission
 
 class MapPageProvider extends StatefulWidget {
   final String raceIdString;
+  final String raceRoute;
+  final Map<dynamic, dynamic> racePoints;
   late LocationPermissionStatus locationPermissionStatus;
   MapPageProvider({
     super.key,
     required this.raceIdString,
+    required this.raceRoute,
+    required this.racePoints,
   });
 
   static const pageConfig = PageConfig(
@@ -37,6 +42,12 @@ class MapPageProvider extends StatefulWidget {
 class MapPageState extends State<MapPageProvider> {
 
   Location location = Location();
+  late List<LatLng> routeLatLng;
+  late Map<String, LatLng> points;
+  late LatLngBounds? latLngBounds;
+  late CameraPosition raceCameraPosition;
+  late List<Marker> markers;
+  
   late bool serviceEnabled;
   late PermissionStatus permissionGranted;
   late LocationData locationData;
@@ -49,6 +60,53 @@ class MapPageState extends State<MapPageProvider> {
   @override
   void initState(){
     super.initState();
+
+      List<String> racesListString = widget.raceRoute.split(',');
+      routeLatLng = racesListString.map(
+              (raceString) {
+            String treatedRaceString = raceString.startsWith(' ') ? raceString
+                .substring(1) : raceString;
+            return LatLng(
+              double.parse(treatedRaceString.split(' ')[1]),
+              double.parse(treatedRaceString.split(' ')[0]),
+            );
+          }
+      ).toList();
+      //latLngBounds = LatLngBounds.fromList(routeLatLng.toString());
+      double mostNorthLat = routeLatLng.map((e) => e.latitude).reduce(max);
+      double mostSouthLat = routeLatLng.map((e) => e.latitude).reduce(min);
+      double mostWestLon = routeLatLng.map((e) => e.longitude).reduce(min);
+      double mostEastLon = routeLatLng.map((e) => e.longitude).reduce(max);
+      latLngBounds = LatLngBounds(
+        southwest: LatLng(mostSouthLat, mostWestLon),
+        northeast: LatLng(mostNorthLat, mostEastLon),
+      );
+
+    if(latLngBounds!=null){
+      CameraUpdate.newLatLngBounds(latLngBounds!, 0);
+    } else {
+      raceCameraPosition = const CameraPosition(
+        target: LatLng(19.423096795906307, -99.17567078650453),
+        zoom: 17,
+      );
+    }
+
+    markers = widget.racePoints.map((key, raceString) {
+      String treatedRaceString = raceString.startsWith(' ') ? raceString.substring(1) : raceString;
+      LatLng latLng = LatLng(
+        double.parse(treatedRaceString.split(' ')[1]),
+        double.parse(treatedRaceString.split(' ')[0]),
+      );
+      return MapEntry(
+        key,
+        Marker(
+          markerId: MarkerId('${latLng.latitude}${latLng.longitude}'),
+          position: LatLng(latLng.latitude, latLng.longitude),
+          infoWindow: InfoWindow(title: key),
+        )
+      );
+    }).values.toList();
+
     checkAndRequestLocationPermissions();
     raceDetailButtonsBloc = BlocProvider<RaceDetailButtonsBloc>(
       create: (context) => serviceLocator<RaceDetailButtonsBloc>(),
@@ -105,12 +163,8 @@ class MapPageState extends State<MapPageProvider> {
                       style: raisedRedButtonStyle,
                       child: const Wrap(
                         children: <Widget>[
-                          Icon(
-                            Icons.warning_rounded,
-                          ),
-                          SizedBox(
-                            width:10,
-                          ),
+                          Icon(Icons.warning_rounded,),
+                          SizedBox(width:10,),
                           Text(emergencyButtonText),
                         ],
                       ),
@@ -136,10 +190,7 @@ class MapPageState extends State<MapPageProvider> {
         widget.locationPermissionStatus = LocationPermissionGranted();
       } else {
         // location permission not granted
-        Map<
-            custom_permission_handler.Permission,
-            custom_permission_handler.PermissionStatus
-        > requestStatus = await [custom_permission_handler.Permission.location].request();
+        await [custom_permission_handler.Permission.location].request();
         var locationStatus = await custom_permission_handler.Permission.location.status;
         if(locationStatus.isGranted){
           widget.locationPermissionStatus = LocationPermissionGranted();
@@ -153,12 +204,6 @@ class MapPageState extends State<MapPageProvider> {
     }
   }
 
-  static const CameraPosition estelaLuzCameraPosition =
-      CameraPosition(
-          target: LatLng(19.423096795906307, -99.17567078650453),
-          zoom: 17,
-      );
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -166,15 +211,37 @@ class MapPageState extends State<MapPageProvider> {
         GoogleMap(
           myLocationEnabled: true,
           myLocationButtonEnabled: true,
+          mapToolbarEnabled: true,
           mapType: MapType.normal,
-          initialCameraPosition: estelaLuzCameraPosition,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(
+              19.423295657661217,
+              -99.1763032731237
+          )),
           onMapCreated: (GoogleMapController gMController){
             googleMapController.complete(gMController);
+            moveCamera();
           },
+          polylines: <Polyline>{
+            Polyline(
+              polylineId: const PolylineId('ruta'),
+              points: routeLatLng,
+              color: Colors.red,
+              width: 3,
+            )
+          },
+          markers: markers.toSet(),
         ),
         raceDetailButtonsBloc,
       ],
     );
+  }
+
+  Future<void> moveCamera() async {
+    final GoogleMapController controller = await googleMapController.future;
+    if(latLngBounds!=null){
+      await controller.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds!, 0));
+    }
   }
 
   void onTapIncidenceButton(

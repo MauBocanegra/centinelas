@@ -10,8 +10,9 @@ class RaceFull extends Equatable {
   final String? description;
   final String? imageUrl;
   final bool isRaceActive;
-  final bool isCheckinEnabled;
   final RaceEngagementState raceEngagementState;
+  final String? raceRoute;
+  final Map<dynamic, dynamic> racePoints;
 
   const RaceFull(
       this.title,
@@ -22,8 +23,9 @@ class RaceFull extends Equatable {
       {
         required this.id,
         required this.isRaceActive,
-        required this.isCheckinEnabled,
         required this.raceEngagementState,
+        required this.raceRoute,
+        required this.racePoints,
       }
   );
 
@@ -38,6 +40,8 @@ class RaceFull extends Equatable {
     imageUrl,
     isRaceActive,
     raceEngagementState,
+    raceRoute,
+    racePoints,
   ];
 }
 

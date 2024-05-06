@@ -59,10 +59,7 @@ class SessionPageState extends State<SessionPageProvider> {
                 pathParameters: {activeRaceIdParamKey: activeRace},
               );
             } else {
-              context.goNamed(
-                HomePage.pageConfig.name,
-                pathParameters: {'tab': RacesPage.pageConfig.name},
-              );
+              context.goNamed(HomePage.pageConfig.name);
             }
           }
         }on Exception catch(exception){

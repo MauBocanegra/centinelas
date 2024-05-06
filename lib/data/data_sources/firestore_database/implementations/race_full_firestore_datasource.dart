@@ -24,14 +24,15 @@ class RaceFullFirestoreDatasource
        ).get().then((DocumentSnapshot doc){
          final data = doc.data() as Map<String, dynamic>;
          raceFullModel = RaceFullModel(
-             raceId: raceId,
-             title: data[raceTitleKey],
-             discipline: raceId.split('/').first,
-             address: data['ubicacion'],
-             description: data['descripcion'],
-             imageUrl: data['linkImagen'],
-             isRaceActive: data['esta_activa'] ?? false,
-             isCheckInEnabled: data['checkin_abierto'] ?? false,
+           raceId: raceId,
+           title: data[raceTitleKey],
+           discipline: raceId.split('/').first,
+           address: data[raceAddressKey],
+           description: data[raceDescriptionKey],
+           imageUrl: data[raceImageKey],
+           isRaceActive: data[raceActiveKey] ?? false,
+           route: data[raceGoogleMapRouteKey] ?? '',
+           points: data[raceGoogleMapPointsKey] ?? {},
          );
        });
 
