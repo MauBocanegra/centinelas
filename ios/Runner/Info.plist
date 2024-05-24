@@ -57,6 +57,10 @@
     <string>La ubicación es necesaria para reportar emergencias</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>La ubicación es necesaria para reportar emergencias</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>La ubicación es necesaria para reportar emergencias</string>
+    <key>NSSiriUsageDescription</key>
+    <string>La ubicación es necesaria para reportar emergencias</string>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
     <key>UIBackgroundModes</key>

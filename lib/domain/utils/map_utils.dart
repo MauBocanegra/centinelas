@@ -69,6 +69,7 @@ class RaceRouteAndPoints{
 
   BitmapDescriptor getMarkerColor(String markerKey){
     double color = switch (markerKey){
+      hidrationPointKey => BitmapDescriptor.hueAzure,
       exitPointKey => BitmapDescriptor.hueOrange,
       finishPointKey => BitmapDescriptor.hueOrange,
       kmPointKey => BitmapDescriptor.hueRose,
