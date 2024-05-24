@@ -5,15 +5,15 @@ import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-class WriteUserIdUseCase implements UseCase<bool, String>{
+class WriteUserIdUseCase implements UseCase<bool, NoParams>{
   const WriteUserIdUseCase({required this.usersRepository});
   final UsersRepository usersRepository;
 
   @override
-  Future<Either<bool, Failure>> call(String uid) async {
+  Future<Either<bool, Failure>> call(NoParams params) async {
     try{
       final wasAbleToWriteUserIdFuture =
-        usersRepository.writeLoggedUserInFirestore(uid);
+        usersRepository.writeLoggedUserInFirestore();
       return wasAbleToWriteUserIdFuture.then(
               (value) => value ? Left(value) : Right(ServerFailure())
       );

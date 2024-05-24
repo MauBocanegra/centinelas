@@ -39,6 +39,8 @@ const locationOffDialogTitle = 'La ubicación de tu dispositivo no esta encendid
 const locationErrorDialogOkButton = 'Continuar';
 
 const reportsErrorString = 'Ocurrió un error al cargar tus reportes, intenta nuevamente más tarde...';
+const reportErrorString = 'Ocurrió un error al cargar los reportes, intenta nuevamente más tarde...';
+const usersListErrorString = 'Ocurrió un error al obtener el listado de Centinelas, intenta nuevamente más tarde...';
 
 const privacyButtonText1 = 'Al iniciar sesión aceptas la ';
 const privacyButtonText2 = 'Política de privacidad de datos';

@@ -7,6 +7,10 @@ class RaceFullModel extends Equatable {
   final String address;
   final String description;
   final String imageUrl;
+  final String logoUrl;
+  final String dayString;
+  final String dateString;
+  final String hourString;
   final String route;
   final Map<dynamic, dynamic> points;
 
@@ -21,6 +25,10 @@ class RaceFullModel extends Equatable {
     required this.address,
     required this.description,
     required this.imageUrl,
+    required this.logoUrl,
+    required this.dayString,
+    required this.dateString,
+    required this.hourString,
     required this.isRaceActive,
     required this.points,
     required this.route,
@@ -34,6 +42,10 @@ class RaceFullModel extends Equatable {
     address,
     description,
     imageUrl,
+    logoUrl,
+    dayString,
+    dateString,
+    hourString,
     isRaceActive,
     points,
     route,

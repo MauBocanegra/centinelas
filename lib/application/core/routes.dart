@@ -5,11 +5,11 @@ import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
 import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
-import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/session/session_page.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +57,14 @@ final routes = GoRouter(
       builder: (context, state) => const HomePage(),
     ),
     GoRoute(
-      name: DispatchPageProvider.pageConfig.name,
-      path: '/$dispatchRoute/:$activeRaceIdParamKey',
-      builder: (context, state) {
-        return DispatchPageProvider(
-            activeRaceId: state.pathParameters[activeRaceIdParamKey] ?? ''
-        );
-      }
+      name: DispatchPage.pageConfig.name,
+      path: '/$dispatchRoute',
+      builder: (context, state) => const DispatchPage(),
+    ),
+    GoRoute(
+      name: IncidencesPageProvider.pageConfig.name,
+      path: '/$incidencesRoute',
+      builder: (context, state) => IncidencesPageProvider(),
     ),
     GoRoute(
         name: PrivacyPageProvider.pageConfig.name,
@@ -108,25 +109,8 @@ final routes = GoRouter(
               context.pop();
             }
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Detalles de carrera'),
-              leading: BackButton(
-                onPressed: (){
-                  if(context.canPop()){
-                    context.pop();
-                  } else {
-                    context.goNamed(
-                      HomePage.pageConfig.name,
-                      pathParameters: {'tab' : RacesPage.pageConfig.name},
-                    );
-                  }
-                },
-              ),
-            ),
-            body: RaceDetailPageProvider(
-              raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
-            ),
+          child: RaceDetailPageProvider(
+            raceEntryIdString: state.pathParameters['raceEntryId'] ?? '',
           ),
         );
       }

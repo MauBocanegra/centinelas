@@ -2,10 +2,10 @@ import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_full_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/models/race_full_model.dart';
+import 'package:centinelas_app/domain/utils/storage_image_utils.dart';
+import 'package:centinelas_app/domain/utils/user_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/material.dart';
 
 class RaceFullFirestoreDatasource 
     implements RaceFullFirestoreDatasourceInterface {
@@ -13,7 +13,7 @@ class RaceFullFirestoreDatasource
   Future<RaceFullModel> fetchRaceFull(String raceId) async {
 
     final FirebaseFirestore firestore = serviceLocator<FirebaseFirestore>();
-    final uid = serviceLocator<FirebaseAuth>().currentUser;
+    final uid = getUserId();
 
     late final RaceFullModel raceFullModel;
 
@@ -21,7 +21,7 @@ class RaceFullFirestoreDatasource
        /// fetch race information from racesCollection
        await firestore.doc(
          '$apiEnv/$racesCollectionKey/$raceId'
-       ).get().then((DocumentSnapshot doc){
+       ).get().then((DocumentSnapshot doc) async {
          final data = doc.data() as Map<String, dynamic>;
          raceFullModel = RaceFullModel(
            raceId: raceId,
@@ -29,7 +29,11 @@ class RaceFullFirestoreDatasource
            discipline: raceId.split('/').first,
            address: data[raceAddressKey],
            description: data[raceDescriptionKey],
-           imageUrl: data[raceImageKey],
+           imageUrl: await getImageUrl(data[raceMainImageKey]),
+           logoUrl: await getImageUrl(data[raceLogoKey]),
+           dayString: data[raceDayKey],
+           dateString: data[raceDateKey],
+           hourString: data[raceHourKey],
            isRaceActive: data[raceActiveKey] ?? false,
            route: data[raceGoogleMapRouteKey] ?? '',
            points: data[raceGoogleMapPointsKey] ?? {},
@@ -39,14 +43,14 @@ class RaceFullFirestoreDatasource
        /// we check if any race engagement state from user data exists
        late final bool hasRacesEngagementData;
        final snapshot = await firestore.doc(
-           '$apiEnv/$usersInfoCollectionKey/${uid?.uid}/$userRacesDataKey'
+           '$apiEnv/$usersInfoCollectionKey/$uid/$userRacesDataKey'
        ).get();
        hasRacesEngagementData = snapshot.exists;
 
        if(hasRacesEngagementData){
          /// has race engagement data
          await firestore.doc(
-             '$apiEnv/$usersInfoCollectionKey/${uid?.uid}/$userRacesDataKey'
+             '$apiEnv/$usersInfoCollectionKey/$uid/$userRacesDataKey'
          ).get().then((DocumentSnapshot doc){
            final data = doc.data() as Map<String, dynamic>;
            final hasCurrentRaceInfo = data.keys.contains(raceId);

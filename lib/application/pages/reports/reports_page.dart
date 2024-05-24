@@ -8,26 +8,26 @@ import 'package:centinelas_app/application/pages/reports/view_states/reports_vie
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ReportsPageProvider extends StatelessWidget{
-  const ReportsPageProvider({ super.key });
+class ReportPageProvider extends StatelessWidget{
+  const ReportPageProvider({ super.key });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ReportsBloc>(
         create: (context) => serviceLocator<ReportsBloc>()
           ..readUserReports(),
-        child: const ReportsPage(),
+        child: const ReportPage(),
     );
   }
 }
 
-class ReportsPage extends StatelessWidget{
-  const ReportsPage({super.key});
+class ReportPage extends StatelessWidget{
+  const ReportPage({super.key});
 
   static const pageConfig = PageConfig(
     icon: Icons.area_chart,
     name: reportsRoute,
-    child: ReportsPageProvider(),
+    child: ReportPageProvider(),
   );
 
   @override

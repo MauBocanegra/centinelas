@@ -5,12 +5,18 @@ class RaceEntryModel extends Equatable {
   final String title;
   final String shortDescription;
   final String imageUrl;
+  final String dayString;
+  final String dateString;
+  final String hourString;
 
   const RaceEntryModel({
     required this.raceEntryId,
     required this.title,
     required this.shortDescription,
     required this.imageUrl,
+    required this.dayString,
+    required this.dateString,
+    required this.hourString,
   });
 
   factory RaceEntryModel.empty(){
@@ -19,6 +25,9 @@ class RaceEntryModel extends Equatable {
         title: '',
         shortDescription: '',
         imageUrl: '',
+        dayString: '',
+        dateString: '',
+        hourString: '',
     );
   }
 
@@ -28,6 +37,9 @@ class RaceEntryModel extends Equatable {
     raceEntryId,
     title,
     shortDescription,
-    imageUrl
+    imageUrl,
+    dayString,
+    dateString,
+    hourString,
   ];
 }

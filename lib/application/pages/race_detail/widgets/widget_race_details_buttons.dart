@@ -155,17 +155,15 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                   serviceLocator<FirebaseAnalytics>().logEvent(
                       name: firebaseEventGoToMap
                   );
+                  String? raceRoute = widget.raceFull.raceRoute ?? '';
+                  raceRoute = raceRoute.isNotEmpty ? raceRoute : noRouteConst;
+                  Map<dynamic, dynamic> racePointsMap = widget.raceFull.racePoints;
                   context.goNamed(
                     MapPageProvider.pageConfig.name,
-                    pathParameters: widget.raceFull.raceRoute !=null ? {
+                    pathParameters: {
                       raceFullIdParamKey : widget.raceFull.id.value,
-                      raceRouteParamKey: widget.raceFull.raceRoute ?? '',
-                      racePointsParamKey: json.encode(widget.raceFull.racePoints ?? ''),
-                    } :
-                    {
-                    raceFullIdParamKey : widget.raceFull.id.value,
-                      raceRouteParamKey: 'null',
-                      racePointsParamKey: '{}',
+                      raceRouteParamKey: raceRoute,
+                      racePointsParamKey: json.encode(racePointsMap),
                     }
                     ,
                   );

@@ -2,6 +2,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:centinelas_app/domain/usecases/load_custom_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
+import 'package:centinelas_app/domain/utils/user_utils.dart';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState>{
     try{
       // leaking data?
       final userDataResponse = await loadCustomUserDataUseCase.call(
-          serviceLocator<FirebaseAuth>().currentUser?.uid ?? ''
+          getUserId() ?? ''
       ).fold(
           (userData) => emit(ProfileLoadedState(userDataModel: userData)),
           (failure) => emit(ProfileErrorState()),

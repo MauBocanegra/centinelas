@@ -1,13 +1,14 @@
 import 'package:centinelas_app/application/app/bloc/auth_cubit.dart';
-import 'package:centinelas_app/application/pages/dispatch/bloc/dispatch_bloc.dart';
-import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/bloc/incidence_entry_item_bloc.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/pages/incidences/widgets/incidence_item/bloc/incidence_entry_item_bloc.dart';
 import 'package:centinelas_app/application/pages/profile/bloc/profile_bloc.dart';
 import 'package:centinelas_app/application/pages/race_detail/bloc/race_detail_bloc.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/bloc_full/races_bloc.dart';
 import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
 import 'package:centinelas_app/application/pages/reports/bloc/reports_bloc.dart';
+import 'package:centinelas_app/application/pages/users_list/bloc/users_list_bloc.dart';
+import 'package:centinelas_app/application/pages/users_list/widgets/bloc/users_list_report_item_bloc.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_entry_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/race_full_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/races_collection_firestore_remote_datasource.dart';
@@ -16,6 +17,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/implementati
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/reports_firestore_datasource_impl.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/user_data_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/implementations/user_id_write_firestore_datasource.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/implementations/users_list_firestore_datasource_impl.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_collection_id_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_entry_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_full_firestore_datasource_interface.dart';
@@ -24,6 +26,7 @@ import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/r
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/reports_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/users_list_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/dispatcher_write_realtime_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/incidence_observer_realtime_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/implementations/incidence_write_realtime_datasource.dart';
@@ -43,7 +46,9 @@ import 'package:centinelas_app/domain/usecases/load_custom_user_data_usecase.dar
 import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_race_full_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_races_usecase.dart';
+import 'package:centinelas_app/domain/usecases/load_report_by_user_usecase.dart';
 import 'package:centinelas_app/domain/usecases/load_reports_usecase.dart';
+import 'package:centinelas_app/domain/usecases/load_users_list_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_incidence_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_phone_write_checkin_usecase.dart';
@@ -52,11 +57,13 @@ import 'package:centinelas_app/domain/usecases/write_race_engagement_usecase.dar
 import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -65,6 +72,14 @@ final serviceLocator = GetIt.I;
 Future<void> init() async {
   // factory = every new instance
   // singleton = only one instance
+
+  serviceLocator.registerFactory(() => FirebaseFirestore.instance);
+  serviceLocator.registerFactory(() => FirebaseDatabase.instance);
+  serviceLocator.registerFactory(() => FirebaseMessaging.instance);
+  serviceLocator.registerFactory(() => FirebaseCrashlytics.instance);
+  serviceLocator.registerFactory(() => FirebaseAnalytics.instance);
+  serviceLocator.registerFactory(() => FirebaseFunctions.instance);
+  serviceLocator.registerFactory(() => FirebaseStorage.instance);
 
   // application layer
   serviceLocator.registerFactory(() => AuthCubit());
@@ -84,7 +99,6 @@ Future<void> init() async {
     writePhoneWriteCheckInUseCase: serviceLocator(),
     writeIncidenceUseCase: serviceLocator(),
   ));
-  serviceLocator.registerFactory(() => DispatchBloc());
   serviceLocator.registerFactory(() => IncidenceEntryItemBloc(
       loadCustomUserDataUseCase: serviceLocator(),
   ));
@@ -93,7 +107,13 @@ Future<void> init() async {
     writeUserDataUseCase: serviceLocator(),
   ));
   serviceLocator.registerFactory(() => ReportsBloc(
-      loadReportsUseCase:serviceLocator()
+      loadReportsUseCase:serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => UsersListBloc(
+      loadUsersListUseCase: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => UsersListReportItemBloc(
+      loadReportByUserUseCase: serviceLocator(),
   ));
 
   // domain layer
@@ -134,7 +154,13 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => WriteUserDataUseCase(
       usersRepository: serviceLocator(),
   ));
-  serviceLocator.registerFactory(() => LoadReportsUseCase(
+  serviceLocator.registerFactory(() => LoadUserReportsUseCase(
+      reportsRepository: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() =>LoadUsersListUseCase(
+      usersRepository: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => LoadReportByUserUseCase(
       reportsRepository: serviceLocator(),
   ));
 
@@ -197,6 +223,10 @@ Future<void> init() async {
       .registerFactory<ReportsFirestoreDatasourceInterface>(
       () => ReportsFirestoreDatasource()
   );
+  serviceLocator
+      .registerFactory<UsersListFirestoreDatasourceInterface>(
+      () => UsersListFirestoreDatasource()
+  );
 
   // library instances
   serviceLocator.registerFactory(() => FirebaseAuth.instance);
@@ -208,11 +238,6 @@ Future<void> init() async {
     serviceLocator<AuthCubit>().authStateChanged(user: user);
   }));
 
-  serviceLocator.registerFactory(() => FirebaseFirestore.instance);
-  serviceLocator.registerFactory(() => FirebaseDatabase.instance);
-  serviceLocator.registerFactory(() => FirebaseMessaging.instance);
-  serviceLocator.registerFactory(() => FirebaseCrashlytics.instance);
-  serviceLocator.registerFactory(() => FirebaseAnalytics.instance);
   serviceLocator.registerFactory(() => FirebaseAnalyticsObserver(
       analytics: serviceLocator<FirebaseAnalytics>()
   ));

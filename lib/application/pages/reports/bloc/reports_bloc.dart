@@ -14,7 +14,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   ReportsBloc({
     required this.loadReportsUseCase
   }) : super (const ReportsLoadingState());
-  final LoadReportsUseCase loadReportsUseCase;
+  final LoadUserReportsUseCase loadReportsUseCase;
 
   Future<void> readUserReports() async {
     emit(const ReportsLoadingState());

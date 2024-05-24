@@ -2,6 +2,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/register_race_write_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
+import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/users_list_firestore_datasource.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
@@ -31,12 +32,12 @@ class UsersRepositoryImpl extends UsersRepository{
   }
 
   @override
-  Future<bool> writeLoggedUserInFirestore(String uid) async {
+  Future<bool> writeLoggedUserInFirestore() async {
     try{
       final userIdWriteFirestoreDatasource =
           serviceLocator<UserIdWriteFirestoreDatasourceInterface>();
       final wasAbleToWriteUserId =
-        await userIdWriteFirestoreDatasource.writeUserID(uid);
+        await userIdWriteFirestoreDatasource.writeUserID();
       return wasAbleToWriteUserId;
     } on Exception catch(exception){
       serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
@@ -127,4 +128,19 @@ class UsersRepositoryImpl extends UsersRepository{
     }
   }
 
+  @override
+  Future<Either<List<String>, Failure>> readUsersList() async {
+    try{
+      final usersListFirestoreDatasource =
+          serviceLocator<UsersListFirestoreDatasourceInterface>();
+      final usersList =
+          await usersListFirestoreDatasource.fetchUsersList();
+      return Left(usersList);
+    } on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
+      return Future.value(Right(
+          ServerFailure(stackTrace: exception.toString())
+      ));
+    }
+  }
 }

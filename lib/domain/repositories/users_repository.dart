@@ -5,7 +5,7 @@ import 'package:either_dart/either.dart';
 
 abstract class UsersRepository{
   Future<bool> writeDispatcherInRealtimeDatabase();
-  Future<bool> writeLoggedUserInFirestore(String uid);
+  Future<bool> writeLoggedUserInFirestore();
   Future<bool> writeRaceEngagementInFirestore(
     String raceId,
     RaceEngagementRequestType engagementType,
@@ -16,4 +16,5 @@ abstract class UsersRepository{
   );
   Future<bool> updateUserData(UserDataModel data);
   Future<bool> isCurrentUserDispatchAuthorized();
+  Future<Either<List<String>, Failure>> readUsersList();
 }

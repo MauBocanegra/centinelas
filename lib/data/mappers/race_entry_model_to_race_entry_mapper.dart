@@ -8,5 +8,8 @@ RaceEntry mapRaceEntryModelToRaceEntry(RaceEntryModel raceEntryModel){
       title: raceEntryModel.title,
       id: RaceEntryId.fromUniqueString(raceEntryModel.raceEntryId),
       description: raceEntryModel.shortDescription,
+      dayString: raceEntryModel.dayString,
+      dateString: raceEntryModel.dateString,
+      hourString: raceEntryModel.hourString,
   );
 }

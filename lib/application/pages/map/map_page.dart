@@ -11,6 +11,7 @@ import 'package:centinelas_app/application/pages/map/helpers/location_permission
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
+import 'package:centinelas_app/domain/utils/map_utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -43,15 +44,19 @@ class MapPageProvider extends StatefulWidget {
 class MapPageState extends State<MapPageProvider> {
 
   Location location = Location();
-  late List<LatLng> routeLatLng;
-  late Map<String, LatLng> points;
-  late LatLngBounds? latLngBounds;
-  late CameraPosition raceCameraPosition;
-  late List<Marker> markers;
   
   late bool serviceEnabled;
   late PermissionStatus permissionGranted;
   late LocationData locationData;
+  late RaceRouteAndPoints raceRouteAndPoints;
+
+  CameraPosition reformaCameraPosition = const CameraPosition(
+      target: LatLng(
+          19.423295657661217,
+          -99.1763032731237
+      ),
+      zoom: 17
+  );
 
   late final Completer<GoogleMapController> googleMapController =
   Completer<GoogleMapController>();
@@ -62,51 +67,11 @@ class MapPageState extends State<MapPageProvider> {
   void initState(){
     super.initState();
 
-      List<String> racesListString = widget.raceRoute.split(',');
-      routeLatLng = racesListString.map(
-              (raceString) {
-            String treatedRaceString = raceString.startsWith(' ') ? raceString
-                .substring(1) : raceString;
-            return LatLng(
-              double.parse(treatedRaceString.split(' ')[1]),
-              double.parse(treatedRaceString.split(' ')[0]),
-            );
-          }
-      ).toList();
-      //latLngBounds = LatLngBounds.fromList(routeLatLng.toString());
-      double mostNorthLat = routeLatLng.map((e) => e.latitude).reduce(max);
-      double mostSouthLat = routeLatLng.map((e) => e.latitude).reduce(min);
-      double mostWestLon = routeLatLng.map((e) => e.longitude).reduce(min);
-      double mostEastLon = routeLatLng.map((e) => e.longitude).reduce(max);
-      latLngBounds = LatLngBounds(
-        southwest: LatLng(mostSouthLat, mostWestLon),
-        northeast: LatLng(mostNorthLat, mostEastLon),
-      );
-
-    if(latLngBounds!=null){
-      CameraUpdate.newLatLngBounds(latLngBounds!, 0);
-    } else {
-      raceCameraPosition = const CameraPosition(
-        target: LatLng(19.423096795906307, -99.17567078650453),
-        zoom: 17,
-      );
-    }
-
-    markers = widget.racePoints.map((key, raceString) {
-      String treatedRaceString = raceString.startsWith(' ') ? raceString.substring(1) : raceString;
-      LatLng latLng = LatLng(
-        double.parse(treatedRaceString.split(' ')[1]),
-        double.parse(treatedRaceString.split(' ')[0]),
-      );
-      return MapEntry(
-        key,
-        Marker(
-          markerId: MarkerId('${latLng.latitude}${latLng.longitude}'),
-          position: LatLng(latLng.latitude, latLng.longitude),
-          infoWindow: InfoWindow(title: key),
-        )
-      );
-    }).values.toList();
+    debugPrint('raceRoute[${widget.raceRoute}] racePoints[${widget.racePoints}]');
+    raceRouteAndPoints = RaceRouteAndPoints(
+        widget.raceRoute,
+        widget.racePoints
+    );
 
     checkAndRequestLocationPermissions();
     raceDetailButtonsBloc = BlocProvider<RaceDetailButtonsBloc>(
@@ -232,11 +197,7 @@ class MapPageState extends State<MapPageProvider> {
           myLocationButtonEnabled: true,
           mapToolbarEnabled: true,
           mapType: MapType.normal,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(
-              19.423295657661217,
-              -99.1763032731237
-          )),
+          initialCameraPosition: reformaCameraPosition,
           onMapCreated: (GoogleMapController gMController){
             googleMapController.complete(gMController);
             moveCamera();
@@ -244,12 +205,13 @@ class MapPageState extends State<MapPageProvider> {
           polylines: <Polyline>{
             Polyline(
               polylineId: const PolylineId('ruta'),
-              points: routeLatLng,
+              points: raceRouteAndPoints.routeLatLng!,
               color: Colors.red,
               width: 3,
             )
           },
-          markers: markers.toSet(),
+          markers: raceRouteAndPoints.markers!.toSet(),
+          //markers: markers.toSet(),
         ),
         raceDetailButtonsBloc,
       ],
@@ -258,8 +220,16 @@ class MapPageState extends State<MapPageProvider> {
 
   Future<void> moveCamera() async {
     final GoogleMapController controller = await googleMapController.future;
-    if(latLngBounds!=null){
-      await controller.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds!, 0));
+    if(raceRouteAndPoints.latLngBounds!=null){
+      await controller.animateCamera(
+          CameraUpdate.newLatLngBounds(
+              raceRouteAndPoints.latLngBounds!, 0
+          )
+      );
+    } else {
+      await controller.animateCamera(
+          CameraUpdate.newCameraPosition(reformaCameraPosition)
+      );
     }
   }
 

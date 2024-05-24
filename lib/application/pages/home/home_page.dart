@@ -5,6 +5,8 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/reports/reports_page.dart';
+import 'package:centinelas_app/core/usecase.dart';
+import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +23,7 @@ class HomePage extends StatefulWidget {
 
   static const tabs = [
     RacesPage.pageConfig,
-    ReportsPage.pageConfig,
+    ReportPage.pageConfig,
   ];
 
   @override
@@ -42,14 +44,31 @@ class HomePageState extends State<HomePage> {
 
   List pages = [
     const RacesProvider(),
-    const ReportsPageProvider(),
+    const ReportPageProvider(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    serviceLocator<WriteUserIdUseCase>().call(NoParams());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Centinelas'),
+        titleSpacing: 0,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/header_centinelas.png',
+              fit: BoxFit.fitWidth,
+              height: 35,
+            ),
+          ],
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: (){

@@ -44,13 +44,13 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
           });
 
           if(user != null && context.mounted){
-            context.pushNamed(
+            context.goNamed(
               HomePage.pageConfig.name,
             );
           }
         },
         child: const Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +60,7 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
                 height: 35.0,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: 10),
                 child: Text(
                   'Inicia sesión con Google',
                   style: TextStyle(

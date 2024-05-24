@@ -12,6 +12,8 @@ const racesCollectionKey = 'eventos';
 const usersInfoCollectionKey = 'usuarios';
 const userDataKey = 'datos_usuario';
 const lastActiveDayKeyForUser = 'ultimo_dia_activo';
+const userEmailKeyForUser = 'correo_usuario';
+const userEmailsKeyForUser = 'correos_usuario';
 const userRacesDataKey = 'datos_carreras';
 const raceEngagementEmpty = 'vacio';
 const raceEngagementRegistered = 'registrada';
@@ -20,10 +22,24 @@ const userDataPhoneKey = 'telefono';
 const adminsDataKey = 'administradores';
 const dispatchersDataKey = 'despachadores';
 
+const raceEntryIdKey = 'id';
+const raceEntryTitleKey = 'titulo';
+const raceEntryImageKey = 'logo_carrera';
+const raceEntryDescriptionKey = 'descripcionCorta';
+const raceEntryLogoKey = 'logo_carrera';
+const raceDayLogoKey = 'dia_carrera';
+const raceDateLogoKey = 'fecha_carrera';
+const raceHourLogoKey = 'hora_carrera';
+
+
 const raceTitleKey = 'titulo';
 const raceAddressKey = 'ubicacion';
 const raceDescriptionKey = 'descripcion';
-const raceImageKey = 'linkImagen';
+const raceMainImageKey = 'imagen_carrera';
+const raceLogoKey = 'logo_carrera';
+const raceDayKey = 'dia_carrera';
+const raceDateKey = 'fecha_carrera';
+const raceHourKey = 'hora_carrera';
 const raceActiveKey = 'esta_activa';
 const raceGoogleMapRouteKey = 'ruta_google_map';
 const raceGoogleMapPointsKey = 'puntos_google_map';
@@ -83,5 +99,23 @@ const firebaseEventGoToPrivacy = 'goto_privacy';
 const firebaseEventGoToDispatch = 'goto_dispatch';
 const firebaseEventSendEmergencyIncidence = 'incidence_emergency';
 const firebaseEventSendAssistanceIncidence = 'incidence_assistance';
+
+const noRouteConst = 'noroute';
+const hidrationPointKey = 'punto_hidratacion';
+const exitPointKey = 'punto_salida';
+const finishPointKey = 'punto_meta';
+const kmPointKey = 'punto_km';
+const medicPointKey = 'punto_medico';
+
+const redPoint = 'punto_rojo';
+const rosePoint = 'punto_rosa';
+const orangePoint = 'punto_naranja';
+const azurePoint = 'punto_azul_claro';
+const greenPoint = 'punto_verde';
+const bluePoint = 'punto_azul';
+const cyanPoint = 'punto_cyan';
+const magentaPoint = 'punto_magenta';
+const violetPoint = 'punto_violeta';
+const yellowPoint = 'punto_amarillo';
 
 const minIncidenceLength = apiEnv==apiEnvDev ? 3 : 20;

@@ -1,6 +1,7 @@
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
+import 'package:centinelas_app/domain/utils/user_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -11,8 +12,7 @@ class DispatcherWriteRealtimeDatasource
     implements DispatcherWriteRealtimeDatasourceInterface{
 
   final String userEmail = serviceLocator<FirebaseAuth>().currentUser?.email ?? '';
-  final String userId = serviceLocator<FirebaseAuth>().currentUser?.uid ?? '';
-  final String uid = serviceLocator<FirebaseAuth>().currentUser?.uid ?? '';
+  final String userId = getUserId() ?? '';
 
   @override
   Future<bool> writeDispatcher() async {

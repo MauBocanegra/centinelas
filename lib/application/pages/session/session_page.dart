@@ -1,9 +1,11 @@
 import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/core/page_config.dart';
+import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/home_page.dart';
+import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
-import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/widgets/colors.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
@@ -13,9 +15,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../core/page_config.dart';
-import '../../core/routes_constants.dart';
 
 class SessionPageProvider extends StatefulWidget {
   const SessionPageProvider({super.key});
@@ -54,10 +53,7 @@ class SessionPageState extends State<SessionPageProvider> {
               serviceLocator<FirebaseAnalytics>().logEvent(
                   name: firebaseEventGoToDispatch
               );
-              context.goNamed(
-                DispatchPageProvider.pageConfig.name,
-                pathParameters: {activeRaceIdParamKey: activeRace},
-              );
+              context.goNamed(DispatchPage.pageConfig.name,);
             } else {
               context.goNamed(HomePage.pageConfig.name);
             }

@@ -5,6 +5,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/mappers/user_data_doc_to_user_data_model.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
+import 'package:centinelas_app/domain/utils/user_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -14,7 +15,7 @@ class UserDataFirestoreDatasource implements
     UserDataFirestoreDatasourceInterface{
 
   final FirebaseFirestore firestore = serviceLocator<FirebaseFirestore>();
-  final String uid = serviceLocator<FirebaseAuth>().currentUser?.uid ?? '';
+  final String uid = getUserId() ?? '';
 
   late final UserDataModel userDataModel;
 
@@ -25,13 +26,14 @@ class UserDataFirestoreDatasource implements
         '$apiEnv/$usersInfoCollectionKey/$uid/$userDataKey'
       ).get().then((DocumentSnapshot doc){
         final data = doc.data() as Map<String, dynamic>;
+        debugPrint('fetchUserData: ${data.toString()}');
         userDataModel = userDataDocToUserDataModel(data);
       }).onError((error, stackTrace){
-        throw Exception('[raceFull Doc] doc/mapping error');
+        throw Exception('[fetchUserData Doc] doc/mapping error');
       });
     } on Exception catch(exception){
       serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
-      throw Exception('[raceFull] error getting userData: ${exception.toString()}');
+      throw Exception('[fetchUserData] error getting userData: ${exception.toString()}');
     }
 
     return userDataModel;
@@ -44,13 +46,14 @@ class UserDataFirestoreDatasource implements
           '$apiEnv/$usersInfoCollectionKey/$userId/$userDataKey'
       ).get().then((DocumentSnapshot doc){
         final data = doc.data() as Map<String, dynamic>;
+        debugPrint('fetchCustomUserData: ${data.toString()}');
         userDataModel = userDataDocToUserDataModel(data);
       }).onError((error, stackTrace){
-        throw Exception('[raceFull Doc] doc/mapping error');
+        throw Exception('[fetchCustomUserData Doc] doc/mapping error');
       });
     } on Exception catch(e){
       serviceLocator<FirebaseCrashlytics>().recordError(e, null);
-      throw Exception('[raceFull] error getting userData: ${e.toString()}');
+      throw Exception('[fetchCustomUserData] error getting userData: ${e.toString()}');
     }
 
     return userDataModel;

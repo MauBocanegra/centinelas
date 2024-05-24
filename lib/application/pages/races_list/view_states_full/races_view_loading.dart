@@ -5,6 +5,23 @@ class RacesViewLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator.adaptive());
+    return Column(
+      children: [
+        Material(
+          elevation: 8,
+          child: Container(
+            alignment: Alignment.center,
+            height: 12,
+            child: Container(),
+          ),
+        ),
+        const SizedBox(height: 24,),
+        const Expanded(
+            child: Center(
+                child: CircularProgressIndicator.adaptive()
+            )
+        )
+      ],
+    );
   }
 }

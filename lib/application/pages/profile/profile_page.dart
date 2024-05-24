@@ -14,8 +14,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../races_list/races_page.dart';
-
 class ProfilePageWidgetProvider extends StatefulWidget {
   const ProfilePageWidgetProvider({
     super.key
@@ -122,7 +120,12 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
   Widget buildMainView(BuildContext context, ProfileState state){
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Perfil'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/header_perfil.png',
+          fit: BoxFit.contain,
+          height: 32,
+        ),
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
@@ -131,7 +134,6 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
             } else {
               context.goNamed(
                 HomePage.pageConfig.name,
-                pathParameters: {'tab' : RacesPage.pageConfig.name},
               );
             }
           },
@@ -146,10 +148,20 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
               child: const Icon(Icons.check),
           )
       ),
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 0, 0.0, 0.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Material(
+                elevation: 8,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 12,
+                  child: Container(),
+                ),
+              ),
+              const SizedBox(height: 24,),
               LayoutBuilder(
                   builder: (context, constraints){
                     return SizedBox(

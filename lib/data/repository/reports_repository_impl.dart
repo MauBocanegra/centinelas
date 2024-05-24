@@ -10,12 +10,12 @@ class ReportsRepositoryImpl extends ReportsRepository {
   ReportsRepositoryImpl();
 
   @override
-  Future<Either<List<ReportModel>, Failure>> readUserReports() async {
+  Future<Either<List<ReportModel>, Failure>> readUserReports(String uid) async {
     try{
       final reportsFirestoreDatasource =
           serviceLocator<ReportsFirestoreDatasourceInterface>();
       final reportsDataModel =
-          await reportsFirestoreDatasource.fetchRacesReports();
+          await reportsFirestoreDatasource.fetchRacesReports(uid);
       return Left(reportsDataModel);
     } on Exception catch(exception){
       serviceLocator<FirebaseCrashlytics>().recordError(exception, null);

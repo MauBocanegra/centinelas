@@ -1,11 +1,12 @@
 import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/bloc/incidence_entry_item_bloc.dart';
-import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/view_states/incidence_entry_item_view_error.dart';
-import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/view_states/incidence_entry_item_view_loaded.dart';
-import 'package:centinelas_app/application/pages/dispatch/widgets/incidence_item/view_states/incidence_entry_item_view_loading.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'bloc/incidence_entry_item_bloc.dart';
+import 'view_states/incidence_entry_item_view_error.dart';
+import 'view_states/incidence_entry_item_view_loaded.dart';
+import 'view_states/incidence_entry_item_view_loading.dart';
 
 class IncidenceEntryItemProvider extends StatelessWidget {
   const IncidenceEntryItemProvider({

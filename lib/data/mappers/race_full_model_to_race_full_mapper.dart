@@ -5,11 +5,11 @@ import 'package:centinelas_app/domain/entities/unique_id.dart';
 
 RaceFull mapRaceFullModelToRaceFull(RaceFullModel raceFullModel) {
   return RaceFull(
-    raceFullModel.title,
-    raceFullModel.discipline,
-    raceFullModel.address,
-    raceFullModel.description,
-    raceFullModel.imageUrl,
+    title: raceFullModel.title,
+    discipline: raceFullModel.discipline,
+    address: raceFullModel.address,
+    description: raceFullModel.description,
+    imageUrl: raceFullModel.imageUrl,
     id: RaceEntryId.fromUniqueString(raceFullModel.raceId),
     isRaceActive: raceFullModel.isRaceActive,
     raceEngagementState: mapRaceEngagementState(
@@ -17,6 +17,10 @@ RaceFull mapRaceFullModelToRaceFull(RaceFullModel raceFullModel) {
     ),
     raceRoute: raceFullModel.route,
     racePoints: raceFullModel.points,
+    logoUrl: raceFullModel.logoUrl,
+    dayString: raceFullModel.dayString,
+    dateString: raceFullModel.dateString,
+    hourString: raceFullModel.hourString,
   );
 }
 
