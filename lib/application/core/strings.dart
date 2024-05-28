@@ -1,9 +1,9 @@
 const registerButtonText = 'Registrate';
 const checkInButtonText = 'Check In';
-const mapButtonText = 'Seguir carrera en tiempo real';
+const mapButtonText = 'Seguimiento\nde carrera';
 const String phoneAndCheckInButtonText = 'Guardar / Check In';
-const assistanceButtonText = 'Soliciar asistencia';
-const emergencyButtonText = 'Reportar EMERGENCIA';
+const assistanceButtonText = 'ASISTENCIA';
+const emergencyButtonText = 'EMERGENCIA';
 const checkedInNotActiveRaceText = 'Tu Check-In esta completo\nUna vez activa la carrera podrás realizar tus reportes';
 const obtainingLocationString = 'Obteniendo ubicacion y enviando incidencia...';
 const errorRaceDetailButtonsWidget = 'Ocurrio un error, intenta nuevamente mas tarde';

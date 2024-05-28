@@ -30,12 +30,14 @@ class CentinelasApp extends StatelessWidget {
               seedColor: Colors.red,
               brightness: Brightness.light, //Colo scheme. from seed, ThemeData
             )),
+        /*
         darkTheme: ThemeData.from(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.black,
               brightness: Brightness.dark,
             )),
+        */
         routerConfig: routes,
       ),
     );

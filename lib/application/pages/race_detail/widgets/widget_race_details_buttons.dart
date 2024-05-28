@@ -6,6 +6,7 @@ import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -82,7 +83,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
               return const Center(child: CircularProgressIndicator());
             } else if(state is RaceDetailButtonsOnlyRegisterState){
               return ElevatedButton(
-                style: raisedBlueButtonStyle,
+                style: registerButtonStyle,
                 onPressed: () {
                   serviceLocator<FirebaseAnalytics>().logEvent(
                       name: firebaseEventRegister
@@ -95,7 +96,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
               );
             } else if (state is RaceDetailButtonsOnlyCheckInState){
               return ElevatedButton(
-                style: raisedOrangeButtonStyle,
+                style: checkInButtonStyle,
                 onPressed: () {
                   serviceLocator<FirebaseAnalytics>().logEvent(
                       name: firebaseEventCheckin
@@ -127,7 +128,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                         ),
                         const SizedBox(height: 8,),
                         ElevatedButton(
-                          style: raisedOrangeButtonStyle,
+                          style: checkInButtonStyle,
                           onPressed: isPhoneCompleted ? (){updatePhoneAndCheckin(context);} : null,
                           child: const Text(phoneAndCheckInButtonText),
                         )
@@ -150,8 +151,8 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                 state is RaceDetailButtonsIncidenceWithSuccessState ||
                 state is RaceDetailButtonsIncidenceWithErrorState
             ){
-              return ElevatedButton(
-                onPressed: (){
+              return InkWell(
+                onTap: (){
                   serviceLocator<FirebaseAnalytics>().logEvent(
                       name: firebaseEventGoToMap
                   );
@@ -168,7 +169,37 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                     ,
                   );
                 },
-                child: const Text(mapButtonText),
+                child: Material(
+                  elevation: 8,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:BorderRadius.circular(8.0)
+                  ),
+                  color: greenColorCentinelas,
+                  child: const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.directions_run,
+                            color: Colors.white,
+                            size: 24.0,
+                          ),
+                          SizedBox(
+                            width:10,
+                          ),
+                          Text(
+                            textAlign: TextAlign.center,
+                            mapButtonText,
+                            style: TextStyle(
+                              color: Colors.white,
+                              height: 1,
+                            ),
+                          )
+                        ],
+                    ),
+                  ),
+                ),
               );
             } else {
               return const Center(

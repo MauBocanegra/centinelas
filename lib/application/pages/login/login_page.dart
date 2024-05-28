@@ -1,4 +1,6 @@
 import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas_app/application/core/page_config.dart';
+import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/login/widgets/google_sign_in_button.dart';
@@ -7,26 +9,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/page_config.dart';
-import '../../core/routes_constants.dart';
-
-/*
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
-
-  static const pageConfig = PageConfig(
-    icon: Icons.login,
-    name: loginRoute,
-    child: LoginPage(),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(color: Colors.deepOrangeAccent);
-  }
-}
-*/
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -45,7 +27,7 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

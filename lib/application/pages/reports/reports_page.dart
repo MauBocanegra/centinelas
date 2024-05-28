@@ -25,7 +25,7 @@ class ReportPage extends StatelessWidget{
   const ReportPage({super.key});
 
   static const pageConfig = PageConfig(
-    icon: Icons.area_chart,
+    icon: Icons.feed_rounded,
     name: reportsRoute,
     child: ReportPageProvider(),
   );

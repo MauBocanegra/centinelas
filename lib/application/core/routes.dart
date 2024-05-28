@@ -77,24 +77,10 @@ final routes = GoRouter(
       name: MapPageProvider.pageConfig.name,
       path: '/$homeRoute/$racesRoute/${MapPageProvider.pageConfig.name}/:$raceFullIdParamKey/:$raceRouteParamKey/:$racePointsParamKey',
       builder: (context, state){
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Mapa'),
-            leading: BackButton(
-              onPressed: (){
-                if(context.canPop()){
-                  context.pop();
-                } else {
-                  context.goNamed(HomePage.pageConfig.name,);
-                }
-              },
-            ),
-          ),
-          body: MapPageProvider(
-            raceIdString: (state.pathParameters[raceFullIdParamKey] ?? ''),
-            raceRoute: (state.pathParameters[raceRouteParamKey] ?? ''),
-            racePoints: (jsonDecode(state.pathParameters[racePointsParamKey] ?? '')),
-          ),
+        return MapPageProvider(
+          raceIdString: (state.pathParameters[raceFullIdParamKey] ?? ''),
+          raceRoute: (state.pathParameters[raceRouteParamKey] ?? ''),
+          racePoints: (jsonDecode(state.pathParameters[racePointsParamKey] ?? '')),
         );
       }
     ),

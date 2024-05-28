@@ -7,8 +7,10 @@ import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas_app/application/pages/home/home_page.dart';
 import 'package:centinelas_app/application/pages/map/helpers/location_permission_status.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
 import 'package:centinelas_app/domain/utils/map_utils.dart';
@@ -16,6 +18,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart' as custom_permission_handler;
@@ -104,40 +107,105 @@ class MapPageState extends State<MapPageProvider> {
             return Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ElevatedButton(
-                      onPressed: (){
-                        onTapIncidenceButton(
-                            context,
-                            SimpleIncidenceRequestType()
-                        );
-                      },
-                      style: raisedBlueButtonStyle,
-                      child: const Text(assistanceButtonText),
-                    ),
-                    ElevatedButton(
-                      onPressed: (){
-                        onTapIncidenceButton(
-                            context,
-                            EmergencyIncidenceRequestType()
-                        );
-                      },
-                      style: raisedRedButtonStyle,
-                      child: const Wrap(
-                        children: <Widget>[
-                          Icon(Icons.warning_rounded,),
-                          SizedBox(width:10,),
-                          Text(emergencyButtonText),
+                padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 32.0),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              onTapIncidenceButton(
+                                  context,
+                                  SimpleIncidenceRequestType()
+                              );
+                            },
+                            child: Material(
+                              elevation: 8.0,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(8.0),
+                                      bottomRight: Radius.circular(8.0)
+                                  )
+                              ),
+                              color: greenColorCentinelas,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.healing,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 8,),
+                                        Text(
+                                          assistanceButtonText,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16,),
+                          InkWell(
+                            onTap: (){
+                              onTapIncidenceButton(
+                                  context,
+                                  EmergencyIncidenceRequestType()
+                              );
+                            },
+                            child: Material(
+                              elevation: 8.0,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(8.0),
+                                      bottomRight: Radius.circular(8.0)
+                                  )
+                              ),
+                              color: redColorCentinelas,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.warning_rounded,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 8,),
+                                        Text(
+                                          emergencyButtonText,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
-                      ),
-                    )
-                  ],
+                      );
+                    }
+                  ),
                 ),
-              ),
             );
           }
       ),
@@ -171,10 +239,8 @@ class MapPageState extends State<MapPageProvider> {
             if(iosInfo!=null){
               var permissionStatus = await location.hasPermission();
               if(permissionStatus == PermissionStatus.granted){
-                debugPrint('bluetooth on iOS GRANTED YEEI');
                 widget.locationPermissionStatus = LocationPermissionGranted();
               } else {
-                debugPrint('bluetooth on iOS DENIED 2x');
               }
             }
           }catch(exception){
@@ -190,31 +256,53 @@ class MapPageState extends State<MapPageProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        GoogleMap(
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
-          mapToolbarEnabled: true,
-          mapType: MapType.normal,
-          initialCameraPosition: reformaCameraPosition,
-          onMapCreated: (GoogleMapController gMController){
-            googleMapController.complete(gMController);
-            moveCamera();
-          },
-          polylines: <Polyline>{
-            Polyline(
-              polylineId: const PolylineId('ruta'),
-              points: raceRouteAndPoints.routeLatLng!,
-              color: Colors.red,
-              width: 3,
-            )
-          },
-          markers: raceRouteAndPoints.markers!.toSet(),
-          //markers: markers.toSet(),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Image.asset(
+          'assets/header_mapa.png',
+          fit: BoxFit.contain,
+          height: 32,
         ),
-        raceDetailButtonsBloc,
-      ],
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            if(context.canPop()){
+              context.pop();
+            } else {
+              context.goNamed(
+                HomePage.pageConfig.name,
+              );
+            }
+          },
+        ),
+      ),
+      body: Stack(
+        children: <Widget>[
+          GoogleMap(
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+            mapToolbarEnabled: true,
+            mapType: MapType.normal,
+            initialCameraPosition: reformaCameraPosition,
+            onMapCreated: (GoogleMapController gMController){
+              googleMapController.complete(gMController);
+              moveCamera();
+            },
+            polylines: <Polyline>{
+              Polyline(
+                polylineId: const PolylineId('ruta'),
+                points: raceRouteAndPoints.routeLatLng!,
+                color: Colors.red,
+                width: 3,
+              )
+            },
+            markers: raceRouteAndPoints.markers!.toSet(),
+            //markers: markers.toSet(),
+          ),
+          raceDetailButtonsBloc,
+        ],
+      ),
     );
   }
 

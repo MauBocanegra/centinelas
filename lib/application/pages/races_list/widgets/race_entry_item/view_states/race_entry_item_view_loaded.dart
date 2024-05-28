@@ -74,7 +74,7 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                 ),
                 */
                 InkWell(
-                  onTap: (){
+                  onTapUp: (details) async {
                     debugPrint('onTap race:${raceEntry.id.value}');
                     serviceLocator<FirebaseAnalytics>().logEvent(
                         name: firebaseEventGoToRace
@@ -82,12 +82,14 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                     context.read<NavigationCubit>().selectedRaceChanged(raceEntry.id);
                     if(Breakpoints.small.isActive(context)){
                       debugPrint('small: ${raceEntry.id.value}');
-                      context.pushNamed(
-                        RaceDetailPage.pageConfig.name,
-                        pathParameters: {
-                          'raceEntryId': raceEntry.id.value.toString(),
-                        },
-                      );
+                      Future.delayed(const Duration(milliseconds: 300),(){
+                        context.pushNamed(
+                          RaceDetailPage.pageConfig.name,
+                          pathParameters: {
+                            'raceEntryId': raceEntry.id.value.toString(),
+                          },
+                        );
+                      });
                     }else {}
                   },
                   child: Row(
