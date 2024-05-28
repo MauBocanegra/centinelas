@@ -25,80 +25,69 @@ class ReportsViewLoaded extends StatelessWidget {
           )
       )
           :
-      Column(
-        children: [
-          Material(
-            elevation: 8,
-            child: Container(
-              alignment: Alignment.center,
-              height: 12,
-              child: Container(),
-            ),
-          ),
-          const SizedBox(height: 24,),
-          Padding(
-            padding: const EdgeInsets.only(right: 64),
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: reportsModelList.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        const SizedBox(width: 8,),
-                        Container(
-                          width: 10,
-                          height: 10,
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
-                            shape: BoxShape.circle,
+      Padding(
+        padding: const EdgeInsets.only(right: 64, top: 16,),
+        child: ListView.builder(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: reportsModelList.length,
+            itemBuilder: (context, index) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      const SizedBox(width: 8,),
+                      Container(
+                        width: 10,
+                        height: 10,
+                        decoration: const BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 8,),
+                      Text(
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w900,
                           ),
-                        ),
-                        const SizedBox(width: 8,),
-                        Text(
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w900,
-                            ),
-                            (reportsModelList[index].title ?? '').toUpperCase()
-                        ),
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(28, 4, 0, 0),
-                      child: Text('Bitacora de actividad:'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 0, 0, 4),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: reportsModelList[index].raceLog.length,
-                        itemBuilder: (context, raceLogIndex) {
-                          return Text('${
+                          (reportsModelList[index].title ?? '').toUpperCase()
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(28, 4, 0, 0),
+                    child: Text('Bitacora de actividad:'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(40, 0, 0, 4),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: reportsModelList[index].raceLog.length,
+                      itemBuilder: (context, raceLogIndex) {
+                        return Text('${
                             raceLogKeyFormatter(
                                 reportsModelList[index].raceLog.keys.toList()[raceLogIndex]
                             )
-                          } '
-                              ': ${timeStampToDate(
-                              reportsModelList[index].raceLog.values.toList()[raceLogIndex]
-                          )}');
-                        },
-                        physics: const ClampingScrollPhysics(),
-                      ),
+                        } '
+                            ': ${timeStampToDate(
+                            reportsModelList[index].raceLog.values.toList()[raceLogIndex]
+                        )}');
+                      },
                     ),
-                    reportsModelList[index].incidencesList.isNotEmpty ?
-                    const Text('Incidencias:') : Container(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        itemCount: reportsModelList[index].incidencesList.length,
-                        itemBuilder: (context, incidencesIndex){
-                          return LayoutBuilder(
+                  ),
+                  reportsModelList[index].incidencesList.isNotEmpty ?
+                  const Text('Incidencias:') : Container(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: reportsModelList[index].incidencesList.length,
+                      itemBuilder: (context, incidencesIndex){
+                        return LayoutBuilder(
                             builder: (context, constraints){
                               return Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
@@ -107,19 +96,19 @@ class ReportsViewLoaded extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     /*
-                                    Text('Hora de reporte: ${reportsModelList[index].incidencesList[incidencesIndex].time}'),
-                                    Text('Texto incidencia: ${reportsModelList[index].incidencesList[incidencesIndex].text}'),
-                                    const Divider(),
-                                    */
+                                        Text('Hora de reporte: ${reportsModelList[index].incidencesList[incidencesIndex].time}'),
+                                        Text('Texto incidencia: ${reportsModelList[index].incidencesList[incidencesIndex].text}'),
+                                        const Divider(),
+                                        */
                                     Material(
                                       elevation: 8.0,
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            bottomRight: Radius.circular(8),
-                                            bottomLeft: Radius.circular(0),
-                                            topRight: Radius.circular(8),
-                                            topLeft: Radius.circular(0)
-                                        )
+                                          borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(8),
+                                              bottomLeft: Radius.circular(0),
+                                              topRight: Radius.circular(8),
+                                              topLeft: Radius.circular(0)
+                                          )
                                       ),
                                       color: mapColorFromIncidenceType(
                                           reportsModelList[index].incidencesList[incidencesIndex].type
@@ -128,14 +117,14 @@ class ReportsViewLoaded extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(36, 8, 36, 8),
                                           child: Text(
-                                              formatTextForIncidence(
-                                                  reportsModelList[index].incidencesList[incidencesIndex].type,
-                                                  reportsModelList[index].incidencesList[incidencesIndex].text
-                                              ),
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(
+                                            formatTextForIncidence(
+                                                reportsModelList[index].incidencesList[incidencesIndex].type,
+                                                reportsModelList[index].incidencesList[incidencesIndex].text
+                                            ),
+                                            textAlign: TextAlign.justify,
+                                            style: const TextStyle(
                                                 color: Colors.white
-                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -144,16 +133,14 @@ class ReportsViewLoaded extends StatelessWidget {
                                 ),
                               );
                             }
-                          );
-                        },
-                      ),
+                        );
+                      },
                     ),
-                  ],
-                );
-              }
-                ),
-          ),
-        ],
+                  ),
+                ],
+              );
+            }
+        ),
       );
   }
 

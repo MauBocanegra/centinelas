@@ -57,6 +57,8 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 8,
+        surfaceTintColor: Colors.white,
         titleSpacing: 0,
         centerTitle: true,
         title: Row(

@@ -12,25 +12,15 @@ class RacesViewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Material(
-          elevation: 8,
-          child: Container(
-            alignment: Alignment.center,
-            height: 12,
-            child: Container(),
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16,),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: raceEntryIds.length,
+        itemBuilder: (context, index) => RaceEntryItemProvider(
+            raceEntryId: raceEntryIds[index]
         ),
-        const SizedBox(height: 24,),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: raceEntryIds.length,
-          itemBuilder: (context, index) => RaceEntryItemProvider(
-              raceEntryId: raceEntryIds[index]
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
