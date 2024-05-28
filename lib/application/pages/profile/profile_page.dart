@@ -162,6 +162,11 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                 ),
               ),
               const SizedBox(height: 24,),
+              Align(
+                alignment: Alignment.topRight,
+                child: signOutButton(),
+              ),
+              const SizedBox(height: 12,),
               LayoutBuilder(
                   builder: (context, constraints){
                     return SizedBox(
@@ -182,8 +187,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(height: 16,),
-              signOutButton(),
+              const SizedBox(height: 8,),
               /// progress bar
               (state is ProfileLoadedState)
                   ? Container()
@@ -306,7 +310,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
             context.goNamed(LoginPage.pageConfig.name);
           }
         },
-        style: raisedRedButtonStyle,
+        style: signOutButtonStyle,
         child: const Wrap(
           children: <Widget>[
             Icon(

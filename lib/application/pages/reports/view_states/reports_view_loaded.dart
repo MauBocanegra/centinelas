@@ -40,6 +40,7 @@ class ReportsViewLoaded extends StatelessWidget {
             padding: const EdgeInsets.only(right: 64),
             child: ListView.builder(
                 shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
                 itemCount: reportsModelList.length,
                 itemBuilder: (context, index) {
                   return Column(
@@ -94,6 +95,7 @@ class ReportsViewLoaded extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       child: ListView.builder(
                         shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
                         itemCount: reportsModelList[index].incidencesList.length,
                         itemBuilder: (context, incidencesIndex){
                           return LayoutBuilder(
@@ -144,7 +146,6 @@ class ReportsViewLoaded extends StatelessWidget {
                             }
                           );
                         },
-                        physics: const ClampingScrollPhysics(),
                       ),
                     ),
                   ],

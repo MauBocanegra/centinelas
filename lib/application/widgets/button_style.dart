@@ -34,9 +34,9 @@ final ButtonStyle goToMapButtonStyle = ElevatedButton.styleFrom(
   ),
 );
 
-final ButtonStyle raisedRedButtonStyle = ElevatedButton.styleFrom(
-  foregroundColor: Colors.white,
-  backgroundColor: Colors.red,
+final ButtonStyle signOutButtonStyle = ElevatedButton.styleFrom(
+  foregroundColor: redColorCentinelas,
+  backgroundColor: pinkColorCentinelas,
   minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 16),
   elevation: 8.0,

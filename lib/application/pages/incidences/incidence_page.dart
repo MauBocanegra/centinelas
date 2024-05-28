@@ -31,7 +31,7 @@ class IncidencesPageProvider extends StatefulWidget {
   });
 
   static const pageConfig = PageConfig(
-      icon: Icons.broadcast_on_home_outlined,
+      icon: Icons.volume_up_sharp,
       name: incidencesRoute,
   );
 
@@ -163,14 +163,6 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
     debugPrint('User granted permission: ${settings.authorizationStatus}');
   }
 
-  void scrollUp() {
-    scrollController.animateTo(
-      scrollController.position.minScrollExtent,
-      duration: const Duration(seconds: 2),
-      curve: Curves.fastOutSlowIn,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -211,7 +203,7 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
                   child: ListView.builder(
                     reverse: true,
                     shrinkWrap: true,
-                    controller: scrollController,
+                    physics: const ClampingScrollPhysics(),
                     itemCount: snapshot.data?.length,
                     itemBuilder: (BuildContext context, int index){
                       return IncidenceEntryItemProvider(
