@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 final ButtonStyle registerButtonStyle = ElevatedButton.styleFrom(
   foregroundColor: Colors.white,
   backgroundColor: redColorCentinelas,
-  minimumSize: Size(88, 36),
-  padding: EdgeInsets.symmetric(horizontal: 16),
+  minimumSize: const Size(88, 36),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
   elevation: 8.0,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -15,8 +15,8 @@ final ButtonStyle registerButtonStyle = ElevatedButton.styleFrom(
 final ButtonStyle checkInButtonStyle = ElevatedButton.styleFrom(
   foregroundColor: redColorCentinelas,
   backgroundColor: pinkColorCentinelas,
-  minimumSize: Size(88, 36),
-  padding: EdgeInsets.symmetric(horizontal: 16),
+  minimumSize: const Size(88, 36),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
   elevation: 8.0,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -26,8 +26,8 @@ final ButtonStyle checkInButtonStyle = ElevatedButton.styleFrom(
 final ButtonStyle goToMapButtonStyle = ElevatedButton.styleFrom(
   foregroundColor: Colors.white,
   backgroundColor: greenColorCentinelas,
-  minimumSize: Size(88, 36),
-  padding: EdgeInsets.symmetric(horizontal: 16),
+  minimumSize: const Size(88, 36),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
   elevation: 8.0,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -37,8 +37,8 @@ final ButtonStyle goToMapButtonStyle = ElevatedButton.styleFrom(
 final ButtonStyle signOutButtonStyle = ElevatedButton.styleFrom(
   foregroundColor: redColorCentinelas,
   backgroundColor: pinkColorCentinelas,
-  minimumSize: Size(88, 36),
-  padding: EdgeInsets.symmetric(horizontal: 16),
+  minimumSize: const Size(88, 36),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
   elevation: 8.0,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),

@@ -1,4 +1,3 @@
-import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

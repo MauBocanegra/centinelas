@@ -35,7 +35,7 @@ class LoginPageState extends State<LoginPage> {
                 children: [
                   LayoutBuilder(
                       builder: (context, constraints){
-                        return Container(
+                        return SizedBox(
                           height: MediaQuery.of(context).size.width / 3,
                           width: MediaQuery.of(context).size.width / 3,
                           child: FittedBox(

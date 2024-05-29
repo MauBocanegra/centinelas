@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:centinelas_app/application/core/constants.dart';
@@ -11,7 +10,6 @@ import 'package:centinelas_app/application/pages/home/home_page.dart';
 import 'package:centinelas_app/application/pages/map/helpers/location_permission_status.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
 import 'package:centinelas_app/application/utils/color_utils.dart';
-import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
 import 'package:centinelas_app/domain/utils/map_utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';

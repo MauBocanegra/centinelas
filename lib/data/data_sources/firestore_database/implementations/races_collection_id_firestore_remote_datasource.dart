@@ -30,7 +30,7 @@ class RaceCollectionIdFirestoreDatasource
     );
 
     return RaceCollectionIdModel(
-        raceCollectionId: collectionIdToBeDisplayed ?? ''
+        raceCollectionId: collectionIdToBeDisplayed
     );
   }
 

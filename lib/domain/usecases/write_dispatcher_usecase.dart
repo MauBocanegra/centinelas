@@ -1,12 +1,8 @@
-import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
-import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class WriteDispatcherUseCase implements UseCase<bool, NoParams>{
   const WriteDispatcherUseCase({required this.realtimeRepository});

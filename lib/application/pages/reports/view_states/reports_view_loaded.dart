@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/data/models/report_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ReportsViewLoaded extends StatelessWidget {
@@ -84,7 +81,7 @@ class ReportsViewLoaded extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                     child: ListView.builder(
                       shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       itemCount: reportsModelList[index].incidencesList.length,
                       itemBuilder: (context, incidencesIndex){
                         return LayoutBuilder(

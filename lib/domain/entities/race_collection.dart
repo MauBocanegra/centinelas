@@ -1,4 +1,3 @@
-import 'race_color.dart';
 import 'unique_id.dart';
 
 class RaceCollection {

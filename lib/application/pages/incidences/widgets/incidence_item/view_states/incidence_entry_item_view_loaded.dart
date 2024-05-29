@@ -1,10 +1,8 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -29,12 +27,12 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
                 actions: (incidenceModel.lat!=0.0 &&incidenceModel.lon!=0.0) ? [
                   SheetAction(
                     icon: Icons.phone,
-                    label: 'Llamar al ${phoneNumber}',
+                    label: 'Llamar al $phoneNumber',
                     key: 'phoneCall',
                   ),
                   SheetAction(
                     icon: Icons.copy,
-                    label: 'Copiar \"${phoneNumber}\"',
+                    label: 'Copiar "$phoneNumber"',
                     key: 'clipboard',
                   ),
                   const SheetAction(
@@ -50,12 +48,12 @@ class IncidenceEntryItemViewLoaded extends StatelessWidget {
                 ] : [
                   SheetAction(
                     icon: Icons.phone,
-                    label: 'Llamar al ${phoneNumber}',
+                    label: 'Llamar al $phoneNumber',
                     key: 'phoneCall',
                   ),
                   SheetAction(
                     icon: Icons.copy,
-                    label: 'Copiar \"${phoneNumber}\"',
+                    label: 'Copiar "$phoneNumber"',
                     key: 'clipboard',
                   ),
                 ]

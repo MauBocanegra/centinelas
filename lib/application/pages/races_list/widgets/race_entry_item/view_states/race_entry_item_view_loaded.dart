@@ -98,11 +98,9 @@ class RaceEntryItemViewLoaded extends StatelessWidget {
                         flex: 7,
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(24, 16, 0, 16),
-                            child: Container(
-                              child: Image(
-                                image: NetworkImage(raceEntry.imageUrl ?? ''),
-                                width: double.infinity,
-                              ),
+                            child: Image(
+                              image: NetworkImage(raceEntry.imageUrl ?? ''),
+                              width: double.infinity,
                             ),
                           )
                       ),

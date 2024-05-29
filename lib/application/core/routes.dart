@@ -5,7 +5,6 @@ import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
-import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
 import 'package:centinelas_app/application/pages/map/map_page.dart';
 import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';

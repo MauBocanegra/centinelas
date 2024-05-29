@@ -21,7 +21,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart' as CustomPermissionHandler;
+import 'package:permission_handler/permission_handler.dart' as custom_permission_handler;
 
 import 'widgets/incidence_item/incidence_entry_item.dart';
 
@@ -155,10 +155,10 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
   }
 
   void checkAndRequestLocationPermissions() async {
-    if(await CustomPermissionHandler.Permission.location.serviceStatus.isEnabled){
+    if(await custom_permission_handler.Permission.location.serviceStatus.isEnabled){
       // enabled
-      var status = await CustomPermissionHandler.Permission.location.status;
-      if(await CustomPermissionHandler.Permission.location.isPermanentlyDenied){
+      var status = await custom_permission_handler.Permission.location.status;
+      if(await custom_permission_handler.Permission.location.isPermanentlyDenied){
         widget.locationPermissionStatus = LocationPermissionPermanentlyDenied();
       }
       if(status.isGranted){
@@ -166,11 +166,8 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
         widget.locationPermissionStatus = LocationPermissionGranted();
       } else {
         // location permission not granted
-        Map<
-            CustomPermissionHandler.Permission,
-            CustomPermissionHandler.PermissionStatus
-        > requestStatus = await [CustomPermissionHandler.Permission.location].request();
-        var locationStatus = await CustomPermissionHandler.Permission.location.status;
+        await [custom_permission_handler.Permission.location].request();
+        var locationStatus = await custom_permission_handler.Permission.location.status;
         if(locationStatus.isGranted){
           widget.locationPermissionStatus = LocationPermissionGranted();
         } else {

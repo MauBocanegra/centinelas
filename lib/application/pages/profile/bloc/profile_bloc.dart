@@ -5,7 +5,6 @@ import 'package:centinelas_app/domain/usecases/write_user_data_usecase.dart';
 import 'package:centinelas_app/domain/utils/user_utils.dart';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +25,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState>{
     emit(ProfileLoadingState());
     try{
       // leaking data?
-      final userDataResponse = await loadCustomUserDataUseCase.call(
+      await loadCustomUserDataUseCase.call(
           getUserId() ?? ''
       ).fold(
           (userData) => emit(ProfileLoadedState(userDataModel: userData)),

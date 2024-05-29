@@ -1,7 +1,7 @@
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 
 class WriteIncidenceUseCase implements UseCase<bool, Map<String, dynamic>>{
   const WriteIncidenceUseCase({required this.realtimeRepository});

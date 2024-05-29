@@ -1,7 +1,6 @@
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
-import 'package:centinelas_app/application/pages/reports/reports_page.dart';
 import 'package:centinelas_app/application/pages/users_list/users_list.page.dart';
 import 'package:flutter/material.dart';
 

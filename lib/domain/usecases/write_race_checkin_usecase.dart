@@ -5,7 +5,6 @@ import 'package:centinelas_app/data/sealed_classes/race_engagement_type_request.
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
-import 'package:either_dart/src/either.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class WriteRaceCheckinUseCase implements

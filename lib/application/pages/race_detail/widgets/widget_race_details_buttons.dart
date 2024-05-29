@@ -156,7 +156,7 @@ class RaceDetailsButtonsWidget extends State<RaceDetailsButtonsWidgetProvider>{
                   serviceLocator<FirebaseAnalytics>().logEvent(
                       name: firebaseEventGoToMap
                   );
-                  String? raceRoute = widget.raceFull.raceRoute ?? '';
+                  String? raceRoute = widget.raceFull.raceRoute;
                   raceRoute = raceRoute.isNotEmpty ? raceRoute : noRouteConst;
                   Map<dynamic, dynamic> racePointsMap = widget.raceFull.racePoints;
                   context.goNamed(

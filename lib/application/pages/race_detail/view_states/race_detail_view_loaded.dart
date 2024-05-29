@@ -1,6 +1,5 @@
 import 'package:centinelas_app/application/pages/race_detail/widgets/widget_race_details_buttons.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RaceDetailViewLoaded extends StatefulWidget {
@@ -36,7 +35,7 @@ class RaceDetailViewLoadedState extends State<RaceDetailViewLoaded> {
             LayoutBuilder(
               builder: (context, constraints) {
                 return Image.network(
-                  widget.raceFull.imageUrl ?? '',
+                  widget.raceFull.imageUrl,
                   width: constraints.maxWidth/2.75,
                 );
               },
@@ -54,7 +53,7 @@ class RaceDetailViewLoadedState extends State<RaceDetailViewLoaded> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Image(
-                          image: NetworkImage(widget.raceFull.logoUrl ?? ''),
+                          image: NetworkImage(widget.raceFull.logoUrl),
                           width: constraints.maxWidth/2.5,
                         ),
                       )

@@ -4,7 +4,6 @@ import 'package:centinelas_app/core/utils/utils.dart';
 import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
 import 'package:centinelas_app/data/sealed_classes/incidence_request_type.dart';
 import 'package:centinelas_app/domain/utils/user_utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';

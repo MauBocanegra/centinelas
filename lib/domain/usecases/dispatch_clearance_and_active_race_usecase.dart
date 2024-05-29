@@ -4,7 +4,7 @@ import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 
 class DispatchClearanceAndActiveRaceUseCase
     implements UseCase<Map<dynamic, dynamic>, NoParams>{

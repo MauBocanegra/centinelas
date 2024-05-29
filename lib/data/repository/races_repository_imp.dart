@@ -12,7 +12,7 @@ import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
 import 'package:centinelas_app/domain/repositories/races_repository.dart';
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +87,7 @@ class RacesRepositoryImpl extends RacesRepository{
       final raceCollectionIdModel = await raceCollectionIdFirestoreDatasource
           .fetchRaceCollectionToDisplayId();
 
-      final raceEntriesIds = await racesFirestoreDataSource.fetchRaceEntriesIdsList(
+      await racesFirestoreDataSource.fetchRaceEntriesIdsList(
           raceCollectionIdModel.raceCollectionId
       );
 
