@@ -1,7 +1,6 @@
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 Iterable<Marker> mapIterableDataSnapshotToIterableGoogleMapsMarker(
@@ -15,8 +14,21 @@ Iterable<Marker> mapIterableDataSnapshotToIterableGoogleMapsMarker(
           title: incidenceModel.type == incidenceEmergencyTypeForMapping
               ? emergencyDialogTitle : assistanceDialogTitle,
           snippet: incidenceModel.text,
-        )
+        ),
+        icon: getMarkerColorByIncidenceType(incidenceModel.type),
       )
   );
   return iterableMarker;
+}
+
+BitmapDescriptor getMarkerColorByIncidenceType(String incidenceType){
+  double color;
+  if(incidenceType == incidenceEmergencyTypeForMapping){
+    color = BitmapDescriptor.hueRed;
+  } else if (incidenceType == incidenceAssistanceTypeForMapping){
+    color = BitmapDescriptor.hueGreen;
+  } else {
+    color = BitmapDescriptor.hueRed;
+  }
+  return BitmapDescriptor.defaultMarkerWithHue(color);
 }

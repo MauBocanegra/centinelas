@@ -48,10 +48,12 @@ class RealtimeRepositoryImpl extends RealtimeRepository{
   }
 
   @override
-  StreamController<Iterable<IncidenceModel>> getIncidenceModelStream() {
+  StreamController<Iterable<IncidenceModel>> getIncidenceModelStream(
+      String raceId
+  ) {
     try{
       final incidenceModelStream =
-        incidenceObserverRealtimeDatasource.getIncidenceModelStream();
+        incidenceObserverRealtimeDatasource.getIncidenceModelStream(raceId);
       incidenceModelStream?.stream.listen((event) {
         outputStreamController.add(event);
       });

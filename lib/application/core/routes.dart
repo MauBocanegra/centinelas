@@ -59,13 +59,22 @@ final routes = GoRouter(
     GoRoute(
       name: DispatchPage.pageConfig.name,
       path: '/$dispatchRoute',
-      builder: (context, state) => const DispatchPage(),
+      builder: (context, state) {
+        final data = state.extra! as Map<String,dynamic>;
+        return DispatchPage(
+          raceId: data[raceEntryIdKey],
+          route: data[raceGoogleMapRouteKey],
+          points: data[raceGoogleMapPointsKey],
+        );
+      }
     ),
+    /*
     GoRoute(
       name: IncidencesPageProvider.pageConfig.name,
       path: '/$incidencesRoute',
       builder: (context, state) => IncidencesPageProvider(),
     ),
+    */
     GoRoute(
         name: PrivacyPageProvider.pageConfig.name,
         path: '/${PrivacyPageProvider.pageConfig.name}',

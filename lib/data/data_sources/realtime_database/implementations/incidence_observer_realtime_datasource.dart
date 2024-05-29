@@ -15,9 +15,12 @@ class IncidenceObserverRealtimeDatasource implements IncidenceObserverRealtimeDa
   final StreamController<Iterable<IncidenceModel>> outputStreamController = StreamController();
 
   @override
-  StreamController<Iterable<IncidenceModel>>? getIncidenceModelStream() {
+  StreamController<Iterable<IncidenceModel>>? getIncidenceModelStream(String raceId) {
     try{
-      final databaseReference = firebase.ref().child(incidencesRealtimeDBPath);
+      final databaseReference = firebase.ref().child(
+          //'$racesIncidencesRealtimeDBPath/$raceId'
+          incidencesRealtimeDBPath
+      ).orderByChild(raceIdRealtimeDBKey).equalTo(raceId);
       streamController.addStream(databaseReference.onValue);
       streamController.stream.listen((event) {
         mapIterableDataSnapshotToIterableIncidenceModel(event.snapshot.children);

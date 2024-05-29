@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/entities/unique_id.dart';
 import 'package:centinelas_app/domain/failures/failures.dart';
@@ -5,7 +6,8 @@ import 'package:centinelas_app/domain/repositories/races_repository.dart';
 import 'package:centinelas_app/domain/repositories/users_repository.dart';
 import 'package:either_dart/src/either.dart';
 
-class DispatchClearanceAndActiveRaceUseCase implements UseCase<String, NoParams>{
+class DispatchClearanceAndActiveRaceUseCase
+    implements UseCase<Map<dynamic, dynamic>, NoParams>{
 
   const DispatchClearanceAndActiveRaceUseCase({
     required this.usersRepository,
@@ -15,13 +17,15 @@ class DispatchClearanceAndActiveRaceUseCase implements UseCase<String, NoParams>
   final RacesRepository racesRepository;
 
   @override
-  Future<Either<String, Failure>> call(NoParams params) async {
+  Future<Either<Map<dynamic, dynamic>, Failure>> call(NoParams params) async {
 
     try{
-      String? fetchedFullRaceId;
+      String? fetchedFullRaceId = '';
+      String? fetchedRaceRoute;
+      Map<dynamic, dynamic> fetchedRacePoints = {};
       final userHasDispatchClearance =
         await usersRepository.isCurrentUserDispatchAuthorized();
-      if(!userHasDispatchClearance){ return const Left(''); }
+      if(!userHasDispatchClearance){ return const Left({}); }
       final readRaceIdsEither = await racesRepository.readRaceEntryIds();
       late final List<RaceEntryId> raceEntryIdsList;
       readRaceIdsEither.fold(
@@ -34,12 +38,18 @@ class DispatchClearanceAndActiveRaceUseCase implements UseCase<String, NoParams>
           (fetchedFullRace) {
             if(fetchedFullRace.isRaceActive){
               fetchedFullRaceId = fetchedFullRace.id.value;
+              fetchedRaceRoute = fetchedFullRace.raceRoute;
+              fetchedRacePoints = fetchedFullRace.racePoints;
             }
           },
           (failure) => Right(failure),
         );
       }
-      return Left(fetchedFullRaceId ?? '');
+      return Left({
+        raceGoogleMapRouteKey: fetchedRaceRoute ?? '',
+        raceGoogleMapPointsKey: fetchedRacePoints,
+        raceEntryIdKey : fetchedFullRaceId,
+      });
     } on Exception catch (exception){
       return Right(ServerFailure(stackTrace: exception.toString()));
     }

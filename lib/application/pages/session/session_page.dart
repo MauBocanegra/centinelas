@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/core/page_config.dart';
 import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
 import 'package:centinelas_app/application/pages/home/home_page.dart';
-import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
 import 'package:centinelas_app/application/widgets/colors.dart';
 import 'package:centinelas_app/core/usecase.dart';
@@ -29,8 +30,6 @@ class SessionPageProvider extends StatefulWidget {
 
 class SessionPageState extends State<SessionPageProvider> {
 
-  //late final BlocProvider
-
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -38,22 +37,29 @@ class SessionPageState extends State<SessionPageProvider> {
         try {
           final dispatchClearanceAndActiveRaceUseCase =
             serviceLocator<DispatchClearanceAndActiveRaceUseCase>();
-          /// TODO this is probable am antipattern so this must be refactored
+
           final clearanceAndActiveRaceResult =
             await dispatchClearanceAndActiveRaceUseCase.call(NoParams());
-          late final String activeRace;
+          late final Map<dynamic, dynamic> activeRaceData;
           clearanceAndActiveRaceResult.fold(
-                (fetchedActiveRace) {
-              activeRace = fetchedActiveRace;
+                (fetchedRaceData) {
+              activeRaceData = fetchedRaceData;
             },
-                (right) => activeRace = '',
+                (right) => activeRaceData = {},
           );
           if (context.mounted) {
-            if (activeRace.isNotEmpty) {
+            if ((activeRaceData[raceEntryIdKey] as String).isNotEmpty) {
               serviceLocator<FirebaseAnalytics>().logEvent(
                   name: firebaseEventGoToDispatch
               );
-              context.goNamed(DispatchPage.pageConfig.name,);
+              context.goNamed(
+                DispatchPage.pageConfig.name,
+                extra: {
+                  raceGoogleMapRouteKey: activeRaceData[raceGoogleMapRouteKey],
+                  raceGoogleMapPointsKey: json.encode(activeRaceData[raceGoogleMapPointsKey]),
+                  raceEntryIdKey : activeRaceData[raceEntryIdKey],
+                }
+              );
             } else {
               context.goNamed(HomePage.pageConfig.name);
             }
@@ -67,7 +73,7 @@ class SessionPageState extends State<SessionPageProvider> {
       }
     });
     return Container(
-        color: primaryColorRed,
+        color: Colors.white,
       child: const Center(
         child: CircularProgressIndicator.adaptive(),
       ),

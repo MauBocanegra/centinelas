@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:centinelas_app/application/core/page_config.dart';
@@ -11,6 +12,7 @@ import 'package:centinelas_app/data/mappers/iterable_datasnapshot_to_iterable_ma
 import 'package:centinelas_app/data/models/incidence_model.dart';
 import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
+import 'package:centinelas_app/domain/utils/map_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -25,9 +27,14 @@ import 'widgets/incidence_item/incidence_entry_item.dart';
 
 class IncidencesPageProvider extends StatefulWidget {
   late LocationPermissionStatus locationPermissionStatus;
-
+  final String raceId;
+  final String route;
+  final String points;
   IncidencesPageProvider({
     super.key,
+    required this.raceId,
+    required this.route,
+    required this.points,
   });
 
   static const pageConfig = PageConfig(
@@ -45,6 +52,7 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
   late bool serviceEnabled;
   late PermissionStatus permissionGranted;
   late LocationData locationData;
+  late RaceRouteAndPoints raceRouteAndPoints;
 
   late final Completer<GoogleMapController> googleMapController =
   Completer<GoogleMapController>();
@@ -78,13 +86,21 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
   @override
   void initState(){
     super.initState();
-
+    try{
+      raceRouteAndPoints = RaceRouteAndPoints(
+          widget.route,
+          json.decode(widget.points),
+      );
+    } catch(exception){
+      debugPrint('errorDecodingMapRouteAndPoints: ${exception.toString()}');
+    }
     checkNotifsPermissions();
 
     //debugPrint('raceId: ${widget.activeRaceId}');
     final realtimeRepository =
       serviceLocator<RealtimeRepository>();
-    final incidenceModelStream = realtimeRepository.getIncidenceModelStream();
+    final incidenceModelStream =
+      realtimeRepository.getIncidenceModelStream(widget.raceId);
     googleMap = reCreateGoogleMap([]);
     streamController.addStream(incidenceModelStream.stream);
   }
@@ -101,6 +117,21 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
     );
   }
 
+  Future<void> moveCamera() async {
+    final GoogleMapController controller = await googleMapController.future;
+    if(raceRouteAndPoints.latLngBounds!=null){
+      await controller.animateCamera(
+          CameraUpdate.newLatLngBounds(
+              raceRouteAndPoints.latLngBounds!, 0
+          )
+      );
+    } else {
+      await controller.animateCamera(
+          CameraUpdate.newCameraPosition(estelaLuzCameraPosition)
+      );
+    }
+  }
+
   GoogleMap reCreateGoogleMap(Iterable<Marker> markers){
     return GoogleMap(
       myLocationEnabled: true,
@@ -109,8 +140,17 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
       initialCameraPosition: estelaLuzCameraPosition,
       onMapCreated: (GoogleMapController gMController){
         googleMapController.complete(gMController);
+        moveCamera();
       },
-      markers: markers.toSet(),
+      polylines: <Polyline>{
+        Polyline(
+          polylineId: const PolylineId('ruta'),
+          points: raceRouteAndPoints.routeLatLng!,
+          color: Colors.red,
+          width: 3,
+        )
+      },
+      markers: {...markers.toSet(), ...raceRouteAndPoints.markers!.toSet()},
     );
   }
 

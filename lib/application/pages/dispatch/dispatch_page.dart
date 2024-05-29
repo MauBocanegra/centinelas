@@ -6,7 +6,15 @@ import 'package:centinelas_app/application/pages/users_list/users_list.page.dart
 import 'package:flutter/material.dart';
 
 class DispatchPage extends StatefulWidget {
-  const DispatchPage({super.key});
+  final String raceId;
+  final String route;
+  final String points;
+  const DispatchPage({
+    super.key,
+    required this.raceId,
+    required this.route,
+    required this.points,
+  });
 
   static const pageConfig = PageConfig(
       icon: Icons.home,
@@ -34,16 +42,33 @@ class DispatchPageState extends State<DispatchPage> {
     });
   }
 
-  List pages = [
-    IncidencesPageProvider(),
-    const UsersListPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List pages = [
+      IncidencesPageProvider(
+        raceId: widget.raceId,
+        route: widget.route,
+        points: widget.points,
+      ),
+      const UsersListPage(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Despachador'),
+        elevation: 8,
+        surfaceTintColor: Colors.white,
+        titleSpacing: 0,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/header_dispatchers.png',
+              fit: BoxFit.fitWidth,
+              height: 45,
+            ),
+          ],
+        ),
         /*
         actions: <Widget>[
           IconButton(
