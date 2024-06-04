@@ -1,5 +1,6 @@
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,7 +28,7 @@ class CentinelasApp extends StatelessWidget {
         theme: ThemeData.from(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.red,
+              seedColor: redColorCentinelas,
               brightness: Brightness.light, //Colo scheme. from seed, ThemeData
             )),
         /*

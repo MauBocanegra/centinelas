@@ -6,6 +6,7 @@ import 'package:centinelas_app/application/pages/home/home_page.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
 import 'package:centinelas_app/application/pages/profile/bloc/profile_bloc.dart';
 import 'package:centinelas_app/application/utils/authentication.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/application/widgets/button_style.dart';
 import 'package:centinelas_app/domain/entities/user_data_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,7 +144,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
           visible: isFABVisible,
           child: FloatingActionButton(
               onPressed: (){writeUserData(context);},
-              backgroundColor: Colors.red,
+              backgroundColor: redColorCentinelas,
               foregroundColor: Colors.white,
               child: const Icon(Icons.check),
           )

@@ -7,6 +7,7 @@ import 'package:centinelas_app/application/core/routes_constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
 import 'package:centinelas_app/application/pages/map/helpers/location_permission_status.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/data/mappers/iterable_datasnapshot_to_iterable_marker_maps.dart';
 import 'package:centinelas_app/data/models/incidence_model.dart';
@@ -146,7 +147,7 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
         Polyline(
           polylineId: const PolylineId('ruta'),
           points: raceRouteAndPoints.routeLatLng!,
-          color: Colors.red,
+          color: redColorCentinelas,
           width: 3,
         )
       },

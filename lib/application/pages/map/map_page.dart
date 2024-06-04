@@ -291,7 +291,7 @@ class MapPageState extends State<MapPageProvider> {
               Polyline(
                 polylineId: const PolylineId('ruta'),
                 points: raceRouteAndPoints.routeLatLng!,
-                color: Colors.red,
+                color: redColorCentinelas,
                 width: 3,
               )
             },
