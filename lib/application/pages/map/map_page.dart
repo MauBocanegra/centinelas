@@ -102,113 +102,126 @@ class MapPageState extends State<MapPageProvider> {
           }
         },
         builder: (context, state){
-            return Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 32.0),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              onTapIncidenceButton(
-                                  context,
-                                  SimpleIncidenceRequestType()
-                              );
-                            },
-                            child: Material(
-                              elevation: 8.0,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8.0),
-                                      bottomRight: Radius.circular(8.0)
+            return Stack(
+              children: [
+                //locationDisclaimerWidget(),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 32.0),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: ElevatedButton(
+                                  onPressed: (){
+                                    onTapIncidenceButton(
+                                        context,
+                                        SimpleIncidenceRequestType()
+                                    );
+                                  },
+                                  style: elevatedButtonStyleWithColor(greenColorCentinelas),
+                                  child: buttonContent(Icons.healing, assistanceButtonText),
+                                )
+                              ),
+                              const SizedBox(height: 16,),
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  child: ElevatedButton(
+                                    onPressed: (){
+                                      onTapIncidenceButton(
+                                          context,
+                                          EmergencyIncidenceRequestType()
+                                      );
+                                    },
+                                    style: elevatedButtonStyleWithColor(redColorCentinelas),
+                                    child: buttonContent(Icons.warning_rounded, emergencyButtonText),
                                   )
                               ),
-                              color: greenColorCentinelas,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.healing,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(width: 8,),
-                                        Text(
-                                          assistanceButtonText,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16,),
-                          InkWell(
-                            onTap: (){
-                              onTapIncidenceButton(
-                                  context,
-                                  EmergencyIncidenceRequestType()
-                              );
-                            },
-                            child: Material(
-                              elevation: 8.0,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8.0),
-                                      bottomRight: Radius.circular(8.0)
-                                  )
-                              ),
-                              color: redColorCentinelas,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.warning_rounded,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(width: 8,),
-                                        Text(
-                                          emergencyButtonText,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  ),
+                            ],
+                          );
+                        }
+                      ),
+                    ),
                 ),
+              ],
             );
           }
       ),
     );
   }
+
+  ButtonStyle elevatedButtonStyleWithColor(Color color){
+    return ElevatedButton.styleFrom(
+      backgroundColor: color,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0))
+      ),
+      elevation: 8.0,
+    );
+  }
+
+  Widget buttonContent(IconData icon, String text){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 12.0, 0, 12.0),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: <Widget>[
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+          const SizedBox(width: 8,),
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /*
+  Widget locationDisclaimerWidget(){
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.25,
+                  child: Material(
+                      color: Colors.white.withAlpha(200),
+                      elevation: 8,
+                      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          locationDisclaimer,
+                          style: TextStyle(
+                            fontSize: 10.0,
+                          ),
+                        ),
+                      )
+                  )
+              );
+            }
+        ),
+      ),
+    );
+  }
+  */
 
   void checkAndRequestLocationPermissions() async {
     //if(await custom_permission_handler.Permission.location.serviceStatus.isEnabled){
@@ -222,6 +235,12 @@ class MapPageState extends State<MapPageProvider> {
         widget.locationPermissionStatus = LocationPermissionGranted();
       } else {
         // location permission not granted
+        await showOkAlertDialog(
+            context: context,
+            message: locationDisclaimer,
+            okLabel: locationOkButton
+        );
+        //checkAndRequestLocationPermissions();
         await [
           custom_permission_handler.Permission.location,
         ].request();
@@ -238,8 +257,7 @@ class MapPageState extends State<MapPageProvider> {
               var permissionStatus = await location.hasPermission();
               if(permissionStatus == PermissionStatus.granted){
                 widget.locationPermissionStatus = LocationPermissionGranted();
-              } else {
-              }
+              } else {}
             }
           }catch(exception){
             widget.locationPermissionStatus = LocationPermissionDenied();

@@ -4,6 +4,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/incidences/incidence_page.dart';
 import 'package:centinelas_app/application/pages/login/login_page.dart';
 import 'package:centinelas_app/application/pages/users_list/users_list.page.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -131,7 +132,7 @@ class DispatchPageState extends State<DispatchPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedTab,
         onTap: (index) => changeTab(index),
-        selectedItemColor: Colors.red,
+        selectedItemColor: redColorCentinelas,
         unselectedItemColor: Colors.grey,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

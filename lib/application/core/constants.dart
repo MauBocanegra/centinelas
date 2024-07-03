@@ -107,6 +107,29 @@ const finishPointKey = 'punto_meta';
 const kmPointKey = 'punto_km';
 const medicPointKey = 'punto_medico';
 
+const hidrationPointKey1 = 'punto_hidratacion_1';
+const hidrationPointKey2 = 'punto_hidratacion_2';
+const hidrationPointKey3 = 'punto_hidratacion_3';
+const hidrationPointKey4 = 'punto_hidratacion_4';
+const hidrationPointKey5 = 'punto_hidratacion_5';
+const hidrationPointKey6 = 'punto_hidratacion_6';
+const hidrationPointKey7 = 'punto_hidratacion_7';
+const hidrationPointKey8 = 'punto_hidratacion_8';
+const hidrationPointKey9 = 'punto_hidratacion_9';
+const hidrationPointKey10 = 'punto_hidratacion_10';
+
+const medicPointKey1 = 'punto_medico_1';
+const medicPointKey2 = 'punto_medico_2';
+const medicPointKey3 = 'punto_medico_3';
+const medicPointKey4 = 'punto_medico_4';
+const medicPointKey5 = 'punto_medico_5';
+const medicPointKey6 = 'punto_medico_6';
+const medicPointKey7 = 'punto_medico_7';
+const medicPointKey8 = 'punto_medico_8';
+const medicPointKey9 = 'punto_medico_9';
+const medicPointKey10 = 'punto_medico_10';
+
+
 const redPoint = 'punto_rojo';
 const rosePoint = 'punto_rosa';
 const orangePoint = 'punto_naranja';

@@ -5,6 +5,7 @@ import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/application/pages/profile/profile_page.dart';
 import 'package:centinelas_app/application/pages/races_list/races_page.dart';
 import 'package:centinelas_app/application/pages/reports/reports_page.dart';
+import 'package:centinelas_app/application/utils/color_utils.dart';
 import 'package:centinelas_app/core/usecase.dart';
 import 'package:centinelas_app/domain/usecases/write_user_id_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -87,7 +88,7 @@ class HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedTab,
         onTap: (index) => changeTab(index),
-        selectedItemColor: Colors.red,
+        selectedItemColor: redColorCentinelas,
         unselectedItemColor: Colors.grey,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

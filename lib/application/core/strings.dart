@@ -42,6 +42,10 @@ const reportsErrorString = 'Ocurrió un error al cargar tus reportes, intenta nu
 const reportErrorString = 'Ocurrió un error al cargar los reportes, intenta nuevamente más tarde...';
 const usersListErrorString = 'Ocurrió un error al obtener el listado de Centinelas, intenta nuevamente más tarde...';
 
+//location disclaimer to be shown before launching map screen and while map screen is shown
+const locationDisclaimer = 'La aplicación necesita usar tu ubicación para mandar el reporte de tu asistencia o emergencia y poder recibir atención. \nAsegúrate que los permisos estén otorgados desde los ajustes de la aplicación, así como de tener la ubicación encendida.';
+const locationOkButton = 'Solicitar permiso';
+
 const hidrationPointTitle = 'Hidratación';
 const exitPointTitle = 'Salida';
 const finishPointTitle = 'Meta';

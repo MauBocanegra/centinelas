@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/core/strings.dart';
 import 'package:centinelas_app/application/pages/race_detail/widgets/widget_race_details_buttons.dart';
 import 'package:centinelas_app/domain/entities/race_full.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class RaceDetailViewLoadedState extends State<RaceDetailViewLoaded> {
             RaceDetailsButtonsWidgetProvider(
                 raceFull: widget.raceFull,
             ),
+            const SizedBox(height: 16.0,),
             Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom))
           ],
         ),
