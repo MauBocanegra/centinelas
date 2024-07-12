@@ -1,3 +1,4 @@
+import 'package:centinelas_app/application/core/constants.dart';
 import 'package:centinelas_app/application/di/injection.dart';
 import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/reports_firestore_datasource_interface.dart';
 import 'package:centinelas_app/data/mappers/report_data_to_report_model_mapper.dart';
@@ -20,7 +21,7 @@ class ReportsFirestoreDatasource implements ReportsFirestoreDatasourceInterface{
     try{
       Uri uri = Uri.https(
           'us-central1-centinelas-27d9b.cloudfunctions.net',
-          'app/api/prod/reports/$uid'
+          'app/api/$apiEnvReportEndpoint/reports/$uid'
       );
       http.Response response = await http.get(uri);
       return mapReportDataToReportModel(response);

@@ -132,10 +132,10 @@ app.get('/api/dev/reports/:userId', async (req, res) => {
             }
         });
 
-        return res.status(200).send({ status: 'SUCCESS', 'data': response });
+        return res.status(200).send({ status: 'SUCCESS', 'message':'OK', 'data': response });
     } catch (error) {
         console.log(error);
-        return res.status(500).send({ status: 'ERROR', data: { message: error.message } });
+        return res.status(500).send({ status: 'ERROR', 'message':'ERROR', data: { message: error.message } });
     }
 });
 

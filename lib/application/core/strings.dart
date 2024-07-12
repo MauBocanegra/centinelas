@@ -47,7 +47,7 @@ const locationDisclaimer = 'La aplicación necesita usar tu ubicación para mand
 const locationOkButton = 'Solicitar permiso';
 
 const hidrationPointTitle = 'Hidratación';
-const exitPointTitle = 'Salida';
+const exitPointTite = 'Salida';
 const finishPointTitle = 'Meta';
 const kmPointTitle = 'Punto';
 const medicPointTitle = 'Primeros auxilios';

@@ -4,6 +4,7 @@ const fcmVapidKey = 'BPembO7RJ6ind06ohC8gdUXRoAtmBbCG3WFOYYPVC6EzWoz9QeXCJMS6Ncl
 const apiEnv = apiEnvProd;
 const apiEnvDev = 'development';
 const apiEnvProd = 'production';
+const apiEnvReportEndpoint = apiEnv == apiEnvDev ? 'dev' : 'prod';
 
 const collectionIdToBeDisplayedRoute = 'coleccion_visible';
 const collectionIdToBeDisplayedId = 'coleccion_visible_en_app';
