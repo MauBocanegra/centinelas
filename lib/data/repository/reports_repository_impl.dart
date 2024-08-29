@@ -1,8 +1,8 @@
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/reports_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/models/report_model.dart';
-import 'package:centinelas_app/domain/failures/failures.dart';
-import 'package:centinelas_app/domain/repositories/reports_repository.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/data/data_sources/firestore_database/interfaces/reports_firestore_datasource_interface.dart';
+import 'package:centinelas/data/models/report_model.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/repositories/reports_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 

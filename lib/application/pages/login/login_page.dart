@@ -1,10 +1,10 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/core/page_config.dart';
-import 'package:centinelas_app/application/core/routes_constants.dart';
-import 'package:centinelas_app/application/core/strings.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/login/widgets/google_sign_in_button.dart';
-import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/core/page_config.dart';
+import 'package:centinelas/application/core/routes_constants.dart';
+import 'package:centinelas/application/core/strings.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/login/widgets/google_sign_in_button.dart';
+import 'package:centinelas/application/pages/privacy/privacy_page.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

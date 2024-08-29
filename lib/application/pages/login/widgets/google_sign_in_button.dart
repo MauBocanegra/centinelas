@@ -1,5 +1,5 @@
-import 'package:centinelas_app/application/pages/home/home_page.dart';
-import 'package:centinelas_app/application/utils/authentication.dart';
+import 'package:centinelas/application/pages/home/home_page.dart';
+import 'package:centinelas/application/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

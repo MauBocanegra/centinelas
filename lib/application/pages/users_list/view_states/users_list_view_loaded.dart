@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/pages/users_list/widgets/view_states/users_list_item_report_view_loaded.dart';
+import 'package:centinelas/application/pages/users_list/widgets/view_states/users_list_item_report_view_loaded.dart';
 import 'package:flutter/material.dart';
 
 class UsersListLoadedView extends StatefulWidget {

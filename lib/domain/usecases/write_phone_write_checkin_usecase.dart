@@ -1,9 +1,9 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/data/sealed_classes/checkin_race_attempt_resolution.dart';
-import 'package:centinelas_app/domain/entities/user_data_model.dart';
-import 'package:centinelas_app/domain/failures/failures.dart';
-import 'package:centinelas_app/domain/repositories/users_repository.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/data/sealed_classes/checkin_race_attempt_resolution.dart';
+import 'package:centinelas/domain/entities/user_data_model.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/repositories/users_repository.dart';
 import 'package:either_dart/either.dart';
 
 class WritePhoneWriteCheckInUseCase implements

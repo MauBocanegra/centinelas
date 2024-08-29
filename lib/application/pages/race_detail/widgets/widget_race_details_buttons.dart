@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/core/strings.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/map/map_page.dart';
-import 'package:centinelas_app/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
-import 'package:centinelas_app/application/utils/color_utils.dart';
-import 'package:centinelas_app/application/widgets/button_style.dart';
-import 'package:centinelas_app/domain/entities/race_full.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/core/strings.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/map/map_page.dart';
+import 'package:centinelas/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
+import 'package:centinelas/application/utils/color_utils.dart';
+import 'package:centinelas/application/widgets/button_style.dart';
+import 'package:centinelas/domain/entities/race_full.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

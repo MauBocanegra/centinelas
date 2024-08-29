@@ -1,9 +1,9 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/race_entry_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/mappers/race_entry_doc_to_race_entry_model_mapper.dart';
-import 'package:centinelas_app/data/models/race_entry_model.dart';
-import 'package:centinelas_app/domain/utils/storage_image_utils.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/data/data_sources/firestore_database/interfaces/race_entry_firestore_datasource_interface.dart';
+import 'package:centinelas/data/mappers/race_entry_doc_to_race_entry_model_mapper.dart';
+import 'package:centinelas/data/models/race_entry_model.dart';
+import 'package:centinelas/domain/utils/storage_image_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';

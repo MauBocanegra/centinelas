@@ -1,9 +1,9 @@
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/entities/race_full.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
-import 'package:centinelas_app/domain/failures/failures.dart';
-import 'package:centinelas_app/domain/repositories/races_repository.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/domain/entities/race_full.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/repositories/races_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 

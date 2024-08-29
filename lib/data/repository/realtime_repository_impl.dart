@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
-import 'package:centinelas_app/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
-import 'package:centinelas_app/data/models/incidence_model.dart';
-import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
+import 'package:centinelas/data/data_sources/realtime_database/interfaces/incidence_observer_realtime_datasource_interface.dart';
+import 'package:centinelas/data/data_sources/realtime_database/interfaces/incidence_write_realtime_datasource_interface.dart';
+import 'package:centinelas/data/models/incidence_model.dart';
+import 'package:centinelas/domain/repositories/realtime_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 

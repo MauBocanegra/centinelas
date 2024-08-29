@@ -1,6 +1,6 @@
-import 'package:centinelas_app/application/core/strings.dart';
-import 'package:centinelas_app/application/pages/race_detail/widgets/widget_race_details_buttons.dart';
-import 'package:centinelas_app/domain/entities/race_full.dart';
+import 'package:centinelas/application/core/strings.dart';
+import 'package:centinelas/application/pages/race_detail/widgets/widget_race_details_buttons.dart';
+import 'package:centinelas/domain/entities/race_full.dart';
 import 'package:flutter/material.dart';
 
 class RaceDetailViewLoaded extends StatefulWidget {

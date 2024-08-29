@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/domain/entities/race_entry.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
-import 'package:centinelas_app/domain/usecases/load_race_entry_usecase.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/domain/entities/race_entry.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
+import 'package:centinelas/domain/usecases/load_race_entry_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';

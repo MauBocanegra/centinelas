@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas/application/core/constants.dart';
 import 'package:equatable/equatable.dart';
 
 class IncidenceModel extends Equatable{

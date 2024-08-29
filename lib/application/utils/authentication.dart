@@ -1,5 +1,5 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

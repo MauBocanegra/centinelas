@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas/application/di/injection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 String? getUserId(){

@@ -1,9 +1,9 @@
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_error.dart';
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_loaded.dart';
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_loading.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/races_list/widgets/race_entry_item/bloc/race_entry_item_bloc.dart';
+import 'package:centinelas/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_error.dart';
+import 'package:centinelas/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_loaded.dart';
+import 'package:centinelas/application/pages/races_list/widgets/race_entry_item/view_states/race_entry_item_view_loading.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,6 +1,6 @@
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/failures/failures.dart';
-import 'package:centinelas_app/domain/repositories/realtime_repository.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/repositories/realtime_repository.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 

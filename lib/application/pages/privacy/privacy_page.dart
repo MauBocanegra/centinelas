@@ -1,6 +1,6 @@
-import 'package:centinelas_app/application/core/page_config.dart';
-import 'package:centinelas_app/application/core/routes_constants.dart';
-import 'package:centinelas_app/application/pages/login/login_page.dart';
+import 'package:centinelas/application/core/page_config.dart';
+import 'package:centinelas/application/core/routes_constants.dart';
+import 'package:centinelas/application/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';

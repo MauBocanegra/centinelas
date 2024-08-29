@@ -1,7 +1,7 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/data/models/race_full_model.dart';
-import 'package:centinelas_app/domain/entities/race_full.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/data/models/race_full_model.dart';
+import 'package:centinelas/domain/entities/race_full.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
 
 RaceFull mapRaceFullModelToRaceFull(RaceFullModel raceFullModel) {
   return RaceFull(

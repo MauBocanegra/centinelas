@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/utils/color_utils.dart';
+import 'package:centinelas/application/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 final ButtonStyle registerButtonStyle = ElevatedButton.styleFrom(

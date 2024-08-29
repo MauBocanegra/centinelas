@@ -1,9 +1,9 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
-import 'package:centinelas_app/data/mappers/user_data_doc_to_user_data_model.dart';
-import 'package:centinelas_app/domain/entities/user_data_model.dart';
-import 'package:centinelas_app/domain/utils/user_utils.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
+import 'package:centinelas/data/mappers/user_data_doc_to_user_data_model.dart';
+import 'package:centinelas/domain/entities/user_data_model.dart';
+import 'package:centinelas/domain/utils/user_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

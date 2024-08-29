@@ -1,8 +1,8 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
-import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
-import 'package:centinelas_app/domain/entities/race_entry.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas/application/pages/race_detail/race_detail_page.dart';
+import 'package:centinelas/domain/entities/race_entry.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

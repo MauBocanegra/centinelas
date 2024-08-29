@@ -1,7 +1,7 @@
-import 'package:centinelas_app/application/app/bloc/auth_cubit.dart';
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart' as di;
-import 'package:centinelas_app/firebase_options.dart';
+import 'package:centinelas/application/app/bloc/auth_cubit.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart' as di;
+import 'package:centinelas/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

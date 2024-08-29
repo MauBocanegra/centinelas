@@ -1,4 +1,4 @@
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
 
 class RacesIdsAndRaceCollection {
   final CollectionId collectionId;

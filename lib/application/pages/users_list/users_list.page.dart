@@ -1,10 +1,10 @@
-import 'package:centinelas_app/application/core/page_config.dart';
-import 'package:centinelas_app/application/core/routes_constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/users_list/bloc/users_list_bloc.dart';
-import 'package:centinelas_app/application/pages/users_list/view_states/races_list_view_error.dart';
-import 'package:centinelas_app/application/pages/users_list/view_states/races_list_view_loading.dart';
-import 'package:centinelas_app/application/pages/users_list/view_states/users_list_view_loaded.dart';
+import 'package:centinelas/application/core/page_config.dart';
+import 'package:centinelas/application/core/routes_constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/users_list/bloc/users_list_bloc.dart';
+import 'package:centinelas/application/pages/users_list/view_states/races_list_view_error.dart';
+import 'package:centinelas/application/pages/users_list/view_states/races_list_view_loading.dart';
+import 'package:centinelas/application/pages/users_list/view_states/users_list_view_loaded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

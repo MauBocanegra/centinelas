@@ -51,6 +51,50 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:908225121225:android:1fc84296cdd41c31d33618",
+        "android_client_info": {
+          "package_name": "centinelas.sportspromotion.com.mx.centinelas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908225121225-f2g6bloe9uu121flm3mdojkreu9e17qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "centinelas.sportspromotion.com.mx.centinelas",
+            "certificate_hash": "7a1b7525184668cb80edbbf3a4058267b9bdaee0"
+          }
+        },
+        {
+          "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908225121225-775b6uq57a57nm6c3j6pki745e36r5r3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "908225121225-c1qp45cdkvkhj788hh0v8evlp65uboob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "centinelas.sportspromotion.com.mx"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:908225121225:android:9de82a9d1d6f8bb7d33618",
         "android_client_info": {
           "package_name": "centinelas.sportspromotion.com.mx.centinelas_app"
@@ -63,6 +107,14 @@
           "android_info": {
             "package_name": "centinelas.sportspromotion.com.mx.centinelas_app",
             "certificate_hash": "7a1b7525184668cb80edbbf3a4058267b9bdaee0"
+          }
+        },
+        {
+          "client_id": "908225121225-e2triphhjduecgundlgm8q9nqeej0n6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "centinelas.sportspromotion.com.mx.centinelas_app",
+            "certificate_hash": "7a4f3055630f2cdb6abb8af50f1fe41a84e9cce9"
           }
         },
         {

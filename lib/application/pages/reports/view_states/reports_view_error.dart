@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/core/strings.dart';
+import 'package:centinelas/application/core/strings.dart';
 import 'package:flutter/material.dart';
 
 class ReportsViewError extends StatefulWidget {

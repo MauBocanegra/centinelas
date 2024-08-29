@@ -1,4 +1,4 @@
-import 'package:centinelas_app/domain/entities/user_data_model.dart';
+import 'package:centinelas/domain/entities/user_data_model.dart';
 
 abstract class UserDataFirestoreDatasourceInterface {
   Future<UserDataModel> fetchUserData();

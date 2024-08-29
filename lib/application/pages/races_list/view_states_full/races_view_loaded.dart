@@ -1,5 +1,5 @@
-import 'package:centinelas_app/application/pages/races_list/widgets/race_entry_item/race_entry_item.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas/application/pages/races_list/widgets/race_entry_item/race_entry_item.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
 import 'package:flutter/material.dart';
 
 class RacesViewLoaded extends StatelessWidget {

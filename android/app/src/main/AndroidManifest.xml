@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="centinelas.sportspromotion.com.mx.centinelas_app">
+    package="centinelas.sportspromotion.com.mx.centinelas">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
-        android:label="Centinelas"
+        android:label="Centinela"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -36,6 +36,6 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDgsZE2Fs9Di2keB4y2cuk9i_nw9vaHd1g" />
+            android:value="AIzaSyCcYsmnYaiEHn7900vbsr_urCvB3Rdaffk" />
     </application>
 </manifest>

@@ -1,11 +1,10 @@
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
-import 'package:centinelas_app/application/utils/color_utils.dart';
+import 'package:centinelas/application/core/routes.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas/application/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import '../core/routes.dart';
 
 class CentinelasApp extends StatelessWidget {
   const CentinelasApp({super.key});

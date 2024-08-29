@@ -1,4 +1,4 @@
-package centinelas.sportspromotion.com.mx.centinelas_app
+package centinelas.sportspromotion.com.mx.centinelas
 
 import io.flutter.embedding.android.FlutterActivity
 

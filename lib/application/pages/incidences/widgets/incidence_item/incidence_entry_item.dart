@@ -1,5 +1,5 @@
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/data/models/incidence_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

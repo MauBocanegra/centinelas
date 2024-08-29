@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/core/constants.dart';
+import 'package:centinelas/application/core/constants.dart';
 import 'package:flutter/material.dart';
 
 Color redColorCentinelas = const Color.fromRGBO(211, 47, 47, 1);

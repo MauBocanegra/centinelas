@@ -1,7 +1,7 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/core/strings.dart';
-import 'package:centinelas_app/application/utils/color_utils.dart';
-import 'package:centinelas_app/data/models/report_model.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/core/strings.dart';
+import 'package:centinelas/application/utils/color_utils.dart';
+import 'package:centinelas/data/models/report_model.dart';
 import 'package:flutter/material.dart';
 
 class ReportsViewLoaded extends StatelessWidget {

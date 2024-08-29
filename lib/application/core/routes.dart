@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:centinelas_app/application/app/bloc/auth_cubit.dart' as auth;
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
-import 'package:centinelas_app/application/pages/home/bloc/navigation_cubit.dart';
-import 'package:centinelas_app/application/pages/map/map_page.dart';
-import 'package:centinelas_app/application/pages/privacy/privacy_page.dart';
-import 'package:centinelas_app/application/pages/profile/profile_page.dart';
-import 'package:centinelas_app/application/pages/race_detail/race_detail_page.dart';
-import 'package:centinelas_app/application/pages/session/session_page.dart';
+import 'package:centinelas/application/app/bloc/auth_cubit.dart' as auth;
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/dispatch/dispatch_page.dart';
+import 'package:centinelas/application/pages/home/bloc/navigation_cubit.dart';
+import 'package:centinelas/application/pages/map/map_page.dart';
+import 'package:centinelas/application/pages/privacy/privacy_page.dart';
+import 'package:centinelas/application/pages/profile/profile_page.dart';
+import 'package:centinelas/application/pages/race_detail/race_detail_page.dart';
+import 'package:centinelas/application/pages/session/session_page.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

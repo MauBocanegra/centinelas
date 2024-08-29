@@ -1,5 +1,5 @@
-import 'package:centinelas_app/data/models/race_collection_model.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
+import 'package:centinelas/data/models/race_collection_model.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
 
 List<RaceEntryId> mapRaceEntriesIdsModelToRaceEntryIdList(
   RaceEntriesIdsModel raceEntryIdsModel

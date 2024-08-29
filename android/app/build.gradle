@@ -29,7 +29,7 @@ if (flutterMinSdkVersion == null) {
 }
 
 android {
-    namespace "centinelas.sportspromotion.com.mx.centinelas_app"
+    namespace "centinelas.sportspromotion.com.mx.centinelas"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -48,7 +48,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "centinelas.sportspromotion.com.mx.centinelas_app"
+        applicationId "centinelas.sportspromotion.com.mx.centinelas"
         // You can update the following values to mat
         // ch your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.

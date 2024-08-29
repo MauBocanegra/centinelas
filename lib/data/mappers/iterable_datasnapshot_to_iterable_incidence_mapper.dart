@@ -1,5 +1,5 @@
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/data/models/incidence_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 Iterable<IncidenceModel> mapIterableDataSnapshotToIterableIncidenceModel(

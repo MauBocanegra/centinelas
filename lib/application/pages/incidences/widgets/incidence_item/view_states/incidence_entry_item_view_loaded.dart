@@ -1,7 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/utils/color_utils.dart';
-import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/utils/color_utils.dart';
+import 'package:centinelas/data/models/incidence_model.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

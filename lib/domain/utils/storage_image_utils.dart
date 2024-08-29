@@ -1,4 +1,4 @@
-import 'package:centinelas_app/application/di/injection.dart';
+import 'package:centinelas/application/di/injection.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 Future<String> getImageUrl(String path) async {

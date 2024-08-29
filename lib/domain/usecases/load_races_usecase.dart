@@ -1,7 +1,7 @@
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/entities/unique_id.dart';
-import 'package:centinelas_app/domain/failures/failures.dart';
-import 'package:centinelas_app/domain/repositories/races_repository.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/domain/entities/unique_id.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/repositories/races_repository.dart';
 import 'package:either_dart/either.dart';
 
 class LoadRacesUseCase implements UseCase<List<RaceEntryId>, NoParams>{

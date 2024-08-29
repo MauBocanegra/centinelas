@@ -1,4 +1,4 @@
-import 'package:centinelas_app/data/models/incidence_model.dart';
+import 'package:centinelas/data/models/incidence_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ReportModel extends Equatable {

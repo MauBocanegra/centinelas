@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:centinelas_app/application/core/constants.dart';
-import 'package:centinelas_app/application/core/page_config.dart';
-import 'package:centinelas_app/application/core/routes_constants.dart';
-import 'package:centinelas_app/application/di/injection.dart';
-import 'package:centinelas_app/application/pages/dispatch/dispatch_page.dart';
-import 'package:centinelas_app/application/pages/home/home_page.dart';
-import 'package:centinelas_app/application/pages/login/login_page.dart';
-import 'package:centinelas_app/core/usecase.dart';
-import 'package:centinelas_app/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
+import 'package:centinelas/application/core/constants.dart';
+import 'package:centinelas/application/core/page_config.dart';
+import 'package:centinelas/application/core/routes_constants.dart';
+import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/dispatch/dispatch_page.dart';
+import 'package:centinelas/application/pages/home/home_page.dart';
+import 'package:centinelas/application/pages/login/login_page.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/domain/usecases/dispatch_clearance_and_active_race_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
