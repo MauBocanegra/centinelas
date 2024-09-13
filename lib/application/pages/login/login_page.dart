@@ -3,6 +3,7 @@ import 'package:centinelas/application/core/page_config.dart';
 import 'package:centinelas/application/core/routes_constants.dart';
 import 'package:centinelas/application/core/strings.dart';
 import 'package:centinelas/application/di/injection.dart';
+import 'package:centinelas/application/pages/login/widgets/apple_sign_in_button.dart';
 import 'package:centinelas/application/pages/login/widgets/google_sign_in_button.dart';
 import 'package:centinelas/application/pages/privacy/privacy_page.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -47,6 +48,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 48,),
                   const GoogleSignInButton(),
+                  const AppleSignInButton(),
                   TextButton(
                       onPressed: (){
                         serviceLocator<FirebaseAnalytics>().logEvent(

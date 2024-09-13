@@ -20,6 +20,13 @@ class UserDataFirestoreDatasource implements
   @override
   Future<UserDataModel> fetchUserData() async {
     try{
+
+      debugPrint(
+          'aiEnv: $apiEnv, '
+          'usersInfoCollectionKey: $usersInfoCollectionKey, '
+          'id: $uid, '
+          'userDataKey: $userDataKey'
+      );
       await firestore.doc(
         '$apiEnv/$usersInfoCollectionKey/$uid/$userDataKey'
       ).get().then((DocumentSnapshot doc){
@@ -40,6 +47,12 @@ class UserDataFirestoreDatasource implements
   @override
   Future<UserDataModel> fetchCustomUserData(String userId) async {
     try{
+      debugPrint(
+          'aiEnv: $apiEnv, '
+              'usersInfoCollectionKey: $usersInfoCollectionKey, '
+              'id: $uid, '
+              'userDataKey: $userDataKey'
+      );
       await firestore.doc(
           '$apiEnv/$usersInfoCollectionKey/$userId/$userDataKey'
       ).get().then((DocumentSnapshot doc){
