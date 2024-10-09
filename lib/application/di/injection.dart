@@ -1,6 +1,7 @@
 import 'package:centinelas/application/app/bloc/auth_cubit.dart';
 import 'package:centinelas/application/pages/home/bloc/navigation_cubit.dart';
 import 'package:centinelas/application/pages/incidences/widgets/incidence_item/bloc/incidence_entry_item_bloc.dart';
+import 'package:centinelas/application/pages/login/bloc/login_bloc.dart';
 import 'package:centinelas/application/pages/profile/bloc/profile_bloc.dart';
 import 'package:centinelas/application/pages/race_detail/bloc/race_detail_bloc.dart';
 import 'package:centinelas/application/pages/race_detail/widgets/bloc/buttons_bloc/race_detail_buttons_bloc.dart';
@@ -27,6 +28,8 @@ import 'package:centinelas/data/data_sources/firestore_database/interfaces/repor
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/users_list_firestore_datasource.dart';
+import 'package:centinelas/data/data_sources/libraries/implementations/apple_login_datasource.dart';
+import 'package:centinelas/data/data_sources/libraries/interfaces/apple_login_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/realtime_database/implementations/dispatcher_write_realtime_datasource.dart';
 import 'package:centinelas/data/data_sources/realtime_database/implementations/incidence_observer_realtime_datasource.dart';
 import 'package:centinelas/data/data_sources/realtime_database/implementations/incidence_write_realtime_datasource.dart';
@@ -49,6 +52,7 @@ import 'package:centinelas/domain/usecases/load_races_usecase.dart';
 import 'package:centinelas/domain/usecases/load_report_by_user_usecase.dart';
 import 'package:centinelas/domain/usecases/load_reports_usecase.dart';
 import 'package:centinelas/domain/usecases/load_users_list_usecase.dart';
+import 'package:centinelas/domain/usecases/try_apple_login_usecase.dart';
 import 'package:centinelas/domain/usecases/write_dispatcher_usecase.dart';
 import 'package:centinelas/domain/usecases/write_incidence_usecase.dart';
 import 'package:centinelas/domain/usecases/write_phone_write_checkin_usecase.dart';
@@ -115,6 +119,9 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => UsersListReportItemBloc(
       loadReportByUserUseCase: serviceLocator(),
   ));
+  serviceLocator.registerFactory(() => LoginBloc(
+      tryAppleLoginUseCase: serviceLocator(),
+  ));
 
   // domain layer
   serviceLocator.registerFactory(() => LoadRacesUseCase(
@@ -162,6 +169,9 @@ Future<void> init() async {
   ));
   serviceLocator.registerFactory(() => LoadReportByUserUseCase(
       reportsRepository: serviceLocator(),
+  ));
+  serviceLocator.registerFactory(() => TryAppleLoginUseCase(
+      usersRepository: serviceLocator(),
   ));
 
   // data layer
@@ -226,6 +236,10 @@ Future<void> init() async {
   serviceLocator
       .registerFactory<UsersListFirestoreDatasourceInterface>(
       () => UsersListFirestoreDatasource()
+  );
+  serviceLocator
+      .registerFactory<AppleLoginDatasourceInterface>(
+      () => AppleLoginDatasource()
   );
 
   // library instances

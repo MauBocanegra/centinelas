@@ -220,7 +220,7 @@ class IncidencesPageProviderState extends State<IncidencesPageProvider> {
         }
       } else {
         debugPrint('shouldGoToLogin');
-        context.go('/${LoginPage.pageConfig.name}');
+        context.go('/${LoginPageProvider.pageConfig.name}');
       }
     });
 

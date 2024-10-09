@@ -68,7 +68,7 @@ class SessionPageState extends State<SessionPageProvider> {
           debugPrint('error inSessionPage ${exception.toString()}');
         }
       } else {
-        context.go('/${LoginPage.pageConfig.name}');
+        context.go('/${LoginPageProvider.pageConfig.name}');
       }
     });
     return Container(

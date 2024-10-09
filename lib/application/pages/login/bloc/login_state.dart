@@ -6,3 +6,11 @@ abstract class LoginState extends Equatable {
 }
 
 class LoginInitialState extends LoginState {}
+class NoEmailAppleLoginState extends LoginState {}
+class SuccessfulLoginState extends LoginState {
+  final String validUserEmail;
+  const SuccessfulLoginState({
+    required this.validUserEmail
+  });
+  @override List<Object?> get props => [validUserEmail];
+}

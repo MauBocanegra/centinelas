@@ -1,17 +1,16 @@
-import 'package:centinelas/application/core/constants.dart';
 import 'package:centinelas/application/core/page_config.dart';
 import 'package:centinelas/application/core/routes_constants.dart';
-import 'package:centinelas/application/core/strings.dart';
 import 'package:centinelas/application/di/injection.dart';
-import 'package:centinelas/application/pages/login/widgets/apple_sign_in_button.dart';
-import 'package:centinelas/application/pages/login/widgets/google_sign_in_button.dart';
-import 'package:centinelas/application/pages/privacy/privacy_page.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:centinelas/application/pages/login/bloc/login_bloc.dart';
+import 'package:centinelas/application/pages/login/view_states/login_view_initial.dart';
+import 'package:centinelas/application/pages/login/view_states/login_view_noemail.dart';
+import 'package:centinelas/application/pages/login/view_states/login_view_valid_email.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:io' show Platform;
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPageProvider extends StatelessWidget {
+  const LoginPageProvider({super.key});
 
   static const pageConfig = PageConfig(
     icon: Icons.login,
@@ -19,73 +18,32 @@ class LoginPage extends StatefulWidget {
   );
 
   @override
-  State<LoginPage> createState() => LoginPageState();
-}
-
-class LoginPageState extends State<LoginPage> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  LayoutBuilder(
-                      builder: (context, constraints){
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.width / 3,
-                          width: MediaQuery.of(context).size.width / 3,
-                          child: FittedBox(
-                            fit: BoxFit.fill,
-                            child: Image.asset('assets/icon/icon.png'),
-                          ),
-                        );
-                      }
-                  ),
-                  const SizedBox(height: 48,),
-                  const GoogleSignInButton(),
-                  const AppleSignInButton(),
-                  TextButton(
-                      onPressed: (){
-                        serviceLocator<FirebaseAnalytics>().logEvent(
-                            name: firebaseEventGoToPrivacy
-                        );
-                        context.go('/${PrivacyPageProvider.pageConfig.name}');
-                      },
-                      child: const Text.rich(
-                        TextSpan(
-                          text: privacyButtonText1,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: Colors.grey,
-                            ),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: privacyButtonText2,
-                                style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.underline,
-                                )
-                            ),
-                            // can add more TextSpans here...
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                  ),
-                ],
-              ),
-            ),
-          )
-      ),
+    return BlocProvider<LoginBloc>(
+        create: (context) => serviceLocator<LoginBloc>(),
+        child: const LoginPage(),
     );
   }
 }
 
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
-
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          if(state is SuccessfulLoginState){
+            debugPrint("SuccessLoginState emited");
+            return const LoginViewValidEmail();
+          }if(state is NoEmailAppleLoginState){
+            debugPrint("NoEmailLoginState emited");
+            return const LoginViewNoemail();
+          }else{
+            debugPrint("InitialLoginState emited");
+            return const LoginViewInitial();
+          }
+        }
+    );
+  }
+}

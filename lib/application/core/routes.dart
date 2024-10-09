@@ -41,9 +41,9 @@ final routes = GoRouter(
       ),
     ),
     GoRoute(
-      name: LoginPage.pageConfig.name,
-      path: '/${LoginPage.pageConfig.name}',
-      builder: (context, state) => const LoginPage()
+      name: LoginPageProvider.pageConfig.name,
+      path: '/${LoginPageProvider.pageConfig.name}',
+      builder: (context, state) => const LoginPageProvider()
     ),
     GoRoute(
       name: ProfilePageWidgetProvider.pageConfig.name,

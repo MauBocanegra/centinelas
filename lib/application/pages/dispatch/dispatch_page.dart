@@ -85,7 +85,7 @@ class DispatchPageState extends State<DispatchPage> {
         }
       } else {
         debugPrint('shouldGoToLogin');
-        context.go('/${LoginPage.pageConfig.name}');
+        context.go('/${LoginPageProvider.pageConfig.name}');
       }
     });
 

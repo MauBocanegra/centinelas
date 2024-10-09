@@ -1,12 +1,17 @@
-import 'package:centinelas/application/core/routes.dart';
+import 'package:centinelas/application/di/injection.dart';
 import 'package:centinelas/application/pages/home/home_page.dart';
-import 'package:centinelas/application/utils/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:centinelas/core/usecase.dart';
+import 'package:centinelas/domain/failures/failures.dart';
+import 'package:centinelas/domain/usecases/try_apple_login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppleSignInButton extends StatefulWidget {
-  const AppleSignInButton({super.key});
+  const AppleSignInButton({
+    super.key,
+    required this.onAppleLoginFailure
+  });
+  final VoidCallback onAppleLoginFailure;
 
   @override
   AppleSignInButtonState createState() => AppleSignInButtonState();
@@ -39,18 +44,28 @@ class AppleSignInButtonState extends State<AppleSignInButton> {
             isSigningIn = true;
           });
 
-          UserCredential? userCredential =
-            await Authentication.signInWithApple();
+          final tryAppleLoginUseCase =
+            serviceLocator<TryAppleLoginUseCase>();
+          final fetchedEmailFromAppleLogin =
+            await tryAppleLoginUseCase.call(NoParams());
+          fetchedEmailFromAppleLogin.fold(
+              (fetchedEmail) => {
+                context.goNamed(
+                  HomePage.pageConfig.name,
+                )
+              },
+              (failure) => {
+                if(failure is EmptyAppleLoginFailure){
+                  widget.onAppleLoginFailure()
+                } else {
+                  debugPrint("what went wrong: ${failure.toString()}")
+                }
+              }
+          );
 
           setState(() {
             isSigningIn = false;
           });
-
-          if(userCredential != null && context.mounted){
-            context.goNamed(
-              HomePage.pageConfig.name,
-            );
-          }
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),

@@ -3,6 +3,7 @@ import 'package:centinelas/data/data_sources/firestore_database/interfaces/regis
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/user_data_firestore_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/user_id_write_firestore_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/firestore_database/interfaces/users_list_firestore_datasource.dart';
+import 'package:centinelas/data/data_sources/libraries/interfaces/apple_login_datasource_interface.dart';
 import 'package:centinelas/data/data_sources/realtime_database/interfaces/dispatcher_write_realtime_datasource_interface.dart';
 import 'package:centinelas/data/sealed_classes/race_engagement_type_request.dart';
 import 'package:centinelas/domain/entities/user_data_model.dart';
@@ -15,6 +16,29 @@ import 'package:flutter/material.dart';
 class UsersRepositoryImpl extends UsersRepository{
 
   UsersRepositoryImpl();
+
+  @override
+  Future<Either<String, Failure>> getEmailFromAppleLogin() async {
+    try{
+      final appleLoginDatasource = serviceLocator<AppleLoginDatasourceInterface>();
+      final String emailFetchedFromApple =
+        await appleLoginDatasource.loginAndGetValidEmail();
+      if(emailFetchedFromApple == "SignInWithAppleAuthorizationException"){
+        return Right(ServerFailure(stackTrace: "Canceled by user"));
+      } else if(emailFetchedFromApple.isEmpty){
+        return Right(EmptyAppleLoginFailure(stackTrace: "Email was not fetched from Apple"));
+      }else if(emailFetchedFromApple.isNotEmpty){
+        return Left(emailFetchedFromApple);
+      }else{
+        return Right(ServerFailure(stackTrace: "Something else went wrong"));
+      }
+    }on Exception catch(exception){
+      serviceLocator<FirebaseCrashlytics>().recordError(exception, null);
+      return Future.value(Right(
+          ServerFailure(stackTrace: exception.toString())
+      ));
+    }
+  }
 
   @override
   Future<bool> writeDispatcherInRealtimeDatabase() async {

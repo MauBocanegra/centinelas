@@ -9,3 +9,11 @@ class ServerFailure extends Failure with EquatableMixin {
   @override
   List<Object?> get props => [stackTrace];
 }
+
+class EmptyAppleLoginFailure extends Failure with EquatableMixin {
+  EmptyAppleLoginFailure({this.stackTrace});
+  final String? stackTrace;
+
+  @override
+  List<Object?> get props => [stackTrace];
+}

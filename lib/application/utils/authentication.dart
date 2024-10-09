@@ -35,7 +35,8 @@ class Authentication {
   }
 
   static Future<UserCredential?> signInWithApple() async {
-    try {
+    // TRY was removed as we need to propagate the error in case of such
+    //try {
       //final appleProvider = AppleAuthProvider();
       //appleProvider.addScope('email');
       //UserCredential userCredential =
@@ -71,17 +72,23 @@ class Authentication {
       UserCredential userCredential =
       await serviceLocator<FirebaseAuth>().signInWithCredential(credential);
       debugPrint('firebaseUserCredential: ${userCredential.toString()}');
-      debugPrint('firebaseUserCredential: ${userCredential.user.toString()}');
+      debugPrint('firebaseUserCredential [User]: ${userCredential.user.toString()}');
+      debugPrint('firebaseUserCredential [User.email]: ${userCredential.user?.email.toString()}');
       return userCredential;
       // if email is empty we have to retrieve it from previous signedIn
       //
+      /*
     } on Exception catch (e) {
       debugPrint('catch: ${e.toString()}');
       Authentication.customSnackBar(
         content: 'Error occurred using Google Sign In. Try again.',
       );
-      return null;
+      if(e is SignInWithAppleAuthorizationException){
+        return null;
+      }
+      return ;
     }
+    */
 }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

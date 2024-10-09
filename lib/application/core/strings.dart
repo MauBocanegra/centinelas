@@ -46,6 +46,9 @@ const usersListErrorString = 'Ocurrió un error al obtener el listado de Centine
 const locationDisclaimer = 'La aplicación necesita usar tu ubicación para mandar el reporte de tu asistencia o emergencia y poder recibir atención. \nAsegúrate que los permisos estén otorgados desde los ajustes de la aplicación, así como de tener la ubicación encendida.';
 const locationOkButton = 'Solicitar permiso';
 
+const appleSignInFailed = "El correo de Apple debe ser visible para el uso de la aplicación y no fue posible obtenerlo por los ajustes de privacidad que fueron elegidos, te invitamos a iniciar sesión con Google para hacer uso de la aplicación";
+const appleSignInFailedButton = "Continuar";
+
 const hidrationPointTitle = 'Hidratación';
 const exitPointTite = 'Salida';
 const finishPointTitle = 'Meta';

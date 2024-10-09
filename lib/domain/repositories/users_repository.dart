@@ -4,6 +4,7 @@ import 'package:centinelas/domain/failures/failures.dart';
 import 'package:either_dart/either.dart';
 
 abstract class UsersRepository{
+  Future<Either<String, Failure>> getEmailFromAppleLogin();
   Future<bool> writeDispatcherInRealtimeDatabase();
   Future<bool> writeLoggedUserInFirestore();
   Future<bool> writeRaceEngagementInFirestore(

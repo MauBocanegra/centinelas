@@ -308,7 +308,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
         onPressed: () async {
           await Authentication.signOut(context: context);
           if(context.mounted) {
-            context.goNamed(LoginPage.pageConfig.name);
+            context.goNamed(LoginPageProvider.pageConfig.name);
           }
         },
         style: signOutButtonStyle,

@@ -53,7 +53,7 @@ class _PrivacyPageProviderState extends State<PrivacyPageProvider> {
             if(context.canPop()){
               context.pop();
             } else {
-              context.go('/${LoginPage.pageConfig.name}');
+              context.go('/${LoginPageProvider.pageConfig.name}');
             }
           },
         ),
