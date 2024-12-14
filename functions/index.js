@@ -191,27 +191,38 @@ exports.notifyDispatchersProd = onValueCreated("/production/incidencias/{inciden
       dispatchersMails.push(eachDispatcher.child('despachador_email').val());
     });
 
-    const message = {
-      notification : {
-        title: "Incidencia reportada!",
-        body: "Verifica la app Centinelas",
-        sound: 'default',
-      },
-      data: {
-        message: "Verifica la app Centinelas",
-        click_action: 'FLUTTER_NOTIFICATION_CLICK',
-      },
-    };
-    const options = {
-      priority: "high",
-    };
-
-      const response = admin.messaging().sendToDevice(dispatchersFCMTokens, message, options).then(function (response) {
-       console.log("Successfully sent message:", response);
-     })
-     .catch(function (error) {
-      console.log("Error sending message:", error);
-     });;
+     const response = admin.messaging().sendEachForMulticast({
+        "tokens": dispatchersFCMTokens,
+        "notification" : {
+            title: "Incidencia reportada!",
+            body: "Verifica la app Centinelas",
+        },
+        "data": {
+            message: "Verifica la app Centinelas",
+            click_action: 'FLUTTER_NOTIFICATION_CLICK',
+        },
+        "android": {
+            "notification": {
+                "sound": "default"
+            }
+        },
+        "apns": {
+            "payload": {
+                "aps": {
+                    "sound": "default"
+                }
+            }
+        }
+     }).then(function (response) {
+          console.log("Successfully sent message:", response);
+          response.responses.forEach((resp, idx) => {
+              if (!resp.success) {
+                  console.error(`Error sending to token ${dispatchersFCMTokens[idx]}:`, resp.error);
+              }
+          });
+     }).catch(function (error) {
+         console.log("Error sending message:", error);
+     });
 
     return event.data.ref.parent.child("despachadores_notificados").set(dispatchersMails);
   });
