@@ -7,6 +7,7 @@ class UserDataModel extends Equatable{
   late final String? emergencyContactPhone;
   late final String? severeAllergies;
   late final String? drugSensitivities;
+  late final bool? isAccountDeletionProgrammed;
 
   @override
   List<Object?> get props => [
@@ -15,6 +16,7 @@ class UserDataModel extends Equatable{
     emergencyContactPhone,
     severeAllergies,
     drugSensitivities,
+    isAccountDeletionProgrammed,
   ];
 
 }

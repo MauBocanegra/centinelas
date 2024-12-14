@@ -22,6 +22,7 @@ class WritePhoneWriteCheckInUseCase implements
     userDataModel.emergencyContactName = '';
     userDataModel.severeAllergies = '';
     userDataModel.drugSensitivities = '';
+    userDataModel.isAccountDeletionProgrammed = false;
     final wasAbleToUpdateData =
       await usersRepository.updateUserData(userDataModel);
 

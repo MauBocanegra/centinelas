@@ -84,6 +84,7 @@ const userDataEmergencyContactNameKey = 'contacto_emergencia_nombre';
 const userDataEmergencyContactPhoneKey = 'contacto_emergencia_telefono';
 const userDataSevereAllergiesKey = 'alergias_severas';
 const userDataDrugSensitivitiesKey = 'sensibilidad_farmacos';
+const userDataAccountDeletionKey = 'borrado_de_cuenta_iniciado';
 
 const raceActivityLog = 'bitacora/';
 

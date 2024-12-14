@@ -49,6 +49,8 @@ const locationOkButton = 'Solicitar permiso';
 const appleSignInFailed = "El correo de Apple debe ser visible para el uso de la aplicación y no fue posible obtenerlo por los ajustes de privacidad que fueron elegidos, te invitamos a iniciar sesión con Google para hacer uso de la aplicación";
 const appleSignInFailedButton = "Continuar";
 
+const stringAccountDeletionStarted = "Marca esta casilla para iniciar el proceso de eliminación de tu cuenta así como de todos tus datos en la aplicación, el proceso puede tardar hasta 20 días hábiles";
+
 const hidrationPointTitle = 'Hidratación';
 const exitPointTite = 'Salida';
 const finishPointTitle = 'Meta';

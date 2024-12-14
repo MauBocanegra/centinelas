@@ -59,6 +59,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
   }
 
   bool isFABVisible = false;
+  bool isAccountDeletionStarted = false;
 
   late final BlocProvider<ProfileBloc> profileBloc;
   UserDataModel? initialUserData;
@@ -109,6 +110,9 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                 initialUserData?.severeAllergies ?? '';
             drugSensitivityController.text =
                 initialUserData?.drugSensitivities ?? '';
+            isAccountDeletionStarted =
+                initialUserData?.isAccountDeletionProgrammed ?? false;
+            verifyDataModification();
           }
         },
         builder: (context, state){
@@ -275,6 +279,25 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
                   ]
                 ),
               ) : spacer(),
+              (state is ProfileLoadedState) ? Padding(
+                padding: const EdgeInsets.fromLTRB(8, 24, 8, 0),
+                child: CheckboxListTile(
+                    title: Text(
+                      stringAccountDeletionStarted,
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: redColorCentinelas,
+                      ),
+                    ),
+                    value: isAccountDeletionStarted,
+                    onChanged: (bool? value){
+                      setState(() {
+                        isAccountDeletionStarted = !isAccountDeletionStarted;
+                      });
+                      verifyDataModification();
+                    },
+                ),
+              ) : spacer(),
               const SizedBox(height: 48,),
             ],
           ),
@@ -343,13 +366,18 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
       bool emergencyPhoneTextIs10Digits =
           typedEmergencyContactPhone.length==10
               ||  typedEmergencyContactPhone.isEmpty;
+      bool isAccountDeletionSameAsCloud =
+          initialUserData?.isAccountDeletionProgrammed == isAccountDeletionStarted ;
+      debugPrint("initial[${initialUserData?.isAccountDeletionProgrammed} actual[$isAccountDeletionStarted]]");
 
       setState(() {
         isFABVisible = (!isTypedPhoneSameAsCloud
             || !isTypedContactSameAsCloud
             || !isTypedContactPhoneSameAsCloud
             || !isTypedAllergiesSameAsCloud
-            || !areTypedSensitivitiesSameAsCloud)
+            || !areTypedSensitivitiesSameAsCloud
+            || !isAccountDeletionSameAsCloud
+        )
             && phoneTextIs10Digits && emergencyPhoneTextIs10Digits
         ;
       });
@@ -368,6 +396,7 @@ class ProfilePageState extends State<ProfilePageWidgetProvider> {
     userDataModel.emergencyContactPhone = typedEmergencyContactPhone;
     userDataModel.severeAllergies = typedAllergies;
     userDataModel.drugSensitivities = typedDrugSensitivities;
+    userDataModel.isAccountDeletionProgrammed = isAccountDeletionStarted;
 
     await BlocProvider.of<ProfileBloc>(viewContext).updateUserData(userDataModel);
   }

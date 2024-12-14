@@ -80,8 +80,8 @@ class UserDataFirestoreDatasource implements
         userDataEmergencyContactNameKey: userDataModel.emergencyContactName,
         userDataEmergencyContactPhoneKey: userDataModel.emergencyContactPhone,
         userDataSevereAllergiesKey: userDataModel.severeAllergies,
-        userDataDrugSensitivitiesKey: userDataModel.drugSensitivities
-
+        userDataDrugSensitivitiesKey: userDataModel.drugSensitivities,
+        userDataAccountDeletionKey: userDataModel.isAccountDeletionProgrammed,
       }, SetOptions(merge: true)).onError((error, stackTrace){
         //debugPrint('writeUserData EXCEPTION: ${error.toString()}');
         throw Exception('Unable to userDataModel to firestore');
