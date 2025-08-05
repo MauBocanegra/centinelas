@@ -34,12 +34,15 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        //sourceCompatibility JavaVersion.VERSION_1_8
+        //targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        //jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -53,12 +56,12 @@ android {
         // ch your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutterMinSdkVersion
-        targetSdkVersion 34
-        compileSdkVersion 34
+        targetSdkVersion 35
+        //compileSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled = true
-        versionCode = 6
+        //versionCode = 6
     }
 
     buildTypes {
@@ -77,5 +80,3 @@ android {
 flutter {
     source '../..'
 }
-
-dependencies {}
